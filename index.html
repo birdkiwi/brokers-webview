@@ -1,0 +1,21 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Brokery</title>
+    <link rel="stylesheet" href="build/style.css">
+</head>
+<body>
+<div style="position:fixed; z-index: 1000; top: 0; left: 0; background: #fff; font-size: 11px; padding: 4px;">
+    <a href="#" onclick="getAccounts('Forex');">Forex</a> &nbsp;
+    <a href="#" onclick="getAccounts('Stock');">Stocks</a> &nbsp;
+    <a href="#" onclick="getAccounts('Other');">Other</a> &nbsp;
+    <a href="#" onclick="showFilter();">Показать фильтр</a> &nbsp;
+    <a href="#" onclick="hideFilter();">Скрыть фильтр</a> &nbsp;
+</div>
+<div id="app">
+    <app></app>
+</div>
+<script src="build/app.js"></script>
+</body>
+</html>

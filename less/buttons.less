@@ -1,0 +1,32 @@
+.button {
+  display: inline-block;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  text-decoration: none;
+  padding: 0 20px;
+}
+
+.button-round {
+  border-radius: 4px;
+}
+
+.button-green {
+  background-color: @c-green;
+  color: #fff;
+
+  &:hover,
+  &:focus {
+    background-color: darker(@c-green, 30%);
+  }
+}
+
+.button-gray {
+  background-color: @c-gray;
+  color: #fff;
+
+  &:hover,
+  &:focus {
+    background-color: darker(@c-gray, 30%);
+  }
+}
