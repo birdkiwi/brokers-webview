@@ -7,14 +7,17 @@
 </head>
 <body>
 <div style="position:fixed; z-index: 1000; top: 0; left: 0; background: #fff; font-size: 11px; padding: 4px;">
-    <a href="#" onclick="getAccounts('Forex');">Forex</a> &nbsp;
-    <a href="#" onclick="getAccounts('Stock');">Stocks</a> &nbsp;
-    <a href="#" onclick="getAccounts('Other');">Other</a> &nbsp;
-    <a href="#" onclick="showFilter();">Показать фильтр</a> &nbsp;
-    <a href="#" onclick="hideFilter();">Скрыть фильтр</a> &nbsp;
+    <a href="#" onclick="setView('brokers-list'); hideFilter();">&larr;</a> &nbsp;
+    <a href="#" onclick="setView('brokers-list'); getAccounts('Forex');">Forex</a> &nbsp;
+    <a href="#" onclick="setView('brokers-list'); getAccounts('Stock');">Stocks</a> &nbsp;
+    <a href="#" onclick="setView('brokers-list'); getAccounts('Other');">Other</a> &nbsp;
+    <a href="#" onclick="showFilter();">Show filter</a> &nbsp;
+    <a href="#" onclick="hideFilter();">Hide filter</a> &nbsp;
 </div>
 <div id="app">
-    <app></app>
+    <app>
+        <component :is="currentView"></component>
+    </app>
 </div>
 <script src="build/app.js"></script>
 </body>

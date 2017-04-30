@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 50);
+/******/ 	return __webpack_require__(__webpack_require__.s = 52);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -75,7 +75,7 @@
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var bind = __webpack_require__(35);
+var bind = __webpack_require__(36);
 
 /*global toString:true*/
 
@@ -382,7 +382,7 @@ module.exports = {
   extend: extend,
   trim: trim
 };
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(77).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(79).Buffer))
 
 /***/ }),
 /* 1 */
@@ -439,8 +439,8 @@ module.exports = function (it, key) {
 
 
 var anObject = __webpack_require__(12),
-    IE8_DOM_DEFINE = __webpack_require__(38),
-    toPrimitive = __webpack_require__(27),
+    IE8_DOM_DEFINE = __webpack_require__(39),
+    toPrimitive = __webpack_require__(28),
     dP = Object.defineProperty;
 
 exports.f = __webpack_require__(3) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
@@ -463,8 +463,8 @@ exports.f = __webpack_require__(3) ? Object.defineProperty : function defineProp
 
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(90),
-    defined = __webpack_require__(17);
+var IObject = __webpack_require__(92),
+    defined = __webpack_require__(18);
 module.exports = function (it) {
   return IObject(defined(it));
 };
@@ -492,7 +492,7 @@ module.exports = __webpack_require__(3) ? function (object, key, value) {
 "use strict";
 
 
-var store = __webpack_require__(25)('wks'),
+var store = __webpack_require__(26)('wks'),
     uid = __webpack_require__(15),
     _Symbol = __webpack_require__(2).Symbol,
     USE_SYMBOL = typeof _Symbol == 'function';
@@ -512,7 +512,7 @@ $exports.store = store;
 
 var global = __webpack_require__(2),
     core = __webpack_require__(1),
-    ctx = __webpack_require__(87),
+    ctx = __webpack_require__(89),
     hide = __webpack_require__(7),
     PROTOTYPE = 'prototype';
 
@@ -600,8 +600,8 @@ module.exports = function (exec) {
 
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys = __webpack_require__(42),
-    enumBugKeys = __webpack_require__(18);
+var $keys = __webpack_require__(43),
+    enumBugKeys = __webpack_require__(19);
 
 module.exports = Object.keys || function keys(O) {
   return $keys(O, enumBugKeys);
@@ -664,13 +664,96 @@ module.exports = function (key) {
 
 /***/ }),
 /* 16 */
+/***/ (function(module, exports) {
+
+/* globals __VUE_SSR_CONTEXT__ */
+
+// this module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier /* server only */
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context = context || (this.$vnode && this.$vnode.ssrContext)
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = injectStyles
+  }
+
+  if (hook) {
+    // inject component registration as beforeCreate hook
+    var existing = options.beforeCreate
+    options.beforeCreate = existing
+      ? [].concat(existing, hook)
+      : [hook]
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(66);
+var normalizeHeaderName = __webpack_require__(68);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -686,10 +769,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(31);
+    adapter = __webpack_require__(32);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(31);
+    adapter = __webpack_require__(32);
   }
   return adapter;
 }
@@ -753,10 +836,10 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 });
 
 module.exports = defaults;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(30)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(31)))
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -769,7 +852,7 @@ module.exports = function (it) {
 };
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -779,7 +862,7 @@ module.exports = function (it) {
 module.exports = 'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'.split(',');
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -788,7 +871,7 @@ module.exports = 'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,
 module.exports = {};
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -797,7 +880,7 @@ module.exports = {};
 module.exports = true;
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -805,22 +888,22 @@ module.exports = true;
 
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
 var anObject = __webpack_require__(12),
-    dPs = __webpack_require__(96),
-    enumBugKeys = __webpack_require__(18),
-    IE_PROTO = __webpack_require__(24)('IE_PROTO'),
+    dPs = __webpack_require__(98),
+    enumBugKeys = __webpack_require__(19),
+    IE_PROTO = __webpack_require__(25)('IE_PROTO'),
     Empty = function Empty() {/* empty */},
     PROTOTYPE = 'prototype';
 
 // Create object with fake `null` prototype: use iframe Object with cleared prototype
 var _createDict = function createDict() {
   // Thrash, waste and sodomy: IE GC bug
-  var iframe = __webpack_require__(37)('iframe'),
+  var iframe = __webpack_require__(38)('iframe'),
       i = enumBugKeys.length,
       lt = '<',
       gt = '>',
       iframeDocument;
   iframe.style.display = 'none';
-  __webpack_require__(89).appendChild(iframe);
+  __webpack_require__(91).appendChild(iframe);
   iframe.src = 'javascript:'; // eslint-disable-line no-script-url
   // createDict = iframe.contentWindow.Object;
   // html.removeChild(iframe);
@@ -847,7 +930,7 @@ module.exports = Object.create || function create(O, Properties) {
 };
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -856,7 +939,7 @@ module.exports = Object.create || function create(O, Properties) {
 exports.f = {}.propertyIsEnumerable;
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -871,20 +954,20 @@ module.exports = function (it, tag, stat) {
 };
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var shared = __webpack_require__(25)('keys'),
+var shared = __webpack_require__(26)('keys'),
     uid = __webpack_require__(15);
 module.exports = function (key) {
   return shared[key] || (shared[key] = uid(key));
 };
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -898,7 +981,7 @@ module.exports = function (key) {
 };
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -912,7 +995,7 @@ module.exports = function (it) {
 };
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -932,7 +1015,7 @@ module.exports = function (it, S) {
 };
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -940,8 +1023,8 @@ module.exports = function (it, S) {
 
 var global = __webpack_require__(2),
     core = __webpack_require__(1),
-    LIBRARY = __webpack_require__(20),
-    wksExt = __webpack_require__(29),
+    LIBRARY = __webpack_require__(21),
+    wksExt = __webpack_require__(30),
     defineProperty = __webpack_require__(5).f;
 module.exports = function (name) {
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
@@ -949,7 +1032,7 @@ module.exports = function (name) {
 };
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -958,7 +1041,7 @@ module.exports = function (name) {
 exports.f = __webpack_require__(8);
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1151,19 +1234,19 @@ process.umask = function () {
 };
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(58);
-var buildURL = __webpack_require__(61);
-var parseHeaders = __webpack_require__(67);
-var isURLSameOrigin = __webpack_require__(65);
-var createError = __webpack_require__(34);
-var btoa = typeof window !== 'undefined' && window.btoa && window.btoa.bind(window) || __webpack_require__(60);
+var settle = __webpack_require__(60);
+var buildURL = __webpack_require__(63);
+var parseHeaders = __webpack_require__(69);
+var isURLSameOrigin = __webpack_require__(67);
+var createError = __webpack_require__(35);
+var btoa = typeof window !== 'undefined' && window.btoa && window.btoa.bind(window) || __webpack_require__(62);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -1256,7 +1339,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(63);
+      var cookies = __webpack_require__(65);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ? cookies.read(config.xsrfCookieName) : undefined;
@@ -1329,10 +1412,10 @@ module.exports = function xhrAdapter(config) {
     request.send(requestData);
   });
 };
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(30)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(31)))
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1358,7 +1441,7 @@ Cancel.prototype.__CANCEL__ = true;
 module.exports = Cancel;
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1369,13 +1452,13 @@ module.exports = function isCancel(value) {
 };
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var enhanceError = __webpack_require__(57);
+var enhanceError = __webpack_require__(59);
 
 /**
  * Create an Error with the specified message, config, error code, and response.
@@ -1392,7 +1475,7 @@ module.exports = function createError(message, config, code, response) {
 };
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1409,7 +1492,7 @@ module.exports = function bind(fn, thisArg) {
 };
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1422,7 +1505,7 @@ module.exports = function (it) {
 };
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1438,34 +1521,34 @@ module.exports = function (it) {
 };
 
 /***/ }),
-/* 38 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = !__webpack_require__(3) && !__webpack_require__(10)(function () {
-  return Object.defineProperty(__webpack_require__(37)('div'), 'a', { get: function get() {
-      return 7;
-    } }).a != 7;
-});
-
-/***/ }),
 /* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var LIBRARY = __webpack_require__(20),
+module.exports = !__webpack_require__(3) && !__webpack_require__(10)(function () {
+  return Object.defineProperty(__webpack_require__(38)('div'), 'a', { get: function get() {
+      return 7;
+    } }).a != 7;
+});
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var LIBRARY = __webpack_require__(21),
     $export = __webpack_require__(9),
-    redefine = __webpack_require__(43),
+    redefine = __webpack_require__(44),
     hide = __webpack_require__(7),
     has = __webpack_require__(4),
-    Iterators = __webpack_require__(19),
-    $iterCreate = __webpack_require__(92),
-    setToStringTag = __webpack_require__(23),
-    getPrototypeOf = __webpack_require__(99),
+    Iterators = __webpack_require__(20),
+    $iterCreate = __webpack_require__(94),
+    setToStringTag = __webpack_require__(24),
+    getPrototypeOf = __webpack_require__(101),
     ITERATOR = __webpack_require__(8)('iterator'),
     BUGGY = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
 ,
@@ -1543,28 +1626,19 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 };
 
 /***/ }),
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
-var $keys = __webpack_require__(42),
-    hiddenKeys = __webpack_require__(18).concat('length', 'prototype');
-
-exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
-  return $keys(O, hiddenKeys);
-};
-
-/***/ }),
 /* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-exports.f = Object.getOwnPropertySymbols;
+// 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
+var $keys = __webpack_require__(43),
+    hiddenKeys = __webpack_require__(19).concat('length', 'prototype');
+
+exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
+  return $keys(O, hiddenKeys);
+};
 
 /***/ }),
 /* 42 */
@@ -1573,10 +1647,19 @@ exports.f = Object.getOwnPropertySymbols;
 "use strict";
 
 
+exports.f = Object.getOwnPropertySymbols;
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var has = __webpack_require__(4),
     toIObject = __webpack_require__(6),
-    arrayIndexOf = __webpack_require__(86)(false),
-    IE_PROTO = __webpack_require__(24)('IE_PROTO');
+    arrayIndexOf = __webpack_require__(88)(false),
+    IE_PROTO = __webpack_require__(25)('IE_PROTO');
 
 module.exports = function (object, names) {
   var O = toIObject(object),
@@ -1594,7 +1677,7 @@ module.exports = function (object, names) {
 };
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1603,20 +1686,20 @@ module.exports = function (object, names) {
 module.exports = __webpack_require__(7);
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 // 7.1.13 ToObject(argument)
-var defined = __webpack_require__(17);
+var defined = __webpack_require__(18);
 module.exports = function (it) {
   return Object(defined(it));
 };
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1646,7 +1729,7 @@ try {
 module.exports = g;
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8168,24 +8251,24 @@ setTimeout(function () {
 /*  */
 
 exports.default = Vue$3;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(30), __webpack_require__(45)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(31), __webpack_require__(46)))
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var Component = __webpack_require__(119)(
+var Component = __webpack_require__(16)(
   /* script */
-  __webpack_require__(116),
+  __webpack_require__(118),
   /* template */
-  __webpack_require__(120),
+  __webpack_require__(129),
   /* styles */
   null,
   /* scopeId */
@@ -8217,7 +8300,2753 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 49 */
+/* 50 */
+/***/ (function(module, exports) {
+
+module.exports = [
+	{
+		"name": "Afghanistan",
+		"alpha-2": "AF",
+		"alpha-3": "AFG",
+		"country-code": "004",
+		"iso_3166-2": "ISO 3166-2:AF",
+		"region": "Asia",
+		"sub-region": "Southern Asia",
+		"region-code": "142",
+		"sub-region-code": "034"
+	},
+	{
+		"name": "Åland Islands",
+		"alpha-2": "AX",
+		"alpha-3": "ALA",
+		"country-code": "248",
+		"iso_3166-2": "ISO 3166-2:AX",
+		"sub-region-code": "154",
+		"region-code": "150",
+		"sub-region": "Northern Europe",
+		"region": "Europe"
+	},
+	{
+		"name": "Albania",
+		"alpha-2": "AL",
+		"alpha-3": "ALB",
+		"country-code": "008",
+		"iso_3166-2": "ISO 3166-2:AL",
+		"region": "Europe",
+		"sub-region": "Southern Europe",
+		"region-code": "150",
+		"sub-region-code": "039"
+	},
+	{
+		"name": "Algeria",
+		"alpha-2": "DZ",
+		"alpha-3": "DZA",
+		"country-code": "012",
+		"iso_3166-2": "ISO 3166-2:DZ",
+		"region": "Africa",
+		"sub-region": "Northern Africa",
+		"region-code": "002",
+		"sub-region-code": "015"
+	},
+	{
+		"name": "American Samoa",
+		"alpha-2": "AS",
+		"alpha-3": "ASM",
+		"country-code": "016",
+		"iso_3166-2": "ISO 3166-2:AS",
+		"region": "Oceania",
+		"sub-region": "Polynesia",
+		"region-code": "009",
+		"sub-region-code": "061"
+	},
+	{
+		"name": "Andorra",
+		"alpha-2": "AD",
+		"alpha-3": "AND",
+		"country-code": "020",
+		"iso_3166-2": "ISO 3166-2:AD",
+		"region": "Europe",
+		"sub-region": "Southern Europe",
+		"region-code": "150",
+		"sub-region-code": "039"
+	},
+	{
+		"name": "Angola",
+		"alpha-2": "AO",
+		"alpha-3": "AGO",
+		"country-code": "024",
+		"iso_3166-2": "ISO 3166-2:AO",
+		"region": "Africa",
+		"sub-region": "Middle Africa",
+		"region-code": "002",
+		"sub-region-code": "017"
+	},
+	{
+		"name": "Anguilla",
+		"alpha-2": "AI",
+		"alpha-3": "AIA",
+		"country-code": "660",
+		"iso_3166-2": "ISO 3166-2:AI",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Antarctica",
+		"alpha-2": "AQ",
+		"alpha-3": "ATA",
+		"country-code": "010",
+		"iso_3166-2": "ISO 3166-2:AQ",
+		"sub-region-code": null,
+		"region-code": null,
+		"sub-region": null,
+		"region": null
+	},
+	{
+		"name": "Antigua and Barbuda",
+		"alpha-2": "AG",
+		"alpha-3": "ATG",
+		"country-code": "028",
+		"iso_3166-2": "ISO 3166-2:AG",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Argentina",
+		"alpha-2": "AR",
+		"alpha-3": "ARG",
+		"country-code": "032",
+		"iso_3166-2": "ISO 3166-2:AR",
+		"region": "Americas",
+		"sub-region": "South America",
+		"region-code": "019",
+		"sub-region-code": "005"
+	},
+	{
+		"name": "Armenia",
+		"alpha-2": "AM",
+		"alpha-3": "ARM",
+		"country-code": "051",
+		"iso_3166-2": "ISO 3166-2:AM",
+		"region": "Asia",
+		"sub-region": "Western Asia",
+		"region-code": "142",
+		"sub-region-code": "145"
+	},
+	{
+		"name": "Aruba",
+		"alpha-2": "AW",
+		"alpha-3": "ABW",
+		"country-code": "533",
+		"iso_3166-2": "ISO 3166-2:AW",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Australia",
+		"alpha-2": "AU",
+		"alpha-3": "AUS",
+		"country-code": "036",
+		"iso_3166-2": "ISO 3166-2:AU",
+		"region": "Oceania",
+		"sub-region": "Australia and New Zealand",
+		"region-code": "009",
+		"sub-region-code": "053"
+	},
+	{
+		"name": "Austria",
+		"alpha-2": "AT",
+		"alpha-3": "AUT",
+		"country-code": "040",
+		"iso_3166-2": "ISO 3166-2:AT",
+		"region": "Europe",
+		"sub-region": "Western Europe",
+		"region-code": "150",
+		"sub-region-code": "155"
+	},
+	{
+		"name": "Azerbaijan",
+		"alpha-2": "AZ",
+		"alpha-3": "AZE",
+		"country-code": "031",
+		"iso_3166-2": "ISO 3166-2:AZ",
+		"region": "Asia",
+		"sub-region": "Western Asia",
+		"region-code": "142",
+		"sub-region-code": "145"
+	},
+	{
+		"name": "Bahamas",
+		"alpha-2": "BS",
+		"alpha-3": "BHS",
+		"country-code": "044",
+		"iso_3166-2": "ISO 3166-2:BS",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Bahrain",
+		"alpha-2": "BH",
+		"alpha-3": "BHR",
+		"country-code": "048",
+		"iso_3166-2": "ISO 3166-2:BH",
+		"region": "Asia",
+		"sub-region": "Western Asia",
+		"region-code": "142",
+		"sub-region-code": "145"
+	},
+	{
+		"name": "Bangladesh",
+		"alpha-2": "BD",
+		"alpha-3": "BGD",
+		"country-code": "050",
+		"iso_3166-2": "ISO 3166-2:BD",
+		"region": "Asia",
+		"sub-region": "Southern Asia",
+		"region-code": "142",
+		"sub-region-code": "034"
+	},
+	{
+		"name": "Barbados",
+		"alpha-2": "BB",
+		"alpha-3": "BRB",
+		"country-code": "052",
+		"iso_3166-2": "ISO 3166-2:BB",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Belarus",
+		"alpha-2": "BY",
+		"alpha-3": "BLR",
+		"country-code": "112",
+		"iso_3166-2": "ISO 3166-2:BY",
+		"region": "Europe",
+		"sub-region": "Eastern Europe",
+		"region-code": "150",
+		"sub-region-code": "151"
+	},
+	{
+		"name": "Belgium",
+		"alpha-2": "BE",
+		"alpha-3": "BEL",
+		"country-code": "056",
+		"iso_3166-2": "ISO 3166-2:BE",
+		"region": "Europe",
+		"sub-region": "Western Europe",
+		"region-code": "150",
+		"sub-region-code": "155"
+	},
+	{
+		"name": "Belize",
+		"alpha-2": "BZ",
+		"alpha-3": "BLZ",
+		"country-code": "084",
+		"iso_3166-2": "ISO 3166-2:BZ",
+		"region": "Americas",
+		"sub-region": "Central America",
+		"region-code": "019",
+		"sub-region-code": "013"
+	},
+	{
+		"name": "Benin",
+		"alpha-2": "BJ",
+		"alpha-3": "BEN",
+		"country-code": "204",
+		"iso_3166-2": "ISO 3166-2:BJ",
+		"region": "Africa",
+		"sub-region": "Western Africa",
+		"region-code": "002",
+		"sub-region-code": "011"
+	},
+	{
+		"name": "Bermuda",
+		"alpha-2": "BM",
+		"alpha-3": "BMU",
+		"country-code": "060",
+		"iso_3166-2": "ISO 3166-2:BM",
+		"region": "Americas",
+		"sub-region": "Northern America",
+		"region-code": "019",
+		"sub-region-code": "021"
+	},
+	{
+		"name": "Bhutan",
+		"alpha-2": "BT",
+		"alpha-3": "BTN",
+		"country-code": "064",
+		"iso_3166-2": "ISO 3166-2:BT",
+		"region": "Asia",
+		"sub-region": "Southern Asia",
+		"region-code": "142",
+		"sub-region-code": "034"
+	},
+	{
+		"name": "Bolivia (Plurinational State of)",
+		"alpha-2": "BO",
+		"alpha-3": "BOL",
+		"country-code": "068",
+		"iso_3166-2": "ISO 3166-2:BO",
+		"region": "Americas",
+		"sub-region": "South America",
+		"region-code": "019",
+		"sub-region-code": "005"
+	},
+	{
+		"name": "Bonaire, Sint Eustatius and Saba",
+		"alpha-2": "BQ",
+		"alpha-3": "BES",
+		"country-code": "535",
+		"iso_3166-2": "ISO 3166-2:BQ",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Bosnia and Herzegovina",
+		"alpha-2": "BA",
+		"alpha-3": "BIH",
+		"country-code": "070",
+		"iso_3166-2": "ISO 3166-2:BA",
+		"region": "Europe",
+		"sub-region": "Southern Europe",
+		"region-code": "150",
+		"sub-region-code": "039"
+	},
+	{
+		"name": "Botswana",
+		"alpha-2": "BW",
+		"alpha-3": "BWA",
+		"country-code": "072",
+		"iso_3166-2": "ISO 3166-2:BW",
+		"region": "Africa",
+		"sub-region": "Southern Africa",
+		"region-code": "002",
+		"sub-region-code": "018"
+	},
+	{
+		"name": "Bouvet Island",
+		"alpha-2": "BV",
+		"alpha-3": "BVT",
+		"country-code": "074",
+		"iso_3166-2": "ISO 3166-2:BV",
+		"sub-region-code": null,
+		"region-code": null,
+		"sub-region": null,
+		"region": null
+	},
+	{
+		"name": "Brazil",
+		"alpha-2": "BR",
+		"alpha-3": "BRA",
+		"country-code": "076",
+		"iso_3166-2": "ISO 3166-2:BR",
+		"region": "Americas",
+		"sub-region": "South America",
+		"region-code": "019",
+		"sub-region-code": "005"
+	},
+	{
+		"name": "British Indian Ocean Territory",
+		"alpha-2": "IO",
+		"alpha-3": "IOT",
+		"country-code": "086",
+		"iso_3166-2": "ISO 3166-2:IO",
+		"sub-region-code": null,
+		"region-code": null,
+		"sub-region": null,
+		"region": null
+	},
+	{
+		"name": "Brunei Darussalam",
+		"alpha-2": "BN",
+		"alpha-3": "BRN",
+		"country-code": "096",
+		"iso_3166-2": "ISO 3166-2:BN",
+		"region": "Asia",
+		"sub-region": "South-Eastern Asia",
+		"region-code": "142",
+		"sub-region-code": "035"
+	},
+	{
+		"name": "Bulgaria",
+		"alpha-2": "BG",
+		"alpha-3": "BGR",
+		"country-code": "100",
+		"iso_3166-2": "ISO 3166-2:BG",
+		"region": "Europe",
+		"sub-region": "Eastern Europe",
+		"region-code": "150",
+		"sub-region-code": "151"
+	},
+	{
+		"name": "Burkina Faso",
+		"alpha-2": "BF",
+		"alpha-3": "BFA",
+		"country-code": "854",
+		"iso_3166-2": "ISO 3166-2:BF",
+		"region": "Africa",
+		"sub-region": "Western Africa",
+		"region-code": "002",
+		"sub-region-code": "011"
+	},
+	{
+		"name": "Burundi",
+		"alpha-2": "BI",
+		"alpha-3": "BDI",
+		"country-code": "108",
+		"iso_3166-2": "ISO 3166-2:BI",
+		"region": "Africa",
+		"sub-region": "Eastern Africa",
+		"region-code": "002",
+		"sub-region-code": "014"
+	},
+	{
+		"name": "Cambodia",
+		"alpha-2": "KH",
+		"alpha-3": "KHM",
+		"country-code": "116",
+		"iso_3166-2": "ISO 3166-2:KH",
+		"region": "Asia",
+		"sub-region": "South-Eastern Asia",
+		"region-code": "142",
+		"sub-region-code": "035"
+	},
+	{
+		"name": "Cameroon",
+		"alpha-2": "CM",
+		"alpha-3": "CMR",
+		"country-code": "120",
+		"iso_3166-2": "ISO 3166-2:CM",
+		"region": "Africa",
+		"sub-region": "Middle Africa",
+		"region-code": "002",
+		"sub-region-code": "017"
+	},
+	{
+		"name": "Canada",
+		"alpha-2": "CA",
+		"alpha-3": "CAN",
+		"country-code": "124",
+		"iso_3166-2": "ISO 3166-2:CA",
+		"region": "Americas",
+		"sub-region": "Northern America",
+		"region-code": "019",
+		"sub-region-code": "021"
+	},
+	{
+		"name": "Cabo Verde",
+		"alpha-2": "CV",
+		"alpha-3": "CPV",
+		"country-code": "132",
+		"iso_3166-2": "ISO 3166-2:CV",
+		"region": "Africa",
+		"sub-region": "Western Africa",
+		"region-code": "002",
+		"sub-region-code": "011"
+	},
+	{
+		"name": "Cayman Islands",
+		"alpha-2": "KY",
+		"alpha-3": "CYM",
+		"country-code": "136",
+		"iso_3166-2": "ISO 3166-2:KY",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Central African Republic",
+		"alpha-2": "CF",
+		"alpha-3": "CAF",
+		"country-code": "140",
+		"iso_3166-2": "ISO 3166-2:CF",
+		"region": "Africa",
+		"sub-region": "Middle Africa",
+		"region-code": "002",
+		"sub-region-code": "017"
+	},
+	{
+		"name": "Chad",
+		"alpha-2": "TD",
+		"alpha-3": "TCD",
+		"country-code": "148",
+		"iso_3166-2": "ISO 3166-2:TD",
+		"region": "Africa",
+		"sub-region": "Middle Africa",
+		"region-code": "002",
+		"sub-region-code": "017"
+	},
+	{
+		"name": "Chile",
+		"alpha-2": "CL",
+		"alpha-3": "CHL",
+		"country-code": "152",
+		"iso_3166-2": "ISO 3166-2:CL",
+		"region": "Americas",
+		"sub-region": "South America",
+		"region-code": "019",
+		"sub-region-code": "005"
+	},
+	{
+		"name": "China",
+		"alpha-2": "CN",
+		"alpha-3": "CHN",
+		"country-code": "156",
+		"iso_3166-2": "ISO 3166-2:CN",
+		"region": "Asia",
+		"sub-region": "Eastern Asia",
+		"region-code": "142",
+		"sub-region-code": "030"
+	},
+	{
+		"name": "Christmas Island",
+		"alpha-2": "CX",
+		"alpha-3": "CXR",
+		"country-code": "162",
+		"iso_3166-2": "ISO 3166-2:CX",
+		"sub-region-code": null,
+		"region-code": null,
+		"sub-region": null,
+		"region": null
+	},
+	{
+		"name": "Cocos (Keeling) Islands",
+		"alpha-2": "CC",
+		"alpha-3": "CCK",
+		"country-code": "166",
+		"iso_3166-2": "ISO 3166-2:CC",
+		"sub-region-code": null,
+		"region-code": null,
+		"sub-region": null,
+		"region": null
+	},
+	{
+		"name": "Colombia",
+		"alpha-2": "CO",
+		"alpha-3": "COL",
+		"country-code": "170",
+		"iso_3166-2": "ISO 3166-2:CO",
+		"region": "Americas",
+		"sub-region": "South America",
+		"region-code": "019",
+		"sub-region-code": "005"
+	},
+	{
+		"name": "Comoros",
+		"alpha-2": "KM",
+		"alpha-3": "COM",
+		"country-code": "174",
+		"iso_3166-2": "ISO 3166-2:KM",
+		"region": "Africa",
+		"sub-region": "Eastern Africa",
+		"region-code": "002",
+		"sub-region-code": "014"
+	},
+	{
+		"name": "Congo",
+		"alpha-2": "CG",
+		"alpha-3": "COG",
+		"country-code": "178",
+		"iso_3166-2": "ISO 3166-2:CG",
+		"region": "Africa",
+		"sub-region": "Middle Africa",
+		"region-code": "002",
+		"sub-region-code": "017"
+	},
+	{
+		"name": "Congo (Democratic Republic of the)",
+		"alpha-2": "CD",
+		"alpha-3": "COD",
+		"country-code": "180",
+		"iso_3166-2": "ISO 3166-2:CD",
+		"region": "Africa",
+		"sub-region": "Middle Africa",
+		"region-code": "002",
+		"sub-region-code": "017"
+	},
+	{
+		"name": "Cook Islands",
+		"alpha-2": "CK",
+		"alpha-3": "COK",
+		"country-code": "184",
+		"iso_3166-2": "ISO 3166-2:CK",
+		"region": "Oceania",
+		"sub-region": "Polynesia",
+		"region-code": "009",
+		"sub-region-code": "061"
+	},
+	{
+		"name": "Costa Rica",
+		"alpha-2": "CR",
+		"alpha-3": "CRI",
+		"country-code": "188",
+		"iso_3166-2": "ISO 3166-2:CR",
+		"region": "Americas",
+		"sub-region": "Central America",
+		"region-code": "019",
+		"sub-region-code": "013"
+	},
+	{
+		"name": "Côte d'Ivoire",
+		"alpha-2": "CI",
+		"alpha-3": "CIV",
+		"country-code": "384",
+		"iso_3166-2": "ISO 3166-2:CI",
+		"region": "Africa",
+		"sub-region": "Western Africa",
+		"region-code": "002",
+		"sub-region-code": "011"
+	},
+	{
+		"name": "Croatia",
+		"alpha-2": "HR",
+		"alpha-3": "HRV",
+		"country-code": "191",
+		"iso_3166-2": "ISO 3166-2:HR",
+		"region": "Europe",
+		"sub-region": "Southern Europe",
+		"region-code": "150",
+		"sub-region-code": "039"
+	},
+	{
+		"name": "Cuba",
+		"alpha-2": "CU",
+		"alpha-3": "CUB",
+		"country-code": "192",
+		"iso_3166-2": "ISO 3166-2:CU",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Curaçao",
+		"alpha-2": "CW",
+		"alpha-3": "CUW",
+		"country-code": "531",
+		"iso_3166-2": "ISO 3166-2:CW",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Cyprus",
+		"alpha-2": "CY",
+		"alpha-3": "CYP",
+		"country-code": "196",
+		"iso_3166-2": "ISO 3166-2:CY",
+		"region": "Asia",
+		"sub-region": "Western Asia",
+		"region-code": "142",
+		"sub-region-code": "145"
+	},
+	{
+		"name": "Czech Republic",
+		"alpha-2": "CZ",
+		"alpha-3": "CZE",
+		"country-code": "203",
+		"iso_3166-2": "ISO 3166-2:CZ",
+		"region": "Europe",
+		"sub-region": "Eastern Europe",
+		"region-code": "150",
+		"sub-region-code": "151"
+	},
+	{
+		"name": "Denmark",
+		"alpha-2": "DK",
+		"alpha-3": "DNK",
+		"country-code": "208",
+		"iso_3166-2": "ISO 3166-2:DK",
+		"region": "Europe",
+		"sub-region": "Northern Europe",
+		"region-code": "150",
+		"sub-region-code": "154"
+	},
+	{
+		"name": "Djibouti",
+		"alpha-2": "DJ",
+		"alpha-3": "DJI",
+		"country-code": "262",
+		"iso_3166-2": "ISO 3166-2:DJ",
+		"region": "Africa",
+		"sub-region": "Eastern Africa",
+		"region-code": "002",
+		"sub-region-code": "014"
+	},
+	{
+		"name": "Dominica",
+		"alpha-2": "DM",
+		"alpha-3": "DMA",
+		"country-code": "212",
+		"iso_3166-2": "ISO 3166-2:DM",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Dominican Republic",
+		"alpha-2": "DO",
+		"alpha-3": "DOM",
+		"country-code": "214",
+		"iso_3166-2": "ISO 3166-2:DO",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Ecuador",
+		"alpha-2": "EC",
+		"alpha-3": "ECU",
+		"country-code": "218",
+		"iso_3166-2": "ISO 3166-2:EC",
+		"region": "Americas",
+		"sub-region": "South America",
+		"region-code": "019",
+		"sub-region-code": "005"
+	},
+	{
+		"name": "Egypt",
+		"alpha-2": "EG",
+		"alpha-3": "EGY",
+		"country-code": "818",
+		"iso_3166-2": "ISO 3166-2:EG",
+		"region": "Africa",
+		"sub-region": "Northern Africa",
+		"region-code": "002",
+		"sub-region-code": "015"
+	},
+	{
+		"name": "El Salvador",
+		"alpha-2": "SV",
+		"alpha-3": "SLV",
+		"country-code": "222",
+		"iso_3166-2": "ISO 3166-2:SV",
+		"region": "Americas",
+		"sub-region": "Central America",
+		"region-code": "019",
+		"sub-region-code": "013"
+	},
+	{
+		"name": "Equatorial Guinea",
+		"alpha-2": "GQ",
+		"alpha-3": "GNQ",
+		"country-code": "226",
+		"iso_3166-2": "ISO 3166-2:GQ",
+		"region": "Africa",
+		"sub-region": "Middle Africa",
+		"region-code": "002",
+		"sub-region-code": "017"
+	},
+	{
+		"name": "Eritrea",
+		"alpha-2": "ER",
+		"alpha-3": "ERI",
+		"country-code": "232",
+		"iso_3166-2": "ISO 3166-2:ER",
+		"region": "Africa",
+		"sub-region": "Eastern Africa",
+		"region-code": "002",
+		"sub-region-code": "014"
+	},
+	{
+		"name": "Estonia",
+		"alpha-2": "EE",
+		"alpha-3": "EST",
+		"country-code": "233",
+		"iso_3166-2": "ISO 3166-2:EE",
+		"region": "Europe",
+		"sub-region": "Northern Europe",
+		"region-code": "150",
+		"sub-region-code": "154"
+	},
+	{
+		"name": "Ethiopia",
+		"alpha-2": "ET",
+		"alpha-3": "ETH",
+		"country-code": "231",
+		"iso_3166-2": "ISO 3166-2:ET",
+		"region": "Africa",
+		"sub-region": "Eastern Africa",
+		"region-code": "002",
+		"sub-region-code": "014"
+	},
+	{
+		"name": "Falkland Islands (Malvinas)",
+		"alpha-2": "FK",
+		"alpha-3": "FLK",
+		"country-code": "238",
+		"iso_3166-2": "ISO 3166-2:FK",
+		"region": "Americas",
+		"sub-region": "South America",
+		"region-code": "019",
+		"sub-region-code": "005"
+	},
+	{
+		"name": "Faroe Islands",
+		"alpha-2": "FO",
+		"alpha-3": "FRO",
+		"country-code": "234",
+		"iso_3166-2": "ISO 3166-2:FO",
+		"region": "Europe",
+		"sub-region": "Northern Europe",
+		"region-code": "150",
+		"sub-region-code": "154"
+	},
+	{
+		"name": "Fiji",
+		"alpha-2": "FJ",
+		"alpha-3": "FJI",
+		"country-code": "242",
+		"iso_3166-2": "ISO 3166-2:FJ",
+		"region": "Oceania",
+		"sub-region": "Melanesia",
+		"region-code": "009",
+		"sub-region-code": "054"
+	},
+	{
+		"name": "Finland",
+		"alpha-2": "FI",
+		"alpha-3": "FIN",
+		"country-code": "246",
+		"iso_3166-2": "ISO 3166-2:FI",
+		"region": "Europe",
+		"sub-region": "Northern Europe",
+		"region-code": "150",
+		"sub-region-code": "154"
+	},
+	{
+		"name": "France",
+		"alpha-2": "FR",
+		"alpha-3": "FRA",
+		"country-code": "250",
+		"iso_3166-2": "ISO 3166-2:FR",
+		"region": "Europe",
+		"sub-region": "Western Europe",
+		"region-code": "150",
+		"sub-region-code": "155"
+	},
+	{
+		"name": "French Guiana",
+		"alpha-2": "GF",
+		"alpha-3": "GUF",
+		"country-code": "254",
+		"iso_3166-2": "ISO 3166-2:GF",
+		"region": "Americas",
+		"sub-region": "South America",
+		"region-code": "019",
+		"sub-region-code": "005"
+	},
+	{
+		"name": "French Polynesia",
+		"alpha-2": "PF",
+		"alpha-3": "PYF",
+		"country-code": "258",
+		"iso_3166-2": "ISO 3166-2:PF",
+		"region": "Oceania",
+		"sub-region": "Polynesia",
+		"region-code": "009",
+		"sub-region-code": "061"
+	},
+	{
+		"name": "French Southern Territories",
+		"alpha-2": "TF",
+		"alpha-3": "ATF",
+		"country-code": "260",
+		"iso_3166-2": "ISO 3166-2:TF",
+		"sub-region-code": null,
+		"region-code": null,
+		"sub-region": null,
+		"region": null
+	},
+	{
+		"name": "Gabon",
+		"alpha-2": "GA",
+		"alpha-3": "GAB",
+		"country-code": "266",
+		"iso_3166-2": "ISO 3166-2:GA",
+		"region": "Africa",
+		"sub-region": "Middle Africa",
+		"region-code": "002",
+		"sub-region-code": "017"
+	},
+	{
+		"name": "Gambia",
+		"alpha-2": "GM",
+		"alpha-3": "GMB",
+		"country-code": "270",
+		"iso_3166-2": "ISO 3166-2:GM",
+		"region": "Africa",
+		"sub-region": "Western Africa",
+		"region-code": "002",
+		"sub-region-code": "011"
+	},
+	{
+		"name": "Georgia",
+		"alpha-2": "GE",
+		"alpha-3": "GEO",
+		"country-code": "268",
+		"iso_3166-2": "ISO 3166-2:GE",
+		"region": "Asia",
+		"sub-region": "Western Asia",
+		"region-code": "142",
+		"sub-region-code": "145"
+	},
+	{
+		"name": "Germany",
+		"alpha-2": "DE",
+		"alpha-3": "DEU",
+		"country-code": "276",
+		"iso_3166-2": "ISO 3166-2:DE",
+		"region": "Europe",
+		"sub-region": "Western Europe",
+		"region-code": "150",
+		"sub-region-code": "155"
+	},
+	{
+		"name": "Ghana",
+		"alpha-2": "GH",
+		"alpha-3": "GHA",
+		"country-code": "288",
+		"iso_3166-2": "ISO 3166-2:GH",
+		"region": "Africa",
+		"sub-region": "Western Africa",
+		"region-code": "002",
+		"sub-region-code": "011"
+	},
+	{
+		"name": "Gibraltar",
+		"alpha-2": "GI",
+		"alpha-3": "GIB",
+		"country-code": "292",
+		"iso_3166-2": "ISO 3166-2:GI",
+		"region": "Europe",
+		"sub-region": "Southern Europe",
+		"region-code": "150",
+		"sub-region-code": "039"
+	},
+	{
+		"name": "Greece",
+		"alpha-2": "GR",
+		"alpha-3": "GRC",
+		"country-code": "300",
+		"iso_3166-2": "ISO 3166-2:GR",
+		"region": "Europe",
+		"sub-region": "Southern Europe",
+		"region-code": "150",
+		"sub-region-code": "039"
+	},
+	{
+		"name": "Greenland",
+		"alpha-2": "GL",
+		"alpha-3": "GRL",
+		"country-code": "304",
+		"iso_3166-2": "ISO 3166-2:GL",
+		"region": "Americas",
+		"sub-region": "Northern America",
+		"region-code": "019",
+		"sub-region-code": "021"
+	},
+	{
+		"name": "Grenada",
+		"alpha-2": "GD",
+		"alpha-3": "GRD",
+		"country-code": "308",
+		"iso_3166-2": "ISO 3166-2:GD",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Guadeloupe",
+		"alpha-2": "GP",
+		"alpha-3": "GLP",
+		"country-code": "312",
+		"iso_3166-2": "ISO 3166-2:GP",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Guam",
+		"alpha-2": "GU",
+		"alpha-3": "GUM",
+		"country-code": "316",
+		"iso_3166-2": "ISO 3166-2:GU",
+		"region": "Oceania",
+		"sub-region": "Micronesia",
+		"region-code": "009",
+		"sub-region-code": "057"
+	},
+	{
+		"name": "Guatemala",
+		"alpha-2": "GT",
+		"alpha-3": "GTM",
+		"country-code": "320",
+		"iso_3166-2": "ISO 3166-2:GT",
+		"region": "Americas",
+		"sub-region": "Central America",
+		"region-code": "019",
+		"sub-region-code": "013"
+	},
+	{
+		"name": "Guernsey",
+		"alpha-2": "GG",
+		"alpha-3": "GGY",
+		"country-code": "831",
+		"iso_3166-2": "ISO 3166-2:GG",
+		"region": "Europe",
+		"sub-region": "Northern Europe",
+		"region-code": "150",
+		"sub-region-code": "154"
+	},
+	{
+		"name": "Guinea",
+		"alpha-2": "GN",
+		"alpha-3": "GIN",
+		"country-code": "324",
+		"iso_3166-2": "ISO 3166-2:GN",
+		"region": "Africa",
+		"sub-region": "Western Africa",
+		"region-code": "002",
+		"sub-region-code": "011"
+	},
+	{
+		"name": "Guinea-Bissau",
+		"alpha-2": "GW",
+		"alpha-3": "GNB",
+		"country-code": "624",
+		"iso_3166-2": "ISO 3166-2:GW",
+		"region": "Africa",
+		"sub-region": "Western Africa",
+		"region-code": "002",
+		"sub-region-code": "011"
+	},
+	{
+		"name": "Guyana",
+		"alpha-2": "GY",
+		"alpha-3": "GUY",
+		"country-code": "328",
+		"iso_3166-2": "ISO 3166-2:GY",
+		"region": "Americas",
+		"sub-region": "South America",
+		"region-code": "019",
+		"sub-region-code": "005"
+	},
+	{
+		"name": "Haiti",
+		"alpha-2": "HT",
+		"alpha-3": "HTI",
+		"country-code": "332",
+		"iso_3166-2": "ISO 3166-2:HT",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Heard Island and McDonald Islands",
+		"alpha-2": "HM",
+		"alpha-3": "HMD",
+		"country-code": "334",
+		"iso_3166-2": "ISO 3166-2:HM",
+		"sub-region-code": null,
+		"region-code": null,
+		"sub-region": null,
+		"region": null
+	},
+	{
+		"name": "Holy See",
+		"alpha-2": "VA",
+		"alpha-3": "VAT",
+		"country-code": "336",
+		"iso_3166-2": "ISO 3166-2:VA",
+		"region": "Europe",
+		"sub-region": "Southern Europe",
+		"region-code": "150",
+		"sub-region-code": "039"
+	},
+	{
+		"name": "Honduras",
+		"alpha-2": "HN",
+		"alpha-3": "HND",
+		"country-code": "340",
+		"iso_3166-2": "ISO 3166-2:HN",
+		"region": "Americas",
+		"sub-region": "Central America",
+		"region-code": "019",
+		"sub-region-code": "013"
+	},
+	{
+		"name": "Hong Kong",
+		"alpha-2": "HK",
+		"alpha-3": "HKG",
+		"country-code": "344",
+		"iso_3166-2": "ISO 3166-2:HK",
+		"region": "Asia",
+		"sub-region": "Eastern Asia",
+		"region-code": "142",
+		"sub-region-code": "030"
+	},
+	{
+		"name": "Hungary",
+		"alpha-2": "HU",
+		"alpha-3": "HUN",
+		"country-code": "348",
+		"iso_3166-2": "ISO 3166-2:HU",
+		"region": "Europe",
+		"sub-region": "Eastern Europe",
+		"region-code": "150",
+		"sub-region-code": "151"
+	},
+	{
+		"name": "Iceland",
+		"alpha-2": "IS",
+		"alpha-3": "ISL",
+		"country-code": "352",
+		"iso_3166-2": "ISO 3166-2:IS",
+		"region": "Europe",
+		"sub-region": "Northern Europe",
+		"region-code": "150",
+		"sub-region-code": "154"
+	},
+	{
+		"name": "India",
+		"alpha-2": "IN",
+		"alpha-3": "IND",
+		"country-code": "356",
+		"iso_3166-2": "ISO 3166-2:IN",
+		"region": "Asia",
+		"sub-region": "Southern Asia",
+		"region-code": "142",
+		"sub-region-code": "034"
+	},
+	{
+		"name": "Indonesia",
+		"alpha-2": "ID",
+		"alpha-3": "IDN",
+		"country-code": "360",
+		"iso_3166-2": "ISO 3166-2:ID",
+		"region": "Asia",
+		"sub-region": "South-Eastern Asia",
+		"region-code": "142",
+		"sub-region-code": "035"
+	},
+	{
+		"name": "Iran (Islamic Republic of)",
+		"alpha-2": "IR",
+		"alpha-3": "IRN",
+		"country-code": "364",
+		"iso_3166-2": "ISO 3166-2:IR",
+		"region": "Asia",
+		"sub-region": "Southern Asia",
+		"region-code": "142",
+		"sub-region-code": "034"
+	},
+	{
+		"name": "Iraq",
+		"alpha-2": "IQ",
+		"alpha-3": "IRQ",
+		"country-code": "368",
+		"iso_3166-2": "ISO 3166-2:IQ",
+		"region": "Asia",
+		"sub-region": "Western Asia",
+		"region-code": "142",
+		"sub-region-code": "145"
+	},
+	{
+		"name": "Ireland",
+		"alpha-2": "IE",
+		"alpha-3": "IRL",
+		"country-code": "372",
+		"iso_3166-2": "ISO 3166-2:IE",
+		"region": "Europe",
+		"sub-region": "Northern Europe",
+		"region-code": "150",
+		"sub-region-code": "154"
+	},
+	{
+		"name": "Isle of Man",
+		"alpha-2": "IM",
+		"alpha-3": "IMN",
+		"country-code": "833",
+		"iso_3166-2": "ISO 3166-2:IM",
+		"region": "Europe",
+		"sub-region": "Northern Europe",
+		"region-code": "150",
+		"sub-region-code": "154"
+	},
+	{
+		"name": "Israel",
+		"alpha-2": "IL",
+		"alpha-3": "ISR",
+		"country-code": "376",
+		"iso_3166-2": "ISO 3166-2:IL",
+		"region": "Asia",
+		"sub-region": "Western Asia",
+		"region-code": "142",
+		"sub-region-code": "145"
+	},
+	{
+		"name": "Italy",
+		"alpha-2": "IT",
+		"alpha-3": "ITA",
+		"country-code": "380",
+		"iso_3166-2": "ISO 3166-2:IT",
+		"region": "Europe",
+		"sub-region": "Southern Europe",
+		"region-code": "150",
+		"sub-region-code": "039"
+	},
+	{
+		"name": "Jamaica",
+		"alpha-2": "JM",
+		"alpha-3": "JAM",
+		"country-code": "388",
+		"iso_3166-2": "ISO 3166-2:JM",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Japan",
+		"alpha-2": "JP",
+		"alpha-3": "JPN",
+		"country-code": "392",
+		"iso_3166-2": "ISO 3166-2:JP",
+		"region": "Asia",
+		"sub-region": "Eastern Asia",
+		"region-code": "142",
+		"sub-region-code": "030"
+	},
+	{
+		"name": "Jersey",
+		"alpha-2": "JE",
+		"alpha-3": "JEY",
+		"country-code": "832",
+		"iso_3166-2": "ISO 3166-2:JE",
+		"region": "Europe",
+		"sub-region": "Northern Europe",
+		"region-code": "150",
+		"sub-region-code": "154"
+	},
+	{
+		"name": "Jordan",
+		"alpha-2": "JO",
+		"alpha-3": "JOR",
+		"country-code": "400",
+		"iso_3166-2": "ISO 3166-2:JO",
+		"region": "Asia",
+		"sub-region": "Western Asia",
+		"region-code": "142",
+		"sub-region-code": "145"
+	},
+	{
+		"name": "Kazakhstan",
+		"alpha-2": "KZ",
+		"alpha-3": "KAZ",
+		"country-code": "398",
+		"iso_3166-2": "ISO 3166-2:KZ",
+		"region": "Asia",
+		"sub-region": "Central Asia",
+		"region-code": "142",
+		"sub-region-code": "143"
+	},
+	{
+		"name": "Kenya",
+		"alpha-2": "KE",
+		"alpha-3": "KEN",
+		"country-code": "404",
+		"iso_3166-2": "ISO 3166-2:KE",
+		"region": "Africa",
+		"sub-region": "Eastern Africa",
+		"region-code": "002",
+		"sub-region-code": "014"
+	},
+	{
+		"name": "Kiribati",
+		"alpha-2": "KI",
+		"alpha-3": "KIR",
+		"country-code": "296",
+		"iso_3166-2": "ISO 3166-2:KI",
+		"region": "Oceania",
+		"sub-region": "Micronesia",
+		"region-code": "009",
+		"sub-region-code": "057"
+	},
+	{
+		"name": "Korea (Democratic People's Republic of)",
+		"alpha-2": "KP",
+		"alpha-3": "PRK",
+		"country-code": "408",
+		"iso_3166-2": "ISO 3166-2:KP",
+		"region": "Asia",
+		"sub-region": "Eastern Asia",
+		"region-code": "142",
+		"sub-region-code": "030"
+	},
+	{
+		"name": "Korea (Republic of)",
+		"alpha-2": "KR",
+		"alpha-3": "KOR",
+		"country-code": "410",
+		"iso_3166-2": "ISO 3166-2:KR",
+		"region": "Asia",
+		"sub-region": "Eastern Asia",
+		"region-code": "142",
+		"sub-region-code": "030"
+	},
+	{
+		"name": "Kuwait",
+		"alpha-2": "KW",
+		"alpha-3": "KWT",
+		"country-code": "414",
+		"iso_3166-2": "ISO 3166-2:KW",
+		"region": "Asia",
+		"sub-region": "Western Asia",
+		"region-code": "142",
+		"sub-region-code": "145"
+	},
+	{
+		"name": "Kyrgyzstan",
+		"alpha-2": "KG",
+		"alpha-3": "KGZ",
+		"country-code": "417",
+		"iso_3166-2": "ISO 3166-2:KG",
+		"region": "Asia",
+		"sub-region": "Central Asia",
+		"region-code": "142",
+		"sub-region-code": "143"
+	},
+	{
+		"name": "Lao People's Democratic Republic",
+		"alpha-2": "LA",
+		"alpha-3": "LAO",
+		"country-code": "418",
+		"iso_3166-2": "ISO 3166-2:LA",
+		"region": "Asia",
+		"sub-region": "South-Eastern Asia",
+		"region-code": "142",
+		"sub-region-code": "035"
+	},
+	{
+		"name": "Latvia",
+		"alpha-2": "LV",
+		"alpha-3": "LVA",
+		"country-code": "428",
+		"iso_3166-2": "ISO 3166-2:LV",
+		"region": "Europe",
+		"sub-region": "Northern Europe",
+		"region-code": "150",
+		"sub-region-code": "154"
+	},
+	{
+		"name": "Lebanon",
+		"alpha-2": "LB",
+		"alpha-3": "LBN",
+		"country-code": "422",
+		"iso_3166-2": "ISO 3166-2:LB",
+		"region": "Asia",
+		"sub-region": "Western Asia",
+		"region-code": "142",
+		"sub-region-code": "145"
+	},
+	{
+		"name": "Lesotho",
+		"alpha-2": "LS",
+		"alpha-3": "LSO",
+		"country-code": "426",
+		"iso_3166-2": "ISO 3166-2:LS",
+		"region": "Africa",
+		"sub-region": "Southern Africa",
+		"region-code": "002",
+		"sub-region-code": "018"
+	},
+	{
+		"name": "Liberia",
+		"alpha-2": "LR",
+		"alpha-3": "LBR",
+		"country-code": "430",
+		"iso_3166-2": "ISO 3166-2:LR",
+		"region": "Africa",
+		"sub-region": "Western Africa",
+		"region-code": "002",
+		"sub-region-code": "011"
+	},
+	{
+		"name": "Libya",
+		"alpha-2": "LY",
+		"alpha-3": "LBY",
+		"country-code": "434",
+		"iso_3166-2": "ISO 3166-2:LY",
+		"region": "Africa",
+		"sub-region": "Northern Africa",
+		"region-code": "002",
+		"sub-region-code": "015"
+	},
+	{
+		"name": "Liechtenstein",
+		"alpha-2": "LI",
+		"alpha-3": "LIE",
+		"country-code": "438",
+		"iso_3166-2": "ISO 3166-2:LI",
+		"region": "Europe",
+		"sub-region": "Western Europe",
+		"region-code": "150",
+		"sub-region-code": "155"
+	},
+	{
+		"name": "Lithuania",
+		"alpha-2": "LT",
+		"alpha-3": "LTU",
+		"country-code": "440",
+		"iso_3166-2": "ISO 3166-2:LT",
+		"region": "Europe",
+		"sub-region": "Northern Europe",
+		"region-code": "150",
+		"sub-region-code": "154"
+	},
+	{
+		"name": "Luxembourg",
+		"alpha-2": "LU",
+		"alpha-3": "LUX",
+		"country-code": "442",
+		"iso_3166-2": "ISO 3166-2:LU",
+		"region": "Europe",
+		"sub-region": "Western Europe",
+		"region-code": "150",
+		"sub-region-code": "155"
+	},
+	{
+		"name": "Macao",
+		"alpha-2": "MO",
+		"alpha-3": "MAC",
+		"country-code": "446",
+		"iso_3166-2": "ISO 3166-2:MO",
+		"region": "Asia",
+		"sub-region": "Eastern Asia",
+		"region-code": "142",
+		"sub-region-code": "030"
+	},
+	{
+		"name": "Macedonia (the former Yugoslav Republic of)",
+		"alpha-2": "MK",
+		"alpha-3": "MKD",
+		"country-code": "807",
+		"iso_3166-2": "ISO 3166-2:MK",
+		"region": "Europe",
+		"sub-region": "Southern Europe",
+		"region-code": "150",
+		"sub-region-code": "039"
+	},
+	{
+		"name": "Madagascar",
+		"alpha-2": "MG",
+		"alpha-3": "MDG",
+		"country-code": "450",
+		"iso_3166-2": "ISO 3166-2:MG",
+		"region": "Africa",
+		"sub-region": "Eastern Africa",
+		"region-code": "002",
+		"sub-region-code": "014"
+	},
+	{
+		"name": "Malawi",
+		"alpha-2": "MW",
+		"alpha-3": "MWI",
+		"country-code": "454",
+		"iso_3166-2": "ISO 3166-2:MW",
+		"region": "Africa",
+		"sub-region": "Eastern Africa",
+		"region-code": "002",
+		"sub-region-code": "014"
+	},
+	{
+		"name": "Malaysia",
+		"alpha-2": "MY",
+		"alpha-3": "MYS",
+		"country-code": "458",
+		"iso_3166-2": "ISO 3166-2:MY",
+		"region": "Asia",
+		"sub-region": "South-Eastern Asia",
+		"region-code": "142",
+		"sub-region-code": "035"
+	},
+	{
+		"name": "Maldives",
+		"alpha-2": "MV",
+		"alpha-3": "MDV",
+		"country-code": "462",
+		"iso_3166-2": "ISO 3166-2:MV",
+		"region": "Asia",
+		"sub-region": "Southern Asia",
+		"region-code": "142",
+		"sub-region-code": "034"
+	},
+	{
+		"name": "Mali",
+		"alpha-2": "ML",
+		"alpha-3": "MLI",
+		"country-code": "466",
+		"iso_3166-2": "ISO 3166-2:ML",
+		"region": "Africa",
+		"sub-region": "Western Africa",
+		"region-code": "002",
+		"sub-region-code": "011"
+	},
+	{
+		"name": "Malta",
+		"alpha-2": "MT",
+		"alpha-3": "MLT",
+		"country-code": "470",
+		"iso_3166-2": "ISO 3166-2:MT",
+		"region": "Europe",
+		"sub-region": "Southern Europe",
+		"region-code": "150",
+		"sub-region-code": "039"
+	},
+	{
+		"name": "Marshall Islands",
+		"alpha-2": "MH",
+		"alpha-3": "MHL",
+		"country-code": "584",
+		"iso_3166-2": "ISO 3166-2:MH",
+		"region": "Oceania",
+		"sub-region": "Micronesia",
+		"region-code": "009",
+		"sub-region-code": "057"
+	},
+	{
+		"name": "Martinique",
+		"alpha-2": "MQ",
+		"alpha-3": "MTQ",
+		"country-code": "474",
+		"iso_3166-2": "ISO 3166-2:MQ",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Mauritania",
+		"alpha-2": "MR",
+		"alpha-3": "MRT",
+		"country-code": "478",
+		"iso_3166-2": "ISO 3166-2:MR",
+		"region": "Africa",
+		"sub-region": "Western Africa",
+		"region-code": "002",
+		"sub-region-code": "011"
+	},
+	{
+		"name": "Mauritius",
+		"alpha-2": "MU",
+		"alpha-3": "MUS",
+		"country-code": "480",
+		"iso_3166-2": "ISO 3166-2:MU",
+		"region": "Africa",
+		"sub-region": "Eastern Africa",
+		"region-code": "002",
+		"sub-region-code": "014"
+	},
+	{
+		"name": "Mayotte",
+		"alpha-2": "YT",
+		"alpha-3": "MYT",
+		"country-code": "175",
+		"iso_3166-2": "ISO 3166-2:YT",
+		"region": "Africa",
+		"sub-region": "Eastern Africa",
+		"region-code": "002",
+		"sub-region-code": "014"
+	},
+	{
+		"name": "Mexico",
+		"alpha-2": "MX",
+		"alpha-3": "MEX",
+		"country-code": "484",
+		"iso_3166-2": "ISO 3166-2:MX",
+		"region": "Americas",
+		"sub-region": "Central America",
+		"region-code": "019",
+		"sub-region-code": "013"
+	},
+	{
+		"name": "Micronesia (Federated States of)",
+		"alpha-2": "FM",
+		"alpha-3": "FSM",
+		"country-code": "583",
+		"iso_3166-2": "ISO 3166-2:FM",
+		"region": "Oceania",
+		"sub-region": "Micronesia",
+		"region-code": "009",
+		"sub-region-code": "057"
+	},
+	{
+		"name": "Moldova (Republic of)",
+		"alpha-2": "MD",
+		"alpha-3": "MDA",
+		"country-code": "498",
+		"iso_3166-2": "ISO 3166-2:MD",
+		"region": "Europe",
+		"sub-region": "Eastern Europe",
+		"region-code": "150",
+		"sub-region-code": "151"
+	},
+	{
+		"name": "Monaco",
+		"alpha-2": "MC",
+		"alpha-3": "MCO",
+		"country-code": "492",
+		"iso_3166-2": "ISO 3166-2:MC",
+		"region": "Europe",
+		"sub-region": "Western Europe",
+		"region-code": "150",
+		"sub-region-code": "155"
+	},
+	{
+		"name": "Mongolia",
+		"alpha-2": "MN",
+		"alpha-3": "MNG",
+		"country-code": "496",
+		"iso_3166-2": "ISO 3166-2:MN",
+		"region": "Asia",
+		"sub-region": "Eastern Asia",
+		"region-code": "142",
+		"sub-region-code": "030"
+	},
+	{
+		"name": "Montenegro",
+		"alpha-2": "ME",
+		"alpha-3": "MNE",
+		"country-code": "499",
+		"iso_3166-2": "ISO 3166-2:ME",
+		"region": "Europe",
+		"sub-region": "Southern Europe",
+		"region-code": "150",
+		"sub-region-code": "039"
+	},
+	{
+		"name": "Montserrat",
+		"alpha-2": "MS",
+		"alpha-3": "MSR",
+		"country-code": "500",
+		"iso_3166-2": "ISO 3166-2:MS",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Morocco",
+		"alpha-2": "MA",
+		"alpha-3": "MAR",
+		"country-code": "504",
+		"iso_3166-2": "ISO 3166-2:MA",
+		"region": "Africa",
+		"sub-region": "Northern Africa",
+		"region-code": "002",
+		"sub-region-code": "015"
+	},
+	{
+		"name": "Mozambique",
+		"alpha-2": "MZ",
+		"alpha-3": "MOZ",
+		"country-code": "508",
+		"iso_3166-2": "ISO 3166-2:MZ",
+		"region": "Africa",
+		"sub-region": "Eastern Africa",
+		"region-code": "002",
+		"sub-region-code": "014"
+	},
+	{
+		"name": "Myanmar",
+		"alpha-2": "MM",
+		"alpha-3": "MMR",
+		"country-code": "104",
+		"iso_3166-2": "ISO 3166-2:MM",
+		"region": "Asia",
+		"sub-region": "South-Eastern Asia",
+		"region-code": "142",
+		"sub-region-code": "035"
+	},
+	{
+		"name": "Namibia",
+		"alpha-2": "NA",
+		"alpha-3": "NAM",
+		"country-code": "516",
+		"iso_3166-2": "ISO 3166-2:NA",
+		"region": "Africa",
+		"sub-region": "Southern Africa",
+		"region-code": "002",
+		"sub-region-code": "018"
+	},
+	{
+		"name": "Nauru",
+		"alpha-2": "NR",
+		"alpha-3": "NRU",
+		"country-code": "520",
+		"iso_3166-2": "ISO 3166-2:NR",
+		"region": "Oceania",
+		"sub-region": "Micronesia",
+		"region-code": "009",
+		"sub-region-code": "057"
+	},
+	{
+		"name": "Nepal",
+		"alpha-2": "NP",
+		"alpha-3": "NPL",
+		"country-code": "524",
+		"iso_3166-2": "ISO 3166-2:NP",
+		"region": "Asia",
+		"sub-region": "Southern Asia",
+		"region-code": "142",
+		"sub-region-code": "034"
+	},
+	{
+		"name": "Netherlands",
+		"alpha-2": "NL",
+		"alpha-3": "NLD",
+		"country-code": "528",
+		"iso_3166-2": "ISO 3166-2:NL",
+		"region": "Europe",
+		"sub-region": "Western Europe",
+		"region-code": "150",
+		"sub-region-code": "155"
+	},
+	{
+		"name": "New Caledonia",
+		"alpha-2": "NC",
+		"alpha-3": "NCL",
+		"country-code": "540",
+		"iso_3166-2": "ISO 3166-2:NC",
+		"region": "Oceania",
+		"sub-region": "Melanesia",
+		"region-code": "009",
+		"sub-region-code": "054"
+	},
+	{
+		"name": "New Zealand",
+		"alpha-2": "NZ",
+		"alpha-3": "NZL",
+		"country-code": "554",
+		"iso_3166-2": "ISO 3166-2:NZ",
+		"region": "Oceania",
+		"sub-region": "Australia and New Zealand",
+		"region-code": "009",
+		"sub-region-code": "053"
+	},
+	{
+		"name": "Nicaragua",
+		"alpha-2": "NI",
+		"alpha-3": "NIC",
+		"country-code": "558",
+		"iso_3166-2": "ISO 3166-2:NI",
+		"region": "Americas",
+		"sub-region": "Central America",
+		"region-code": "019",
+		"sub-region-code": "013"
+	},
+	{
+		"name": "Niger",
+		"alpha-2": "NE",
+		"alpha-3": "NER",
+		"country-code": "562",
+		"iso_3166-2": "ISO 3166-2:NE",
+		"region": "Africa",
+		"sub-region": "Western Africa",
+		"region-code": "002",
+		"sub-region-code": "011"
+	},
+	{
+		"name": "Nigeria",
+		"alpha-2": "NG",
+		"alpha-3": "NGA",
+		"country-code": "566",
+		"iso_3166-2": "ISO 3166-2:NG",
+		"region": "Africa",
+		"sub-region": "Western Africa",
+		"region-code": "002",
+		"sub-region-code": "011"
+	},
+	{
+		"name": "Niue",
+		"alpha-2": "NU",
+		"alpha-3": "NIU",
+		"country-code": "570",
+		"iso_3166-2": "ISO 3166-2:NU",
+		"region": "Oceania",
+		"sub-region": "Polynesia",
+		"region-code": "009",
+		"sub-region-code": "061"
+	},
+	{
+		"name": "Norfolk Island",
+		"alpha-2": "NF",
+		"alpha-3": "NFK",
+		"country-code": "574",
+		"iso_3166-2": "ISO 3166-2:NF",
+		"region": "Oceania",
+		"sub-region": "Australia and New Zealand",
+		"region-code": "009",
+		"sub-region-code": "053"
+	},
+	{
+		"name": "Northern Mariana Islands",
+		"alpha-2": "MP",
+		"alpha-3": "MNP",
+		"country-code": "580",
+		"iso_3166-2": "ISO 3166-2:MP",
+		"region": "Oceania",
+		"sub-region": "Micronesia",
+		"region-code": "009",
+		"sub-region-code": "057"
+	},
+	{
+		"name": "Norway",
+		"alpha-2": "NO",
+		"alpha-3": "NOR",
+		"country-code": "578",
+		"iso_3166-2": "ISO 3166-2:NO",
+		"region": "Europe",
+		"sub-region": "Northern Europe",
+		"region-code": "150",
+		"sub-region-code": "154"
+	},
+	{
+		"name": "Oman",
+		"alpha-2": "OM",
+		"alpha-3": "OMN",
+		"country-code": "512",
+		"iso_3166-2": "ISO 3166-2:OM",
+		"region": "Asia",
+		"sub-region": "Western Asia",
+		"region-code": "142",
+		"sub-region-code": "145"
+	},
+	{
+		"name": "Pakistan",
+		"alpha-2": "PK",
+		"alpha-3": "PAK",
+		"country-code": "586",
+		"iso_3166-2": "ISO 3166-2:PK",
+		"region": "Asia",
+		"sub-region": "Southern Asia",
+		"region-code": "142",
+		"sub-region-code": "034"
+	},
+	{
+		"name": "Palau",
+		"alpha-2": "PW",
+		"alpha-3": "PLW",
+		"country-code": "585",
+		"iso_3166-2": "ISO 3166-2:PW",
+		"region": "Oceania",
+		"sub-region": "Micronesia",
+		"region-code": "009",
+		"sub-region-code": "057"
+	},
+	{
+		"name": "Palestine, State of",
+		"alpha-2": "PS",
+		"alpha-3": "PSE",
+		"country-code": "275",
+		"iso_3166-2": "ISO 3166-2:PS",
+		"region": "Asia",
+		"sub-region": "Western Asia",
+		"region-code": "142",
+		"sub-region-code": "145"
+	},
+	{
+		"name": "Panama",
+		"alpha-2": "PA",
+		"alpha-3": "PAN",
+		"country-code": "591",
+		"iso_3166-2": "ISO 3166-2:PA",
+		"region": "Americas",
+		"sub-region": "Central America",
+		"region-code": "019",
+		"sub-region-code": "013"
+	},
+	{
+		"name": "Papua New Guinea",
+		"alpha-2": "PG",
+		"alpha-3": "PNG",
+		"country-code": "598",
+		"iso_3166-2": "ISO 3166-2:PG",
+		"region": "Oceania",
+		"sub-region": "Melanesia",
+		"region-code": "009",
+		"sub-region-code": "054"
+	},
+	{
+		"name": "Paraguay",
+		"alpha-2": "PY",
+		"alpha-3": "PRY",
+		"country-code": "600",
+		"iso_3166-2": "ISO 3166-2:PY",
+		"region": "Americas",
+		"sub-region": "South America",
+		"region-code": "019",
+		"sub-region-code": "005"
+	},
+	{
+		"name": "Peru",
+		"alpha-2": "PE",
+		"alpha-3": "PER",
+		"country-code": "604",
+		"iso_3166-2": "ISO 3166-2:PE",
+		"region": "Americas",
+		"sub-region": "South America",
+		"region-code": "019",
+		"sub-region-code": "005"
+	},
+	{
+		"name": "Philippines",
+		"alpha-2": "PH",
+		"alpha-3": "PHL",
+		"country-code": "608",
+		"iso_3166-2": "ISO 3166-2:PH",
+		"region": "Asia",
+		"sub-region": "South-Eastern Asia",
+		"region-code": "142",
+		"sub-region-code": "035"
+	},
+	{
+		"name": "Pitcairn",
+		"alpha-2": "PN",
+		"alpha-3": "PCN",
+		"country-code": "612",
+		"iso_3166-2": "ISO 3166-2:PN",
+		"region": "Oceania",
+		"sub-region": "Polynesia",
+		"region-code": "009",
+		"sub-region-code": "061"
+	},
+	{
+		"name": "Poland",
+		"alpha-2": "PL",
+		"alpha-3": "POL",
+		"country-code": "616",
+		"iso_3166-2": "ISO 3166-2:PL",
+		"region": "Europe",
+		"sub-region": "Eastern Europe",
+		"region-code": "150",
+		"sub-region-code": "151"
+	},
+	{
+		"name": "Portugal",
+		"alpha-2": "PT",
+		"alpha-3": "PRT",
+		"country-code": "620",
+		"iso_3166-2": "ISO 3166-2:PT",
+		"region": "Europe",
+		"sub-region": "Southern Europe",
+		"region-code": "150",
+		"sub-region-code": "039"
+	},
+	{
+		"name": "Puerto Rico",
+		"alpha-2": "PR",
+		"alpha-3": "PRI",
+		"country-code": "630",
+		"iso_3166-2": "ISO 3166-2:PR",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Qatar",
+		"alpha-2": "QA",
+		"alpha-3": "QAT",
+		"country-code": "634",
+		"iso_3166-2": "ISO 3166-2:QA",
+		"region": "Asia",
+		"sub-region": "Western Asia",
+		"region-code": "142",
+		"sub-region-code": "145"
+	},
+	{
+		"name": "Réunion",
+		"alpha-2": "RE",
+		"alpha-3": "REU",
+		"country-code": "638",
+		"iso_3166-2": "ISO 3166-2:RE",
+		"region": "Africa",
+		"sub-region": "Eastern Africa",
+		"region-code": "002",
+		"sub-region-code": "014"
+	},
+	{
+		"name": "Romania",
+		"alpha-2": "RO",
+		"alpha-3": "ROU",
+		"country-code": "642",
+		"iso_3166-2": "ISO 3166-2:RO",
+		"region": "Europe",
+		"sub-region": "Eastern Europe",
+		"region-code": "150",
+		"sub-region-code": "151"
+	},
+	{
+		"name": "Russian Federation",
+		"alpha-2": "RU",
+		"alpha-3": "RUS",
+		"country-code": "643",
+		"iso_3166-2": "ISO 3166-2:RU",
+		"region": "Europe",
+		"sub-region": "Eastern Europe",
+		"region-code": "150",
+		"sub-region-code": "151"
+	},
+	{
+		"name": "Rwanda",
+		"alpha-2": "RW",
+		"alpha-3": "RWA",
+		"country-code": "646",
+		"iso_3166-2": "ISO 3166-2:RW",
+		"region": "Africa",
+		"sub-region": "Eastern Africa",
+		"region-code": "002",
+		"sub-region-code": "014"
+	},
+	{
+		"name": "Saint Barthélemy",
+		"alpha-2": "BL",
+		"alpha-3": "BLM",
+		"country-code": "652",
+		"iso_3166-2": "ISO 3166-2:BL",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Saint Helena, Ascension and Tristan da Cunha",
+		"alpha-2": "SH",
+		"alpha-3": "SHN",
+		"country-code": "654",
+		"iso_3166-2": "ISO 3166-2:SH",
+		"region": "Africa",
+		"sub-region": "Western Africa",
+		"region-code": "002",
+		"sub-region-code": "011"
+	},
+	{
+		"name": "Saint Kitts and Nevis",
+		"alpha-2": "KN",
+		"alpha-3": "KNA",
+		"country-code": "659",
+		"iso_3166-2": "ISO 3166-2:KN",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Saint Lucia",
+		"alpha-2": "LC",
+		"alpha-3": "LCA",
+		"country-code": "662",
+		"iso_3166-2": "ISO 3166-2:LC",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Saint Martin (French part)",
+		"alpha-2": "MF",
+		"alpha-3": "MAF",
+		"country-code": "663",
+		"iso_3166-2": "ISO 3166-2:MF",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Saint Pierre and Miquelon",
+		"alpha-2": "PM",
+		"alpha-3": "SPM",
+		"country-code": "666",
+		"iso_3166-2": "ISO 3166-2:PM",
+		"region": "Americas",
+		"sub-region": "Northern America",
+		"region-code": "019",
+		"sub-region-code": "021"
+	},
+	{
+		"name": "Saint Vincent and the Grenadines",
+		"alpha-2": "VC",
+		"alpha-3": "VCT",
+		"country-code": "670",
+		"iso_3166-2": "ISO 3166-2:VC",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Samoa",
+		"alpha-2": "WS",
+		"alpha-3": "WSM",
+		"country-code": "882",
+		"iso_3166-2": "ISO 3166-2:WS",
+		"region": "Oceania",
+		"sub-region": "Polynesia",
+		"region-code": "009",
+		"sub-region-code": "061"
+	},
+	{
+		"name": "San Marino",
+		"alpha-2": "SM",
+		"alpha-3": "SMR",
+		"country-code": "674",
+		"iso_3166-2": "ISO 3166-2:SM",
+		"region": "Europe",
+		"sub-region": "Southern Europe",
+		"region-code": "150",
+		"sub-region-code": "039"
+	},
+	{
+		"name": "Sao Tome and Principe",
+		"alpha-2": "ST",
+		"alpha-3": "STP",
+		"country-code": "678",
+		"iso_3166-2": "ISO 3166-2:ST",
+		"region": "Africa",
+		"sub-region": "Middle Africa",
+		"region-code": "002",
+		"sub-region-code": "017"
+	},
+	{
+		"name": "Saudi Arabia",
+		"alpha-2": "SA",
+		"alpha-3": "SAU",
+		"country-code": "682",
+		"iso_3166-2": "ISO 3166-2:SA",
+		"region": "Asia",
+		"sub-region": "Western Asia",
+		"region-code": "142",
+		"sub-region-code": "145"
+	},
+	{
+		"name": "Senegal",
+		"alpha-2": "SN",
+		"alpha-3": "SEN",
+		"country-code": "686",
+		"iso_3166-2": "ISO 3166-2:SN",
+		"region": "Africa",
+		"sub-region": "Western Africa",
+		"region-code": "002",
+		"sub-region-code": "011"
+	},
+	{
+		"name": "Serbia",
+		"alpha-2": "RS",
+		"alpha-3": "SRB",
+		"country-code": "688",
+		"iso_3166-2": "ISO 3166-2:RS",
+		"region": "Europe",
+		"sub-region": "Southern Europe",
+		"region-code": "150",
+		"sub-region-code": "039"
+	},
+	{
+		"name": "Seychelles",
+		"alpha-2": "SC",
+		"alpha-3": "SYC",
+		"country-code": "690",
+		"iso_3166-2": "ISO 3166-2:SC",
+		"region": "Africa",
+		"sub-region": "Eastern Africa",
+		"region-code": "002",
+		"sub-region-code": "014"
+	},
+	{
+		"name": "Sierra Leone",
+		"alpha-2": "SL",
+		"alpha-3": "SLE",
+		"country-code": "694",
+		"iso_3166-2": "ISO 3166-2:SL",
+		"region": "Africa",
+		"sub-region": "Western Africa",
+		"region-code": "002",
+		"sub-region-code": "011"
+	},
+	{
+		"name": "Singapore",
+		"alpha-2": "SG",
+		"alpha-3": "SGP",
+		"country-code": "702",
+		"iso_3166-2": "ISO 3166-2:SG",
+		"region": "Asia",
+		"sub-region": "South-Eastern Asia",
+		"region-code": "142",
+		"sub-region-code": "035"
+	},
+	{
+		"name": "Sint Maarten (Dutch part)",
+		"alpha-2": "SX",
+		"alpha-3": "SXM",
+		"country-code": "534",
+		"iso_3166-2": "ISO 3166-2:SX",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Slovakia",
+		"alpha-2": "SK",
+		"alpha-3": "SVK",
+		"country-code": "703",
+		"iso_3166-2": "ISO 3166-2:SK",
+		"region": "Europe",
+		"sub-region": "Eastern Europe",
+		"region-code": "150",
+		"sub-region-code": "151"
+	},
+	{
+		"name": "Slovenia",
+		"alpha-2": "SI",
+		"alpha-3": "SVN",
+		"country-code": "705",
+		"iso_3166-2": "ISO 3166-2:SI",
+		"region": "Europe",
+		"sub-region": "Southern Europe",
+		"region-code": "150",
+		"sub-region-code": "039"
+	},
+	{
+		"name": "Solomon Islands",
+		"alpha-2": "SB",
+		"alpha-3": "SLB",
+		"country-code": "090",
+		"iso_3166-2": "ISO 3166-2:SB",
+		"region": "Oceania",
+		"sub-region": "Melanesia",
+		"region-code": "009",
+		"sub-region-code": "054"
+	},
+	{
+		"name": "Somalia",
+		"alpha-2": "SO",
+		"alpha-3": "SOM",
+		"country-code": "706",
+		"iso_3166-2": "ISO 3166-2:SO",
+		"region": "Africa",
+		"sub-region": "Eastern Africa",
+		"region-code": "002",
+		"sub-region-code": "014"
+	},
+	{
+		"name": "South Africa",
+		"alpha-2": "ZA",
+		"alpha-3": "ZAF",
+		"country-code": "710",
+		"iso_3166-2": "ISO 3166-2:ZA",
+		"region": "Africa",
+		"sub-region": "Southern Africa",
+		"region-code": "002",
+		"sub-region-code": "018"
+	},
+	{
+		"name": "South Georgia and the South Sandwich Islands",
+		"alpha-2": "GS",
+		"alpha-3": "SGS",
+		"country-code": "239",
+		"iso_3166-2": "ISO 3166-2:GS",
+		"sub-region-code": null,
+		"region-code": null,
+		"sub-region": null,
+		"region": null
+	},
+	{
+		"name": "South Sudan",
+		"alpha-2": "SS",
+		"alpha-3": "SSD",
+		"country-code": "728",
+		"iso_3166-2": "ISO 3166-2:SS",
+		"region": "Africa",
+		"sub-region": "Eastern Africa",
+		"region-code": "002",
+		"sub-region-code": "014"
+	},
+	{
+		"name": "Spain",
+		"alpha-2": "ES",
+		"alpha-3": "ESP",
+		"country-code": "724",
+		"iso_3166-2": "ISO 3166-2:ES",
+		"region": "Europe",
+		"sub-region": "Southern Europe",
+		"region-code": "150",
+		"sub-region-code": "039"
+	},
+	{
+		"name": "Sri Lanka",
+		"alpha-2": "LK",
+		"alpha-3": "LKA",
+		"country-code": "144",
+		"iso_3166-2": "ISO 3166-2:LK",
+		"region": "Asia",
+		"sub-region": "Southern Asia",
+		"region-code": "142",
+		"sub-region-code": "034"
+	},
+	{
+		"name": "Sudan",
+		"alpha-2": "SD",
+		"alpha-3": "SDN",
+		"country-code": "729",
+		"iso_3166-2": "ISO 3166-2:SD",
+		"region": "Africa",
+		"sub-region": "Northern Africa",
+		"region-code": "002",
+		"sub-region-code": "015"
+	},
+	{
+		"name": "Suriname",
+		"alpha-2": "SR",
+		"alpha-3": "SUR",
+		"country-code": "740",
+		"iso_3166-2": "ISO 3166-2:SR",
+		"region": "Americas",
+		"sub-region": "South America",
+		"region-code": "019",
+		"sub-region-code": "005"
+	},
+	{
+		"name": "Svalbard and Jan Mayen",
+		"alpha-2": "SJ",
+		"alpha-3": "SJM",
+		"country-code": "744",
+		"iso_3166-2": "ISO 3166-2:SJ",
+		"region": "Europe",
+		"sub-region": "Northern Europe",
+		"region-code": "150",
+		"sub-region-code": "154"
+	},
+	{
+		"name": "Swaziland",
+		"alpha-2": "SZ",
+		"alpha-3": "SWZ",
+		"country-code": "748",
+		"iso_3166-2": "ISO 3166-2:SZ",
+		"region": "Africa",
+		"sub-region": "Southern Africa",
+		"region-code": "002",
+		"sub-region-code": "018"
+	},
+	{
+		"name": "Sweden",
+		"alpha-2": "SE",
+		"alpha-3": "SWE",
+		"country-code": "752",
+		"iso_3166-2": "ISO 3166-2:SE",
+		"region": "Europe",
+		"sub-region": "Northern Europe",
+		"region-code": "150",
+		"sub-region-code": "154"
+	},
+	{
+		"name": "Switzerland",
+		"alpha-2": "CH",
+		"alpha-3": "CHE",
+		"country-code": "756",
+		"iso_3166-2": "ISO 3166-2:CH",
+		"region": "Europe",
+		"sub-region": "Western Europe",
+		"region-code": "150",
+		"sub-region-code": "155"
+	},
+	{
+		"name": "Syrian Arab Republic",
+		"alpha-2": "SY",
+		"alpha-3": "SYR",
+		"country-code": "760",
+		"iso_3166-2": "ISO 3166-2:SY",
+		"region": "Asia",
+		"sub-region": "Western Asia",
+		"region-code": "142",
+		"sub-region-code": "145"
+	},
+	{
+		"name": "Taiwan, Province of China",
+		"alpha-2": "TW",
+		"alpha-3": "TWN",
+		"country-code": "158",
+		"iso_3166-2": "ISO 3166-2:TW",
+		"region": "Asia",
+		"sub-region": "Eastern Asia",
+		"region-code": "142",
+		"sub-region-code": "030"
+	},
+	{
+		"name": "Tajikistan",
+		"alpha-2": "TJ",
+		"alpha-3": "TJK",
+		"country-code": "762",
+		"iso_3166-2": "ISO 3166-2:TJ",
+		"region": "Asia",
+		"sub-region": "Central Asia",
+		"region-code": "142",
+		"sub-region-code": "143"
+	},
+	{
+		"name": "Tanzania, United Republic of",
+		"alpha-2": "TZ",
+		"alpha-3": "TZA",
+		"country-code": "834",
+		"iso_3166-2": "ISO 3166-2:TZ",
+		"region": "Africa",
+		"sub-region": "Eastern Africa",
+		"region-code": "002",
+		"sub-region-code": "014"
+	},
+	{
+		"name": "Thailand",
+		"alpha-2": "TH",
+		"alpha-3": "THA",
+		"country-code": "764",
+		"iso_3166-2": "ISO 3166-2:TH",
+		"region": "Asia",
+		"sub-region": "South-Eastern Asia",
+		"region-code": "142",
+		"sub-region-code": "035"
+	},
+	{
+		"name": "Timor-Leste",
+		"alpha-2": "TL",
+		"alpha-3": "TLS",
+		"country-code": "626",
+		"iso_3166-2": "ISO 3166-2:TL",
+		"region": "Asia",
+		"sub-region": "South-Eastern Asia",
+		"region-code": "142",
+		"sub-region-code": "035"
+	},
+	{
+		"name": "Togo",
+		"alpha-2": "TG",
+		"alpha-3": "TGO",
+		"country-code": "768",
+		"iso_3166-2": "ISO 3166-2:TG",
+		"region": "Africa",
+		"sub-region": "Western Africa",
+		"region-code": "002",
+		"sub-region-code": "011"
+	},
+	{
+		"name": "Tokelau",
+		"alpha-2": "TK",
+		"alpha-3": "TKL",
+		"country-code": "772",
+		"iso_3166-2": "ISO 3166-2:TK",
+		"region": "Oceania",
+		"sub-region": "Polynesia",
+		"region-code": "009",
+		"sub-region-code": "061"
+	},
+	{
+		"name": "Tonga",
+		"alpha-2": "TO",
+		"alpha-3": "TON",
+		"country-code": "776",
+		"iso_3166-2": "ISO 3166-2:TO",
+		"region": "Oceania",
+		"sub-region": "Polynesia",
+		"region-code": "009",
+		"sub-region-code": "061"
+	},
+	{
+		"name": "Trinidad and Tobago",
+		"alpha-2": "TT",
+		"alpha-3": "TTO",
+		"country-code": "780",
+		"iso_3166-2": "ISO 3166-2:TT",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Tunisia",
+		"alpha-2": "TN",
+		"alpha-3": "TUN",
+		"country-code": "788",
+		"iso_3166-2": "ISO 3166-2:TN",
+		"region": "Africa",
+		"sub-region": "Northern Africa",
+		"region-code": "002",
+		"sub-region-code": "015"
+	},
+	{
+		"name": "Turkey",
+		"alpha-2": "TR",
+		"alpha-3": "TUR",
+		"country-code": "792",
+		"iso_3166-2": "ISO 3166-2:TR",
+		"region": "Asia",
+		"sub-region": "Western Asia",
+		"region-code": "142",
+		"sub-region-code": "145"
+	},
+	{
+		"name": "Turkmenistan",
+		"alpha-2": "TM",
+		"alpha-3": "TKM",
+		"country-code": "795",
+		"iso_3166-2": "ISO 3166-2:TM",
+		"region": "Asia",
+		"sub-region": "Central Asia",
+		"region-code": "142",
+		"sub-region-code": "143"
+	},
+	{
+		"name": "Turks and Caicos Islands",
+		"alpha-2": "TC",
+		"alpha-3": "TCA",
+		"country-code": "796",
+		"iso_3166-2": "ISO 3166-2:TC",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Tuvalu",
+		"alpha-2": "TV",
+		"alpha-3": "TUV",
+		"country-code": "798",
+		"iso_3166-2": "ISO 3166-2:TV",
+		"region": "Oceania",
+		"sub-region": "Polynesia",
+		"region-code": "009",
+		"sub-region-code": "061"
+	},
+	{
+		"name": "Uganda",
+		"alpha-2": "UG",
+		"alpha-3": "UGA",
+		"country-code": "800",
+		"iso_3166-2": "ISO 3166-2:UG",
+		"region": "Africa",
+		"sub-region": "Eastern Africa",
+		"region-code": "002",
+		"sub-region-code": "014"
+	},
+	{
+		"name": "Ukraine",
+		"alpha-2": "UA",
+		"alpha-3": "UKR",
+		"country-code": "804",
+		"iso_3166-2": "ISO 3166-2:UA",
+		"region": "Europe",
+		"sub-region": "Eastern Europe",
+		"region-code": "150",
+		"sub-region-code": "151"
+	},
+	{
+		"name": "United Arab Emirates",
+		"alpha-2": "AE",
+		"alpha-3": "ARE",
+		"country-code": "784",
+		"iso_3166-2": "ISO 3166-2:AE",
+		"region": "Asia",
+		"sub-region": "Western Asia",
+		"region-code": "142",
+		"sub-region-code": "145"
+	},
+	{
+		"name": "United Kingdom of Great Britain and Northern Ireland",
+		"alpha-2": "GB",
+		"alpha-3": "GBR",
+		"country-code": "826",
+		"iso_3166-2": "ISO 3166-2:GB",
+		"region": "Europe",
+		"sub-region": "Northern Europe",
+		"region-code": "150",
+		"sub-region-code": "154"
+	},
+	{
+		"name": "United States of America",
+		"alpha-2": "US",
+		"alpha-3": "USA",
+		"country-code": "840",
+		"iso_3166-2": "ISO 3166-2:US",
+		"region": "Americas",
+		"sub-region": "Northern America",
+		"region-code": "019",
+		"sub-region-code": "021"
+	},
+	{
+		"name": "United States Minor Outlying Islands",
+		"alpha-2": "UM",
+		"alpha-3": "UMI",
+		"country-code": "581",
+		"iso_3166-2": "ISO 3166-2:UM",
+		"sub-region-code": null,
+		"region-code": null,
+		"sub-region": null,
+		"region": null
+	},
+	{
+		"name": "Uruguay",
+		"alpha-2": "UY",
+		"alpha-3": "URY",
+		"country-code": "858",
+		"iso_3166-2": "ISO 3166-2:UY",
+		"region": "Americas",
+		"sub-region": "South America",
+		"region-code": "019",
+		"sub-region-code": "005"
+	},
+	{
+		"name": "Uzbekistan",
+		"alpha-2": "UZ",
+		"alpha-3": "UZB",
+		"country-code": "860",
+		"iso_3166-2": "ISO 3166-2:UZ",
+		"region": "Asia",
+		"sub-region": "Central Asia",
+		"region-code": "142",
+		"sub-region-code": "143"
+	},
+	{
+		"name": "Vanuatu",
+		"alpha-2": "VU",
+		"alpha-3": "VUT",
+		"country-code": "548",
+		"iso_3166-2": "ISO 3166-2:VU",
+		"region": "Oceania",
+		"sub-region": "Melanesia",
+		"region-code": "009",
+		"sub-region-code": "054"
+	},
+	{
+		"name": "Venezuela (Bolivarian Republic of)",
+		"alpha-2": "VE",
+		"alpha-3": "VEN",
+		"country-code": "862",
+		"iso_3166-2": "ISO 3166-2:VE",
+		"region": "Americas",
+		"sub-region": "South America",
+		"region-code": "019",
+		"sub-region-code": "005"
+	},
+	{
+		"name": "Viet Nam",
+		"alpha-2": "VN",
+		"alpha-3": "VNM",
+		"country-code": "704",
+		"iso_3166-2": "ISO 3166-2:VN",
+		"region": "Asia",
+		"sub-region": "South-Eastern Asia",
+		"region-code": "142",
+		"sub-region-code": "035"
+	},
+	{
+		"name": "Virgin Islands (British)",
+		"alpha-2": "VG",
+		"alpha-3": "VGB",
+		"country-code": "092",
+		"iso_3166-2": "ISO 3166-2:VG",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Virgin Islands (U.S.)",
+		"alpha-2": "VI",
+		"alpha-3": "VIR",
+		"country-code": "850",
+		"iso_3166-2": "ISO 3166-2:VI",
+		"region": "Americas",
+		"sub-region": "Caribbean",
+		"region-code": "019",
+		"sub-region-code": "029"
+	},
+	{
+		"name": "Wallis and Futuna",
+		"alpha-2": "WF",
+		"alpha-3": "WLF",
+		"country-code": "876",
+		"iso_3166-2": "ISO 3166-2:WF",
+		"region": "Oceania",
+		"sub-region": "Polynesia",
+		"region-code": "009",
+		"sub-region-code": "061"
+	},
+	{
+		"name": "Western Sahara",
+		"alpha-2": "EH",
+		"alpha-3": "ESH",
+		"country-code": "732",
+		"iso_3166-2": "ISO 3166-2:EH",
+		"region": "Africa",
+		"sub-region": "Northern Africa",
+		"region-code": "002",
+		"sub-region-code": "015"
+	},
+	{
+		"name": "Yemen",
+		"alpha-2": "YE",
+		"alpha-3": "YEM",
+		"country-code": "887",
+		"iso_3166-2": "ISO 3166-2:YE",
+		"region": "Asia",
+		"sub-region": "Western Asia",
+		"region-code": "142",
+		"sub-region-code": "145"
+	},
+	{
+		"name": "Zambia",
+		"alpha-2": "ZM",
+		"alpha-3": "ZMB",
+		"country-code": "894",
+		"iso_3166-2": "ISO 3166-2:ZM",
+		"region": "Africa",
+		"sub-region": "Eastern Africa",
+		"region-code": "002",
+		"sub-region-code": "014"
+	},
+	{
+		"name": "Zimbabwe",
+		"alpha-2": "ZW",
+		"alpha-3": "ZWE",
+		"country-code": "716",
+		"iso_3166-2": "ISO 3166-2:ZW",
+		"region": "Africa",
+		"sub-region": "Eastern Africa",
+		"region-code": "002",
+		"sub-region-code": "014"
+	}
+];
+
+/***/ }),
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8228,19 +11057,19 @@ module.exports = {
 };
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _vue = __webpack_require__(46);
+var _vue = __webpack_require__(47);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-__webpack_require__(47);
+__webpack_require__(48);
 
-var _App = __webpack_require__(48);
+var _App = __webpack_require__(49);
 
 var _App2 = _interopRequireDefault(_App);
 
@@ -8251,32 +11080,34 @@ _vue2.default.config.debug = "dev" == 'dev';
 //Vue components
 
 
-var app = new _vue2.default({ render: function render(createEle) {
-    return createEle(_App2.default);
-  } }).$mount('#app');
+var app = new _vue2.default({
+    render: function render(createEle) {
+        return createEle(_App2.default);
+    }
+}).$mount('#app');
 
 window.app = app;
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-module.exports = __webpack_require__(52);
+module.exports = __webpack_require__(54);
 
 /***/ }),
-/* 52 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(35);
-var Axios = __webpack_require__(54);
-var defaults = __webpack_require__(16);
+var bind = __webpack_require__(36);
+var Axios = __webpack_require__(56);
+var defaults = __webpack_require__(17);
 
 /**
  * Create an instance of Axios
@@ -8309,15 +11140,15 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(32);
-axios.CancelToken = __webpack_require__(53);
-axios.isCancel = __webpack_require__(33);
+axios.Cancel = __webpack_require__(33);
+axios.CancelToken = __webpack_require__(55);
+axios.isCancel = __webpack_require__(34);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(68);
+axios.spread = __webpack_require__(70);
 
 module.exports = axios;
 
@@ -8325,13 +11156,13 @@ module.exports = axios;
 module.exports.default = axios;
 
 /***/ }),
-/* 53 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(32);
+var Cancel = __webpack_require__(33);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -8388,18 +11219,18 @@ CancelToken.source = function source() {
 module.exports = CancelToken;
 
 /***/ }),
-/* 54 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var defaults = __webpack_require__(16);
+var defaults = __webpack_require__(17);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(55);
-var dispatchRequest = __webpack_require__(56);
-var isAbsoluteURL = __webpack_require__(64);
-var combineURLs = __webpack_require__(62);
+var InterceptorManager = __webpack_require__(57);
+var dispatchRequest = __webpack_require__(58);
+var isAbsoluteURL = __webpack_require__(66);
+var combineURLs = __webpack_require__(64);
 
 /**
  * Create a new instance of Axios
@@ -8479,7 +11310,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 module.exports = Axios;
 
 /***/ }),
-/* 55 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8537,16 +11368,16 @@ InterceptorManager.prototype.forEach = function forEach(fn) {
 module.exports = InterceptorManager;
 
 /***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(59);
-var isCancel = __webpack_require__(33);
-var defaults = __webpack_require__(16);
+var transformData = __webpack_require__(61);
+var isCancel = __webpack_require__(34);
+var defaults = __webpack_require__(17);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -8603,7 +11434,7 @@ module.exports = function dispatchRequest(config) {
 };
 
 /***/ }),
-/* 57 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8629,13 +11460,13 @@ module.exports = function enhanceError(error, config, code, response) {
 };
 
 /***/ }),
-/* 58 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(34);
+var createError = __webpack_require__(35);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -8655,7 +11486,7 @@ module.exports = function settle(resolve, reject, response) {
 };
 
 /***/ }),
-/* 59 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8681,7 +11512,7 @@ module.exports = function transformData(data, headers, fns) {
 };
 
 /***/ }),
-/* 60 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8722,7 +11553,7 @@ function btoa(input) {
 module.exports = btoa;
 
 /***/ }),
-/* 61 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8789,7 +11620,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 };
 
 /***/ }),
-/* 62 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8808,7 +11639,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 };
 
 /***/ }),
-/* 63 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8867,7 +11698,7 @@ function nonStandardBrowserEnv() {
 }();
 
 /***/ }),
-/* 64 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8889,7 +11720,7 @@ module.exports = function isAbsoluteURL(url) {
 };
 
 /***/ }),
-/* 65 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8958,7 +11789,7 @@ function nonStandardBrowserEnv() {
 }();
 
 /***/ }),
-/* 66 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8976,7 +11807,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 };
 
 /***/ }),
-/* 67 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9021,7 +11852,7 @@ module.exports = function parseHeaders(headers) {
 };
 
 /***/ }),
-/* 68 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9053,24 +11884,6 @@ module.exports = function spread(callback) {
     return callback.apply(null, arr);
   };
 };
-
-/***/ }),
-/* 69 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = { "default": __webpack_require__(78), __esModule: true };
-
-/***/ }),
-/* 70 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = { "default": __webpack_require__(79), __esModule: true };
 
 /***/ }),
 /* 71 */
@@ -9115,15 +11928,33 @@ module.exports = { "default": __webpack_require__(83), __esModule: true };
 "use strict";
 
 
+module.exports = { "default": __webpack_require__(84), __esModule: true };
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = { "default": __webpack_require__(85), __esModule: true };
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 exports.__esModule = true;
 
-var _iterator = __webpack_require__(74);
+var _iterator = __webpack_require__(76);
 
 var _iterator2 = _interopRequireDefault(_iterator);
 
-var _symbol = __webpack_require__(73);
+var _symbol = __webpack_require__(75);
 
 var _symbol2 = _interopRequireDefault(_symbol);
 
@@ -9144,7 +11975,7 @@ exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.d
 };
 
 /***/ }),
-/* 76 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9264,7 +12095,7 @@ function fromByteArray(uint8) {
 }
 
 /***/ }),
-/* 77 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9278,9 +12109,9 @@ function fromByteArray(uint8) {
 
 
 
-var base64 = __webpack_require__(76);
-var ieee754 = __webpack_require__(114);
-var isArray = __webpack_require__(115);
+var base64 = __webpack_require__(78);
+var ieee754 = __webpack_require__(116);
+var isArray = __webpack_require__(117);
 
 exports.Buffer = Buffer;
 exports.SlowBuffer = SlowBuffer;
@@ -11005,10 +13836,10 @@ function blitBuffer(src, dst, offset, length) {
 function isnan(val) {
   return val !== val; // eslint-disable-line no-self-compare
 }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(45)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(46)))
 
 /***/ }),
-/* 78 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11022,32 +13853,6 @@ module.exports = function stringify(it) {
 };
 
 /***/ }),
-/* 79 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-__webpack_require__(105);
-var $Object = __webpack_require__(1).Object;
-module.exports = function create(P, D) {
-  return $Object.create(P, D);
-};
-
-/***/ }),
-/* 80 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-__webpack_require__(106);
-var $Object = __webpack_require__(1).Object;
-module.exports = function defineProperty(it, key, desc) {
-  return $Object.defineProperty(it, key, desc);
-};
-
-/***/ }),
 /* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11055,7 +13860,10 @@ module.exports = function defineProperty(it, key, desc) {
 
 
 __webpack_require__(107);
-module.exports = __webpack_require__(1).Object.keys;
+var $Object = __webpack_require__(1).Object;
+module.exports = function create(P, D) {
+  return $Object.create(P, D);
+};
 
 /***/ }),
 /* 82 */
@@ -11064,11 +13872,11 @@ module.exports = __webpack_require__(1).Object.keys;
 "use strict";
 
 
-__webpack_require__(110);
 __webpack_require__(108);
-__webpack_require__(111);
-__webpack_require__(112);
-module.exports = __webpack_require__(1).Symbol;
+var $Object = __webpack_require__(1).Object;
+module.exports = function defineProperty(it, key, desc) {
+  return $Object.defineProperty(it, key, desc);
+};
 
 /***/ }),
 /* 83 */
@@ -11078,11 +13886,34 @@ module.exports = __webpack_require__(1).Symbol;
 
 
 __webpack_require__(109);
-__webpack_require__(113);
-module.exports = __webpack_require__(29).f('iterator');
+module.exports = __webpack_require__(1).Object.keys;
 
 /***/ }),
 /* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__(112);
+__webpack_require__(110);
+__webpack_require__(113);
+__webpack_require__(114);
+module.exports = __webpack_require__(1).Symbol;
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__(111);
+__webpack_require__(115);
+module.exports = __webpack_require__(30).f('iterator');
+
+/***/ }),
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11094,7 +13925,7 @@ module.exports = function (it) {
 };
 
 /***/ }),
-/* 85 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11103,7 +13934,7 @@ module.exports = function (it) {
 module.exports = function () {/* empty */};
 
 /***/ }),
-/* 86 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11112,8 +13943,8 @@ module.exports = function () {/* empty */};
 // false -> Array#indexOf
 // true  -> Array#includes
 var toIObject = __webpack_require__(6),
-    toLength = __webpack_require__(103),
-    toIndex = __webpack_require__(102);
+    toLength = __webpack_require__(105),
+    toIndex = __webpack_require__(104);
 module.exports = function (IS_INCLUDES) {
   return function ($this, el, fromIndex) {
     var O = toIObject($this),
@@ -11134,14 +13965,14 @@ module.exports = function (IS_INCLUDES) {
 };
 
 /***/ }),
-/* 87 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 // optional / simple context binding
-var aFunction = __webpack_require__(84);
+var aFunction = __webpack_require__(86);
 module.exports = function (fn, that, length) {
   aFunction(fn);
   if (that === undefined) return fn;
@@ -11165,7 +13996,7 @@ module.exports = function (fn, that, length) {
 };
 
 /***/ }),
-/* 88 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11173,8 +14004,8 @@ module.exports = function (fn, that, length) {
 
 // all enumerable object keys, includes symbols
 var getKeys = __webpack_require__(11),
-    gOPS = __webpack_require__(41),
-    pIE = __webpack_require__(22);
+    gOPS = __webpack_require__(42),
+    pIE = __webpack_require__(23);
 module.exports = function (it) {
   var result = getKeys(it),
       getSymbols = gOPS.f;
@@ -11190,7 +14021,7 @@ module.exports = function (it) {
 };
 
 /***/ }),
-/* 89 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11199,41 +14030,41 @@ module.exports = function (it) {
 module.exports = __webpack_require__(2).document && document.documentElement;
 
 /***/ }),
-/* 90 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(36);
-module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
-  return cof(it) == 'String' ? it.split('') : Object(it);
-};
-
-/***/ }),
-/* 91 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// 7.2.2 IsArray(argument)
-var cof = __webpack_require__(36);
-module.exports = Array.isArray || function isArray(arg) {
-  return cof(arg) == 'Array';
-};
-
-/***/ }),
 /* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var create = __webpack_require__(21),
+// fallback for non-array-like ES3 and non-enumerable old V8 strings
+var cof = __webpack_require__(37);
+module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
+  return cof(it) == 'String' ? it.split('') : Object(it);
+};
+
+/***/ }),
+/* 93 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// 7.2.2 IsArray(argument)
+var cof = __webpack_require__(37);
+module.exports = Array.isArray || function isArray(arg) {
+  return cof(arg) == 'Array';
+};
+
+/***/ }),
+/* 94 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var create = __webpack_require__(22),
     descriptor = __webpack_require__(14),
-    setToStringTag = __webpack_require__(23),
+    setToStringTag = __webpack_require__(24),
     IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
@@ -11247,7 +14078,7 @@ module.exports = function (Constructor, NAME, next) {
 };
 
 /***/ }),
-/* 93 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11258,7 +14089,7 @@ module.exports = function (done, value) {
 };
 
 /***/ }),
-/* 94 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11278,7 +14109,7 @@ module.exports = function (object, el) {
 };
 
 /***/ }),
-/* 95 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11341,7 +14172,7 @@ var meta = module.exports = {
 };
 
 /***/ }),
-/* 96 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11363,18 +14194,18 @@ module.exports = __webpack_require__(3) ? Object.defineProperties : function def
 };
 
 /***/ }),
-/* 97 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var pIE = __webpack_require__(22),
+var pIE = __webpack_require__(23),
     createDesc = __webpack_require__(14),
     toIObject = __webpack_require__(6),
-    toPrimitive = __webpack_require__(27),
+    toPrimitive = __webpack_require__(28),
     has = __webpack_require__(4),
-    IE8_DOM_DEFINE = __webpack_require__(38),
+    IE8_DOM_DEFINE = __webpack_require__(39),
     gOPD = Object.getOwnPropertyDescriptor;
 
 exports.f = __webpack_require__(3) ? gOPD : function getOwnPropertyDescriptor(O, P) {
@@ -11387,7 +14218,7 @@ exports.f = __webpack_require__(3) ? gOPD : function getOwnPropertyDescriptor(O,
 };
 
 /***/ }),
-/* 98 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11397,7 +14228,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
 var toIObject = __webpack_require__(6),
-    gOPN = __webpack_require__(40).f,
+    gOPN = __webpack_require__(41).f,
     toString = {}.toString;
 
 var windowNames = (typeof window === 'undefined' ? 'undefined' : _typeof(window)) == 'object' && window && Object.getOwnPropertyNames ? Object.getOwnPropertyNames(window) : [];
@@ -11415,7 +14246,7 @@ module.exports.f = function getOwnPropertyNames(it) {
 };
 
 /***/ }),
-/* 99 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11423,8 +14254,8 @@ module.exports.f = function getOwnPropertyNames(it) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
 var has = __webpack_require__(4),
-    toObject = __webpack_require__(44),
-    IE_PROTO = __webpack_require__(24)('IE_PROTO'),
+    toObject = __webpack_require__(45),
+    IE_PROTO = __webpack_require__(25)('IE_PROTO'),
     ObjectProto = Object.prototype;
 
 module.exports = Object.getPrototypeOf || function (O) {
@@ -11436,7 +14267,7 @@ module.exports = Object.getPrototypeOf || function (O) {
 };
 
 /***/ }),
-/* 100 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11456,14 +14287,14 @@ module.exports = function (KEY, exec) {
 };
 
 /***/ }),
-/* 101 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var toInteger = __webpack_require__(26),
-    defined = __webpack_require__(17);
+var toInteger = __webpack_require__(27),
+    defined = __webpack_require__(18);
 // true  -> String#at
 // false -> String#codePointAt
 module.exports = function (TO_STRING) {
@@ -11480,13 +14311,13 @@ module.exports = function (TO_STRING) {
 };
 
 /***/ }),
-/* 102 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var toInteger = __webpack_require__(26),
+var toInteger = __webpack_require__(27),
     max = Math.max,
     min = Math.min;
 module.exports = function (index, length) {
@@ -11495,36 +14326,36 @@ module.exports = function (index, length) {
 };
 
 /***/ }),
-/* 103 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 // 7.1.15 ToLength
-var toInteger = __webpack_require__(26),
+var toInteger = __webpack_require__(27),
     min = Math.min;
 module.exports = function (it) {
   return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
 };
 
 /***/ }),
-/* 104 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var addToUnscopables = __webpack_require__(85),
-    step = __webpack_require__(93),
-    Iterators = __webpack_require__(19),
+var addToUnscopables = __webpack_require__(87),
+    step = __webpack_require__(95),
+    Iterators = __webpack_require__(20),
     toIObject = __webpack_require__(6);
 
 // 22.1.3.4 Array.prototype.entries()
 // 22.1.3.13 Array.prototype.keys()
 // 22.1.3.29 Array.prototype.values()
 // 22.1.3.30 Array.prototype[@@iterator]()
-module.exports = __webpack_require__(39)(Array, 'Array', function (iterated, kind) {
+module.exports = __webpack_require__(40)(Array, 'Array', function (iterated, kind) {
   this._t = toIObject(iterated); // target
   this._i = 0; // next index
   this._k = kind; // kind
@@ -11550,7 +14381,7 @@ addToUnscopables('values');
 addToUnscopables('entries');
 
 /***/ }),
-/* 105 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11558,10 +14389,10 @@ addToUnscopables('entries');
 
 var $export = __webpack_require__(9);
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-$export($export.S, 'Object', { create: __webpack_require__(21) });
+$export($export.S, 'Object', { create: __webpack_require__(22) });
 
 /***/ }),
-/* 106 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11572,40 +14403,40 @@ var $export = __webpack_require__(9);
 $export($export.S + $export.F * !__webpack_require__(3), 'Object', { defineProperty: __webpack_require__(5).f });
 
 /***/ }),
-/* 107 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// 19.1.2.14 Object.keys(O)
-var toObject = __webpack_require__(44),
-    $keys = __webpack_require__(11);
-
-__webpack_require__(100)('keys', function () {
-  return function keys(it) {
-    return $keys(toObject(it));
-  };
-});
-
-/***/ }),
-/* 108 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/***/ }),
 /* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var $at = __webpack_require__(101)(true);
+// 19.1.2.14 Object.keys(O)
+var toObject = __webpack_require__(45),
+    $keys = __webpack_require__(11);
+
+__webpack_require__(102)('keys', function () {
+  return function keys(it) {
+    return $keys(toObject(it));
+  };
+});
+
+/***/ }),
+/* 110 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/***/ }),
+/* 111 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var $at = __webpack_require__(103)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
-__webpack_require__(39)(String, 'String', function (iterated) {
+__webpack_require__(40)(String, 'String', function (iterated) {
   this._t = String(iterated); // target
   this._i = 0; // next index
   // 21.1.5.2.1 %StringIteratorPrototype%.next()
@@ -11620,7 +14451,7 @@ __webpack_require__(39)(String, 'String', function (iterated) {
 });
 
 /***/ }),
-/* 110 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11633,25 +14464,25 @@ var global = __webpack_require__(2),
     has = __webpack_require__(4),
     DESCRIPTORS = __webpack_require__(3),
     $export = __webpack_require__(9),
-    redefine = __webpack_require__(43),
-    META = __webpack_require__(95).KEY,
+    redefine = __webpack_require__(44),
+    META = __webpack_require__(97).KEY,
     $fails = __webpack_require__(10),
-    shared = __webpack_require__(25),
-    setToStringTag = __webpack_require__(23),
+    shared = __webpack_require__(26),
+    setToStringTag = __webpack_require__(24),
     uid = __webpack_require__(15),
     wks = __webpack_require__(8),
-    wksExt = __webpack_require__(29),
-    wksDefine = __webpack_require__(28),
-    keyOf = __webpack_require__(94),
-    enumKeys = __webpack_require__(88),
-    isArray = __webpack_require__(91),
+    wksExt = __webpack_require__(30),
+    wksDefine = __webpack_require__(29),
+    keyOf = __webpack_require__(96),
+    enumKeys = __webpack_require__(90),
+    isArray = __webpack_require__(93),
     anObject = __webpack_require__(12),
     toIObject = __webpack_require__(6),
-    toPrimitive = __webpack_require__(27),
+    toPrimitive = __webpack_require__(28),
     createDesc = __webpack_require__(14),
-    _create = __webpack_require__(21),
-    gOPNExt = __webpack_require__(98),
-    $GOPD = __webpack_require__(97),
+    _create = __webpack_require__(22),
+    gOPNExt = __webpack_require__(100),
+    $GOPD = __webpack_require__(99),
     $DP = __webpack_require__(5),
     $keys = __webpack_require__(11),
     gOPD = $GOPD.f,
@@ -11779,11 +14610,11 @@ if (!USE_NATIVE) {
 
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
-  __webpack_require__(40).f = gOPNExt.f = $getOwnPropertyNames;
-  __webpack_require__(22).f = $propertyIsEnumerable;
-  __webpack_require__(41).f = $getOwnPropertySymbols;
+  __webpack_require__(41).f = gOPNExt.f = $getOwnPropertyNames;
+  __webpack_require__(23).f = $propertyIsEnumerable;
+  __webpack_require__(42).f = $getOwnPropertySymbols;
 
-  if (DESCRIPTORS && !__webpack_require__(20)) {
+  if (DESCRIPTORS && !__webpack_require__(21)) {
     redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
   }
 
@@ -11870,34 +14701,34 @@ setToStringTag(Math, 'Math', true);
 setToStringTag(global.JSON, 'JSON', true);
 
 /***/ }),
-/* 111 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-__webpack_require__(28)('asyncIterator');
-
-/***/ }),
-/* 112 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-__webpack_require__(28)('observable');
-
-/***/ }),
 /* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(104);
+__webpack_require__(29)('asyncIterator');
+
+/***/ }),
+/* 114 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__(29)('observable');
+
+/***/ }),
+/* 115 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__(106);
 var global = __webpack_require__(2),
     hide = __webpack_require__(7),
-    Iterators = __webpack_require__(19),
+    Iterators = __webpack_require__(20),
     TO_STRING_TAG = __webpack_require__(8)('toStringTag');
 
 for (var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList', 'CSSRuleList'], i = 0; i < 5; i++) {
@@ -11909,7 +14740,7 @@ for (var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList
 }
 
 /***/ }),
-/* 114 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12001,7 +14832,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 };
 
 /***/ }),
-/* 115 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12014,7 +14845,7 @@ module.exports = Array.isArray || function (arr) {
 };
 
 /***/ }),
-/* 116 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12024,19 +14855,49 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _vueSliderComponent = __webpack_require__(117);
-
-var _vueSliderComponent2 = _interopRequireDefault(_vueSliderComponent);
-
-var _config = __webpack_require__(49);
+var _config = __webpack_require__(51);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _axios = __webpack_require__(51);
+var _axios = __webpack_require__(53);
 
 var _axios2 = _interopRequireDefault(_axios);
 
+var _brokersList = __webpack_require__(126);
+
+var _brokersList2 = _interopRequireDefault(_brokersList);
+
+var _brokersCard = __webpack_require__(124);
+
+var _brokersCard2 = _interopRequireDefault(_brokersCard);
+
+var _brokersFilter = __webpack_require__(125);
+
+var _brokersFilter2 = _interopRequireDefault(_brokersFilter);
+
+var _countries = __webpack_require__(50);
+
+var _countries2 = _interopRequireDefault(_countries);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var axiosInstance = _axios2.default.create({
     baseURL: _config2.default.apiUrl,
@@ -12045,7 +14906,141 @@ var axiosInstance = _axios2.default.create({
         "Content-Type": "application/json",
         "Accept": "application/json"
     }
-}); //
+});
+
+exports.default = {
+    data: function data() {
+        return {
+            currentView: 'brokers-list',
+            currentBroker: null,
+            brokers: [],
+            countries: {},
+            comparison: [],
+            filters: {
+                visible: false,
+                active: false,
+                country: null,
+                sortBy: null,
+                tradeComission: {
+                    value: [0, 10],
+                    slider: {
+                        width: '100%',
+                        height: 2,
+                        dotSize: 28,
+                        min: 0,
+                        max: 10,
+                        tooltip: false
+                    }
+                },
+                minAccountDeposit: {
+                    value: [0, 10],
+                    slider: {
+                        width: '100%',
+                        height: 2,
+                        dotSize: 28,
+                        min: 0,
+                        max: 10,
+                        tooltip: false
+                    }
+                }
+            }
+        };
+    },
+
+    components: {
+        brokersList: _brokersList2.default,
+        brokersFilter: _brokersFilter2.default,
+        brokersCard: _brokersCard2.default
+    },
+    methods: {
+        getAccounts: function getAccounts(type) {
+            var _this = this;
+            axiosInstance.get('FindAccounts', {
+                params: {
+                    type: type ? type : 'Forex'
+                }
+            }).then(function (response) {
+                _this.brokers = response.data.data;
+            }, function (error) {
+                //TODO: error handler
+            });
+        },
+        getCountries: function getCountries() {
+            var _this = this;
+            axiosInstance.get('AccountCountries', {
+                params: {
+                    //profileType: type ? type : 'Forex'
+                }
+            }).then(function (response) {
+                _this.countries = response.data;
+            }, function (error) {
+                //TODO: error handler
+            });
+        },
+        showFilter: function showFilter() {
+            this.filters.visible = true;
+        },
+        hideFilter: function hideFilter() {
+            this.filters.visible = false;
+        },
+        toggleCountrySelect: function toggleCountrySelect() {
+            this.$el.querySelector('.js-country-select').click();
+        },
+        openBroker: function openBroker(broker) {
+            this.currentView = 'brokers-card';
+            this.currentBroker = broker;
+        },
+        setView: function setView(view) {
+            this.currentView = view;
+        }
+    },
+    mounted: function mounted() {
+        this.getAccounts();
+        this.getCountries();
+        window.showFilter = this.showFilter;
+        window.hideFilter = this.hideFilter;
+        window.getAccounts = this.getAccounts;
+        window.setView = this.setView;
+    }
+};
+
+/***/ }),
+/* 119 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -12211,68 +15206,217 @@ var axiosInstance = _axios2.default.create({
 exports.default = {
     data: function data() {
         return {
-            brokers: [],
-            countries: {},
-            comparison: [],
-            filters: {
-                visible: true,
-                active: false,
-                country: null,
-                sortBy: null,
-                tradeComission: {
-                    value: [0, 10],
-                    slider: {
-                        width: '100%',
-                        height: 2,
-                        dotSize: 28,
-                        min: 0,
-                        max: 10,
-                        tooltip: false
-                    }
-                },
-                minAccountDeposit: {
-                    value: [0, 10],
-                    slider: {
-                        width: '100%',
-                        height: 2,
-                        dotSize: 28,
-                        min: 0,
-                        max: 10,
-                        tooltip: false
-                    }
-                }
-            }
+            currentTab: 'details'
         };
+    },
+
+    props: ['broker']
+};
+
+/***/ }),
+/* 120 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _vueSliderComponent = __webpack_require__(122);
+
+var _vueSliderComponent2 = _interopRequireDefault(_vueSliderComponent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    data: function data() {
+        return {};
     },
 
     components: {
         vueSlider: _vueSliderComponent2.default
     },
+    props: ['filters', 'countries']
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+/* 121 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+    data: function data() {
+        return {};
+    },
+
+    props: ['brokers', 'comparison'],
     methods: {
-        getAccounts: function getAccounts(type) {
-            var _this = this;
-            axiosInstance.get('FindAccounts', {
-                params: {
-                    type: type ? type : 'Forex'
-                }
-            }).then(function (response) {
-                _this.brokers = response.data.data;
-            }, function (error) {
-                //TODO: error handler
-            });
-        },
-        getCountries: function getCountries() {
-            var _this = this;
-            axiosInstance.get('AccountCountries', {
-                params: {
-                    //profileType: type ? type : 'Forex'
-                }
-            }).then(function (response) {
-                _this.countries = response.data;
-            }, function (error) {
-                //TODO: error handler
-            });
-        },
         addToComparison: function addToComparison(id) {
             if (this.comparison.indexOf(id) < 0) {
                 this.comparison.push(id);
@@ -12288,51 +15432,35 @@ exports.default = {
             return this.comparison.indexOf(id) > -1;
         },
         clearComparison: function clearComparison() {
-            this.comparison = [];
-        },
-        showFilter: function showFilter() {
-            this.filters.visible = true;
-        },
-        hideFilter: function hideFilter() {
-            this.filters.visible = false;
-        },
-        toggleCountrySelect: function toggleCountrySelect() {
-            this.$el.querySelector('.js-country-select').click();
+            this.comparison.splice(0, this.comparison.length);
         }
-    },
-    mounted: function mounted() {
-        this.getAccounts();
-        this.getCountries();
-        window.showFilter = this.showFilter;
-        window.hideFilter = this.hideFilter;
-        window.getAccounts = this.getAccounts;
     }
 };
 
 /***/ }),
-/* 117 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
-var _stringify = __webpack_require__(69);
+var _stringify = __webpack_require__(71);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
-var _keys = __webpack_require__(72);
+var _keys = __webpack_require__(74);
 
 var _keys2 = _interopRequireDefault(_keys);
 
-var _create = __webpack_require__(70);
+var _create = __webpack_require__(72);
 
 var _create2 = _interopRequireDefault(_create);
 
-var _defineProperty = __webpack_require__(71);
+var _defineProperty = __webpack_require__(73);
 
 var _defineProperty2 = _interopRequireDefault(_defineProperty);
 
-var _typeof2 = __webpack_require__(75);
+var _typeof2 = __webpack_require__(77);
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
@@ -12651,10 +15779,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     var s = i(0);t.exports = s;
   }]);
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(118)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(123)(module)))
 
 /***/ }),
-/* 118 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12684,90 +15812,442 @@ module.exports = function (module) {
 };
 
 /***/ }),
-/* 119 */
-/***/ (function(module, exports) {
+/* 124 */
+/***/ (function(module, exports, __webpack_require__) {
 
-/* globals __VUE_SSR_CONTEXT__ */
+var disposed = false
+var Component = __webpack_require__(16)(
+  /* script */
+  __webpack_require__(119),
+  /* template */
+  __webpack_require__(127),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/Users/alexey/PhpstormProjects/brokers-webview/app/components/brokers-card.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] brokers-card.vue: functional components are not supported with templates, they should use render functions.")}
 
-// this module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier /* server only */
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5f609967", Component.options)
+  } else {
+    hotAPI.reload("data-v-5f609967", Component.options)
   }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
 
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context = context || (this.$vnode && this.$vnode.ssrContext)
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = injectStyles
-  }
-
-  if (hook) {
-    // inject component registration as beforeCreate hook
-    var existing = options.beforeCreate
-    options.beforeCreate = existing
-      ? [].concat(existing, hook)
-      : [hook]
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
-}
+module.exports = Component.exports
 
 
 /***/ }),
-/* 120 */
+/* 125 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(16)(
+  /* script */
+  __webpack_require__(120),
+  /* template */
+  __webpack_require__(128),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/Users/alexey/PhpstormProjects/brokers-webview/app/components/brokers-filter.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] brokers-filter.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7582fbe2", Component.options)
+  } else {
+    hotAPI.reload("data-v-7582fbe2", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 126 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(16)(
+  /* script */
+  __webpack_require__(121),
+  /* template */
+  __webpack_require__(130),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/Users/alexey/PhpstormProjects/brokers-webview/app/components/brokers-list.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] brokers-list.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-9fd95016", Component.options)
+  } else {
+    hotAPI.reload("data-v-9fd95016", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 127 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "broker-card"
+  }, [_c('div', {
+    staticClass: "broker-card-preview"
+  }, [_c('div', {
+    staticClass: "broker-card-preview-live"
+  }, [_vm._v("\n            Live\n        ")]), _vm._v(" "), _c('div', {
+    staticClass: "broker-card-preview-padding"
+  }, [_c('div', {
+    staticClass: "broker-card-logo"
+  }, [_c('img', {
+    attrs: {
+      "src": 'http://www.brokeries.com/Content/Proto/images/logos/brokers/' + _vm.broker.Broker + '.jpg'
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "broker-card-title"
+  }, [_vm._v("\n                " + _vm._s(_vm.broker.Broker) + "\n            ")]), _vm._v(" "), _c('div', {
+    staticClass: "broker-card-subtitle"
+  }, [_vm._v("\n                " + _vm._s(_vm.broker.ProfileType) + " Account\n            ")]), _vm._v(" "), _c('div', {
+    staticClass: "broker-card-link-btn"
+  }, [_c('a', {
+    staticClass: "button button-round button-green",
+    attrs: {
+      "href": _vm.broker.BrokerWebsite,
+      "target": "_blank"
+    }
+  }, [_vm._v("Open account")])])]), _vm._v(" "), _vm._m(0)]), _vm._v(" "), _c('div', {
+    staticClass: "broker-card-tabs"
+  }, [_c('a', {
+    staticClass: "broker-card-tabs-item",
+    class: (_vm.currentTab == 'details') ? 'active' : '',
+    attrs: {
+      "href": "#"
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.currentTab = 'details'
+      }
+    }
+  }, [_vm._v("Account Details")]), _vm._v(" "), _c('a', {
+    staticClass: "broker-card-tabs-item",
+    class: (_vm.currentTab == 'summary') ? 'active' : '',
+    attrs: {
+      "href": "#"
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.currentTab = 'summary'
+      }
+    }
+  }, [_vm._v("Summary")])]), _vm._v(" "), _c('transition', {
+    attrs: {
+      "name": "fade"
+    }
+  }, [(_vm.currentTab == 'details') ? _c('div', [_c('table', {
+    staticClass: "brokers-card-details-table"
+  }, [_c('tr', [_c('th', [_vm._v("Aggregate rating")]), _vm._v(" "), _c('td', {
+    staticClass: "text-right text-uppercase"
+  }, [(_vm.broker.Rank === 'Excellent') ? _c('span', {
+    staticClass: "c-green"
+  }, [_vm._v("\n                            " + _vm._s(_vm.broker.Rank) + "\n                        ")]) : (_vm.broker.Rank === 'Poor') ? _c('span', {
+    staticClass: "c-gray-light"
+  }, [_vm._v("\n                            " + _vm._s(_vm.broker.Rank) + "\n                        ")]) : _c('span', [_vm._v("\n                            " + _vm._s(_vm.broker.Rank) + "\n                        ")])])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("Rating")]), _vm._v(" "), _c('td', {
+    staticClass: "text-right"
+  }, [_c('div', {
+    staticClass: "brokers-card-stars broker-stars"
+  }, [_vm._l((Math.round(_vm.broker.StarRating)), function(index) {
+    return _c('span', {
+      staticClass: "broker-stars-item broker-stars-item-filled"
+    })
+  }), _vm._v(" "), _vm._l(((5 - Math.round(_vm.broker.StarRating))), function(index) {
+    return _c('span', {
+      staticClass: "broker-stars-item"
+    })
+  })], 2)])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("EUR/USD spread, avg")]), _vm._v(" "), _c('td', {
+    staticClass: "text-right"
+  }, [_vm._v("\n                        " + _vm._s(_vm.broker.AverageEurUsdSpread) + "\n                    ")])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("USD/JPY spread, avg")]), _vm._v(" "), _c('td', {
+    staticClass: "text-right"
+  }, [_vm._v("\n                        " + _vm._s(_vm.broker.AverageUSDJPYSpread) + "\n                    ")])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("GBP/USD spread, avg")]), _vm._v(" "), _c('td', {
+    staticClass: "text-right"
+  }, [_vm._v("\n                        " + _vm._s(_vm.broker.AverageGBPUSDSpread) + "\n                    ")])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("USD/CAD spread, avg")]), _vm._v(" "), _c('td', {
+    staticClass: "text-right"
+  }, [_vm._v("\n                        " + _vm._s(_vm.broker.AverageUSDCADSpread) + "\n                    ")])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("XAU/USD spread, avg")]), _vm._v(" "), _c('td', {
+    staticClass: "text-right"
+  }, [_vm._v("\n                        " + _vm._s(_vm.broker.AverageXAUUSDSpread) + "\n                    ")])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("Broker Address")]), _vm._v(" "), _c('td', {
+    staticClass: "text-right"
+  }, [_c('div', {
+    domProps: {
+      "innerHTML": _vm._s(_vm.broker.Location)
+    }
+  })])])])]) : _vm._e()]), _vm._v(" "), _c('transition', {
+    attrs: {
+      "name": "fade"
+    }
+  }, [(_vm.currentTab == 'summary') ? _c('div', [_c('div', {
+    staticClass: "broker-card-summary"
+  }, [_c('p', [_vm._v("\n                    Trade over 50 currency pairs including gold and silver in real time. Benefits from sophisticated trading platforms, premium charting tools. Access extensive education, actionable research, detailed charts, and more…\n                ")])])]) : _vm._e()]), _vm._v(" "), _c('pre', {
+    staticStyle: {
+      "background": "#666",
+      "max-width": "100%",
+      "overflow": "auto",
+      "max-height": "300px"
+    }
+  }, [_vm._v("\n        " + _vm._s(_vm.broker) + "\n    ")])], 1)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "broker-card-promo"
+  }, [_c('div', {
+    staticClass: "broker-card-promo-title"
+  }, [_vm._v("\n                Promo\n            ")]), _vm._v(" "), _c('div', {
+    staticClass: "broker-card-promo-desc"
+  }, [_c('p', [_vm._v("\n                    Promo???\n                ")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-5f609967", module.exports)
+  }
+}
+
+/***/ }),
+/* 128 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "brokers-filter"
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "brokers-filter-body"
+  }, [_c('div', {
+    staticClass: "brokers-filter-control brokers-filter-control-country"
+  }, [_c('div', {
+    staticClass: "brokers-filter-control-country-title"
+  }, [_vm._v("\n                Country range\n            ")]), _vm._v(" "), _c('a', {
+    staticClass: "brokers-filter-control-country-link",
+    attrs: {
+      "href": "#"
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.toggleCountrySelect($event)
+      }
+    }
+  }, [_vm._v("\n                " + _vm._s(_vm.filters.country ? _vm.filters.country : 'All countries') + "\n            ")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.filters.country),
+      expression: "filters.country"
+    }],
+    staticClass: "js-country-select brokers-filter-control-country-select",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.filters.country = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    domProps: {
+      "value": null
+    }
+  }, [_vm._v("All countries")]), _vm._v(" "), _vm._l((_vm.countries), function(country, name) {
+    return _c('option', {
+      domProps: {
+        "value": name
+      }
+    }, [_vm._v("\n                    " + _vm._s(name) + "\n                ")])
+  })], 2)]), _vm._v(" "), _c('div', {
+    staticClass: "brokers-filter-control brokers-filter-control-sorting"
+  }, [_c('div', {
+    staticClass: "brokers-filter-control-title"
+  }, [_vm._v("\n                Sorting\n            ")]), _vm._v(" "), _c('div', {
+    staticClass: "brokers-filter-control-sorting-select"
+  }, [_c('a', {
+    staticClass: "brokers-filter-control-sorting-select-item active",
+    attrs: {
+      "href": "#"
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+      }
+    }
+  }, [_vm._v("\n                    Unsorted\n                ")]), _vm._v(" "), _c('a', {
+    staticClass: "brokers-filter-control-sorting-select-item",
+    attrs: {
+      "href": "#"
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+      }
+    }
+  }, [_vm._v("\n                    Abc\n                ")])])]), _vm._v(" "), _c('div', {
+    staticClass: "brokers-filter-control brokers-filter-control-range"
+  }, [_c('div', {
+    staticClass: "brokers-filter-control-title"
+  }, [_vm._v("\n                Trade Comission\n            ")]), _vm._v(" "), _c('vue-slider', _vm._b({
+    ref: "tradeComissionSlider",
+    model: {
+      value: (_vm.filters.tradeComission.value),
+      callback: function($$v) {
+        _vm.filters.tradeComission.value = $$v
+      },
+      expression: "filters.tradeComission.value"
+    }
+  }, 'vue-slider', _vm.filters.tradeComission.slider)), _vm._v(" "), _c('div', {
+    staticClass: "brokers-filter-control-range-values"
+  }, [_c('div', {
+    staticClass: "brokers-filter-control-range-min"
+  }, [_vm._v("\n                    " + _vm._s(_vm.filters.tradeComission.value[0]) + "\n                ")]), _vm._v(" "), _c('div', {
+    staticClass: "brokers-filter-control-range-max"
+  }, [_vm._v("\n                    " + _vm._s(_vm.filters.tradeComission.value[1]) + "\n                ")])])], 1), _vm._v(" "), _c('div', {
+    staticClass: "brokers-filter-control brokers-filter-control-range"
+  }, [_c('div', {
+    staticClass: "brokers-filter-control-title"
+  }, [_vm._v("\n                Min account deposit\n            ")]), _vm._v(" "), _c('vue-slider', _vm._b({
+    model: {
+      value: (_vm.filters.minAccountDeposit.value),
+      callback: function($$v) {
+        _vm.filters.minAccountDeposit.value = $$v
+      },
+      expression: "filters.minAccountDeposit.value"
+    }
+  }, 'vue-slider', _vm.filters.minAccountDeposit.slider)), _vm._v(" "), _c('div', {
+    staticClass: "brokers-filter-control-range-values"
+  }, [_c('div', {
+    staticClass: "brokers-filter-control-range-min"
+  }, [_vm._v("\n                    " + _vm._s(_vm.filters.minAccountDeposit.value[0]) + "\n                ")]), _vm._v(" "), _c('div', {
+    staticClass: "brokers-filter-control-range-max"
+  }, [_vm._v("\n                    " + _vm._s(_vm.filters.minAccountDeposit.value[1]) + "\n                ")])])], 1)])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "brokers-filter-header"
+  }, [_c('div', {
+    staticClass: "brokers-filter-header-title"
+  }, [_vm._v("\n            Filter\n        ")]), _vm._v(" "), _c('div', {
+    staticClass: "brokers-filter-header-buttons"
+  }, [_c('a', {
+    staticClass: "button button-round button-gray",
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Reset")]), _vm._v(" "), _c('a', {
+    staticClass: "button button-round button-green",
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Apply")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-7582fbe2", module.exports)
+  }
+}
+
+/***/ }),
+/* 129 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('transition', {
+    attrs: {
+      "name": "fade"
+    }
+  }, [(_vm.currentView == 'brokers-list') ? _c('brokers-list', {
+    attrs: {
+      "brokers": _vm.brokers,
+      "comparison": _vm.comparison
+    }
+  }) : _vm._e()], 1), _vm._v(" "), _c('transition', {
+    attrs: {
+      "name": "fade"
+    }
+  }, [(_vm.currentView == 'brokers-card') ? _c('brokers-card', {
+    attrs: {
+      "broker": _vm.currentBroker
+    }
+  }) : _vm._e()], 1), _vm._v(" "), _c('transition', {
+    attrs: {
+      "name": "fade"
+    }
+  }, [(_vm.filters.visible) ? _c('div', {
+    staticClass: "overlay overlay-padding"
+  }, [_c('brokers-filter', {
+    attrs: {
+      "filters": _vm.filters,
+      "countries": _vm.countries
+    }
+  })], 1) : _vm._e()])], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-87d40e68", module.exports)
+  }
+}
+
+/***/ }),
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -12784,6 +16264,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       on: {
         "click": function($event) {
           $event.preventDefault();
+          _vm.$parent.openBroker(broker)
         }
       }
     }, [_c('div', {
@@ -12794,11 +16275,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     })]), _vm._v(" "), _c('div', {
       staticClass: "brokers-list-item-stars broker-stars"
-    }, [_vm._l((broker.StarRating), function(index) {
+    }, [_vm._l((Math.round(broker.StarRating)), function(index) {
       return _c('span', {
         staticClass: "broker-stars-item broker-stars-item-filled"
       })
-    }), _vm._v(" "), _vm._l(((5 - broker.StarRating)), function(index) {
+    }), _vm._v(" "), _vm._l(((5 - Math.round(broker.StarRating))), function(index) {
       return _c('span', {
         staticClass: "broker-stars-item"
       })
@@ -12810,17 +16291,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       on: {
         "click": function($event) {
           $event.preventDefault();
+          _vm.$parent.openBroker(broker)
         }
       }
     }, [_c('div', {
       staticClass: "brokers-list-item-title"
-    }, [_vm._v(_vm._s(broker.Broker))]), _vm._v(" "), _vm._m(0, true), _vm._v(" "), _c('table', {
+    }, [_vm._v(_vm._s(broker.Broker))]), _vm._v(" "), _c('div', {
+      staticClass: "brokers-list-item-subtitle"
+    }, [_c('div', {
+      staticClass: "brokers-list-item-label"
+    }, [_vm._v("Promo")]), _vm._v("\n                    " + _vm._s(broker.ProfileType) + " Account\n                ")]), _vm._v(" "), _c('table', {
       staticClass: "brokers-list-item-table"
-    }, [_vm._m(1, true), _vm._v(" "), _c('tr', [_c('td', [(broker.Rank === 'Excellent') ? _c('span', {
+    }, [_vm._m(0, true), _vm._v(" "), _c('tr', [_c('td', [(broker.Rank === 'Excellent') ? _c('span', {
       staticClass: "c-green"
-    }, [_vm._v("\n                            " + _vm._s(broker.Rank) + "\n                        ")]) : (broker.Rank === 'Poor') ? _c('span', {
+    }, [_vm._v("\n                                " + _vm._s(broker.Rank) + "\n                            ")]) : (broker.Rank === 'Poor') ? _c('span', {
       staticClass: "c-gray-light"
-    }, [_vm._v("\n                            " + _vm._s(broker.Rank) + "\n                        ")]) : _c('span', [_vm._v("\n                            " + _vm._s(broker.Rank) + "\n                        ")])]), _vm._v(" "), _c('td', [_vm._v("\n                            " + _vm._s(broker.MinDeposit) + "\n                        ")]), _vm._v(" "), _c('td', [_vm._v("\n                            " + _vm._s(broker.MaxLeverage) + "\n                        ")])])])]), _vm._v(" "), (_vm.inComparison(broker.BrokerId)) ? _c('a', {
+    }, [_vm._v("\n                                " + _vm._s(broker.Rank) + "\n                                ")]) : _c('span', [_vm._v("\n                                " + _vm._s(broker.Rank) + "\n                            ")])]), _vm._v(" "), _c('td', [_vm._v("\n                            " + _vm._s(broker.MinDeposit) + "\n                        ")]), _vm._v(" "), _c('td', [_vm._v("\n                            " + _vm._s(broker.MaxLeverage) + "\n                        ")])])])]), _vm._v(" "), (_vm.inComparison(broker.BrokerId)) ? _c('a', {
       staticClass: "brokers-list-item-comparison",
       attrs: {
         "href": "#"
@@ -12960,154 +16446,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.clearComparison($event)
       }
     }
-  })]), _vm._v(" "), _c('transition', {
-    attrs: {
-      "name": "fade"
-    }
-  }, [(_vm.filters.visible) ? _c('div', {
-    staticClass: "overlay overlay-padding"
-  }, [_c('div', {
-    staticClass: "brokers-filter"
-  }, [_c('div', {
-    staticClass: "brokers-filter-header"
-  }, [_c('div', {
-    staticClass: "brokers-filter-header-title"
-  }, [_vm._v("\n                        Filter\n                    ")]), _vm._v(" "), _c('div', {
-    staticClass: "brokers-filter-header-buttons"
-  }, [_c('a', {
-    staticClass: "button button-round button-gray",
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("Reset")]), _vm._v(" "), _c('a', {
-    staticClass: "button button-round button-green",
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("Apply")])])]), _vm._v(" "), _c('div', {
-    staticClass: "brokers-filter-body"
-  }, [_c('div', {
-    staticClass: "brokers-filter-control brokers-filter-control-country"
-  }, [_c('div', {
-    staticClass: "brokers-filter-control-country-title"
-  }, [_vm._v("\n                            Country range\n                        ")]), _vm._v(" "), _c('a', {
-    staticClass: "brokers-filter-control-country-link",
-    attrs: {
-      "href": "#"
-    },
-    on: {
-      "click": function($event) {
-        $event.preventDefault();
-        _vm.toggleCountrySelect($event)
-      }
-    }
-  }, [_vm._v("\n                            " + _vm._s(_vm.filters.country ? _vm.filters.country : 'All countries') + "\n                        ")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.filters.country),
-      expression: "filters.country"
-    }],
-    staticClass: "js-country-select brokers-filter-control-country-select",
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.filters.country = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, [_c('option', {
-    domProps: {
-      "value": null
-    }
-  }, [_vm._v("All countries")]), _vm._v(" "), _vm._l((_vm.countries), function(country, name) {
-    return _c('option', {
-      domProps: {
-        "value": name
-      }
-    }, [_vm._v("\n                                " + _vm._s(name) + "\n                            ")])
-  })], 2)]), _vm._v(" "), _c('div', {
-    staticClass: "brokers-filter-control brokers-filter-control-sorting"
-  }, [_c('div', {
-    staticClass: "brokers-filter-control-title"
-  }, [_vm._v("\n                            Sorting\n                        ")]), _vm._v(" "), _c('div', {
-    staticClass: "brokers-filter-control-sorting-select"
-  }, [_c('a', {
-    staticClass: "brokers-filter-control-sorting-select-item active",
-    attrs: {
-      "href": "#"
-    },
-    on: {
-      "click": function($event) {
-        $event.preventDefault();
-      }
-    }
-  }, [_vm._v("\n                                Unsorted\n                            ")]), _vm._v(" "), _c('a', {
-    staticClass: "brokers-filter-control-sorting-select-item",
-    attrs: {
-      "href": "#"
-    },
-    on: {
-      "click": function($event) {
-        $event.preventDefault();
-      }
-    }
-  }, [_vm._v("\n                                Abc\n                            ")])])]), _vm._v(" "), _c('div', {
-    staticClass: "brokers-filter-control brokers-filter-control-range"
-  }, [_c('div', {
-    staticClass: "brokers-filter-control-title"
-  }, [_vm._v("\n                            Trade Comission\n                        ")]), _vm._v(" "), _c('vue-slider', _vm._b({
-    ref: "tradeComissionSlider",
-    model: {
-      value: (_vm.filters.tradeComission.value),
-      callback: function($$v) {
-        _vm.filters.tradeComission.value = $$v
-      },
-      expression: "filters.tradeComission.value"
-    }
-  }, 'vue-slider', _vm.filters.tradeComission.slider)), _vm._v(" "), _c('div', {
-    staticClass: "brokers-filter-control-range-values"
-  }, [_c('div', {
-    staticClass: "brokers-filter-control-range-min"
-  }, [_vm._v("\n                                " + _vm._s(_vm.filters.tradeComission.value[0]) + "\n                            ")]), _vm._v(" "), _c('div', {
-    staticClass: "brokers-filter-control-range-max"
-  }, [_vm._v("\n                                " + _vm._s(_vm.filters.tradeComission.value[1]) + "\n                            ")])])], 1), _vm._v(" "), _c('div', {
-    staticClass: "brokers-filter-control brokers-filter-control-range"
-  }, [_c('div', {
-    staticClass: "brokers-filter-control-title"
-  }, [_vm._v("\n                            Min account deposit\n                        ")]), _vm._v(" "), _c('vue-slider', _vm._b({
-    model: {
-      value: (_vm.filters.minAccountDeposit.value),
-      callback: function($$v) {
-        _vm.filters.minAccountDeposit.value = $$v
-      },
-      expression: "filters.minAccountDeposit.value"
-    }
-  }, 'vue-slider', _vm.filters.minAccountDeposit.slider)), _vm._v(" "), _c('div', {
-    staticClass: "brokers-filter-control-range-values"
-  }, [_c('div', {
-    staticClass: "brokers-filter-control-range-min"
-  }, [_vm._v("\n                                " + _vm._s(_vm.filters.minAccountDeposit.value[0]) + "\n                            ")]), _vm._v(" "), _c('div', {
-    staticClass: "brokers-filter-control-range-max"
-  }, [_vm._v("\n                                " + _vm._s(_vm.filters.minAccountDeposit.value[1]) + "\n                            ")])])], 1)])])]) : _vm._e()])], 1)
+  })])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "brokers-list-item-subtitle"
-  }, [_c('div', {
-    staticClass: "brokers-list-item-label"
-  }, [_vm._v("Promo")]), _vm._v("\n                    Forex Account\n                ")])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('tr', [_c('th', [_vm._v("Aggregate rating")]), _vm._v(" "), _c('th', [_vm._v("Min Deposit")]), _vm._v(" "), _c('th', [_vm._v("Max Leverage")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-87d40e68", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-9fd95016", module.exports)
   }
 }
 
