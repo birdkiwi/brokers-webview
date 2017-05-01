@@ -1,6 +1,14 @@
 <template>
     <div>
         <transition name="fade">
+            <div class="spinner-overlay" v-if="spinner">
+                <div class="spinner">
+                    <spinner :radius="'20px'"></spinner>
+                </div>
+            </div>
+        </transition>
+
+        <transition name="fade">
             <brokers-list v-if="currentView == 'brokers-list'" :brokers="brokers" :comparison="comparison"></brokers-list>
         </transition>
 
@@ -18,6 +26,7 @@
 <script>
     import config from './config';
     import axios from 'axios';
+    import spinner from 'vue-spinner/src/FadeLoader.vue';
     import brokersList from './components/brokers-list.vue';
     import brokersCard from './components/brokers-card.vue';
     import brokersFilter from './components/brokers-filter.vue';
@@ -37,6 +46,7 @@
             return {
                 currentView: 'brokers-list',
                 currentBroker: null,
+                spinner: false,
                 brokers: [],
                 countries: {},
                 comparison: [],
@@ -73,23 +83,29 @@
         components: {
             brokersList,
             brokersFilter,
-            brokersCard
+            brokersCard,
+            spinner
         },
         methods: {
             getAccounts(type) {
                 let _this = this;
+                _this.spinner = true;
+
                 axiosInstance.get('FindAccounts', {
                     params: {
                         type: type ? type : 'Forex'
                     }
                 }).then(function(response) {
                     _this.brokers = response.data.data;
+                    _this.spinner = false;
                 }, function (error) {
+                    _this.spinner = false;
                     //TODO: error handler
                 });
             },
             getCountries() {
                 let _this = this;
+
                 axiosInstance.get('AccountCountries', {
                     params: {
                         //profileType: type ? type : 'Forex'

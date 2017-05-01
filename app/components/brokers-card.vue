@@ -34,7 +34,7 @@
 
         <div class="broker-card-tabs">
             <a href="#" @click.prevent="currentTab = 'details'" class="broker-card-tabs-item" :class="(currentTab == 'details') ? 'active' : ''">Account Details</a>
-            <a href="#" @click.prevent="currentTab = 'summary'" class="broker-card-tabs-item" :class="(currentTab == 'summary') ? 'active' : ''">Summary</a>
+            <a v-if="broker.Description" href="#" @click.prevent="currentTab = 'summary'" class="broker-card-tabs-item" :class="(currentTab == 'summary') ? 'active' : ''">Summary</a>
         </div>
 
         <transition name="fade">
@@ -91,6 +91,78 @@
                         <th>XAU/USD spread, avg</th>
                         <td class="text-right">
                             {{ broker.AverageXAUUSDSpread }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>AUD/USD spread, avg</th>
+                        <td class="text-right">
+                            {{ broker.AverageAUDUSDSpread }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>USD/CHF spread, avg</th>
+                        <td class="text-right">
+                            {{ broker.AverageUSDCHFSpread }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Trade comission</th>
+                        <td class="text-right">
+                            {{ broker.TradeCommission }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Incentive</th>
+                        <td class="text-right">
+                            {{ broker.Incentive }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Assisted trade fee</th>
+                        <td class="text-right">
+                            {{ broker.AssistedTradeFee }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Marginable</th>
+                        <td class="text-right">
+                            {{ broker.Marginable ? 'Yes' : 'No' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Margin rate</th>
+                        <td class="text-right">
+                            {{ broker.MarginRate }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Volume-based commission</th>
+                        <td class="text-right">
+                            {{ broker.IsCommissionVolumeBased ? 'Yes' : 'No' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Minumum deposit</th>
+                        <td class="text-right">
+                            {{ broker.MinDeposit }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Minumum deposit (Margin)</th>
+                        <td class="text-right">
+                            {{ broker.MarginMinDeposit }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Maximum Leverage</th>
+                        <td class="text-right">
+                            {{ broker.MaxLeverage }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Contract fee</th>
+                        <td class="text-right">
+                            {{ broker.ContractFee }}
                         </td>
                     </tr>
                     <tr>
@@ -173,11 +245,7 @@
         </transition>
         <transition name="fade">
             <div v-if="currentTab == 'summary'">
-                <div class="broker-card-summary">
-                    <p>
-                        Trade over 50 currency pairs including gold and silver in real time. Benefits from sophisticated trading platforms, premium charting tools. Access extensive education, actionable research, detailed charts, and more…
-                    </p>
-                </div>
+                <div v-if="broker.Description" v-html="broker.Description" class="broker-card-summary"></div>
             </div>
         </transition>
 

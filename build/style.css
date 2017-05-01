@@ -745,30 +745,8 @@ template {
 .broker-card-summary p:last-child {
   margin-bottom: 0;
 }
-.text-left {
-  text-align: left !important;
-}
-.text-center {
-  text-align: center !important;
-}
-.text-right {
-  text-align: right !important;
-}
-.text-uppercase {
-  text-transform: uppercase !important;
-}
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  color: #333333;
+.broker-card-summary a {
+  color: #fff;
 }
 .brokers-list-item {
   display: flex;
@@ -784,9 +762,19 @@ body {
   padding: 12px;
   text-decoration: none;
 }
+@media all and (max-width: 340px) {
+  .brokers-list-item-left {
+    padding: 6px 6px 6px 0;
+  }
+}
 .brokers-list-item-photo {
   width: 80px;
   height: 70px;
+}
+@media all and (max-width: 340px) {
+  .brokers-list-item-photo {
+    width: 60px;
+  }
 }
 .brokers-list-item-photo img {
   max-width: 100%;
@@ -799,6 +787,12 @@ body {
   flex: 1;
   padding: 12px;
   text-decoration: none;
+}
+@media all and (max-width: 340px) {
+  .brokers-list-item-content {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 .brokers-list-item-title {
   font-size: 17px;
@@ -850,6 +844,31 @@ body {
   line-height: 36px;
   margin-left: 10px;
   margin-right: 15px;
+}
+.text-left {
+  text-align: left !important;
+}
+.text-center {
+  text-align: center !important;
+}
+.text-right {
+  text-align: right !important;
+}
+.text-uppercase {
+  text-transform: uppercase !important;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #333333;
 }
 .broker-stars {
   display: inline-block;
@@ -915,6 +934,21 @@ body {
 .overlay-padding {
   padding: 8px;
   overflow-y: auto;
+}
+.spinner-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.spinner {
+  height: 100px;
 }
 
 /*# sourceMappingURL=style.css.map*/
