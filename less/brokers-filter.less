@@ -3,10 +3,8 @@
   left: 50%;
   top: 0;
   transform: translateX(-50%);
-  margin: 8px;
-  width: 100%;
+  width: calc(~"100% - 16px");
   max-width: 360px;
-  padding: 16px;
   background-color: @c-main-black;
   color: #fff;
   border-radius: 12px;
@@ -16,6 +14,10 @@
   a {
     color: #fff;
   }
+}
+
+.brokers-filter-padding {
+  padding: 16px;
 }
 
 .brokers-filter-header {
@@ -52,7 +54,7 @@
     display: inline-block;
     width: 8px;
     height: 13px;
-    vertical-align: middle;
+    vertical-align: baseline;
     background: url("../images/icon-select-arrow-right-white.svg");
     margin-left: 5px;
   }

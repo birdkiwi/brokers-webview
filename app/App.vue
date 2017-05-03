@@ -98,10 +98,12 @@
                 let _this = this;
                 _this.spinner = true;
 
+                let params = {
+                    type: type ? type : 'Forex'
+                }
+
                 axiosInstance.get('FindAccounts', {
-                    params: {
-                        type: type ? type : 'Forex'
-                    }
+                    params: params
                 }).then(function(response) {
                     _this.brokers = response.data.data;
                     _this.spinner = false;
@@ -113,15 +115,12 @@
             getCountries() {
                 let _this = this;
 
-                axiosInstance.get('AccountCountries', {
-                    params: {
-                        //profileType: type ? type : 'Forex'
-                    }
-                }).then(function(response) {
-                    _this.countries = response.data;
-                }, function (error) {
-                    //TODO: error handler
-                });
+                axiosInstance.get('AccountCountries')
+                    .then(function(response) {
+                        _this.countries = response.data;
+                    }, function (error) {
+                        //TODO: error handler
+                    });
             },
             showFilter() {
                 this.filters.visible = true;

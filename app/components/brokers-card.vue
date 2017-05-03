@@ -66,43 +66,43 @@
                     <tr>
                         <th>EUR/USD spread, avg</th>
                         <td class="text-right">
-                            {{ broker.AverageEurUsdSpread }}
+                            {{ broker.AverageEurUsdSpread.toFixed(2) }}
                         </td>
                     </tr>
                     <tr>
                         <th>USD/JPY spread, avg</th>
                         <td class="text-right">
-                            {{ broker.AverageUSDJPYSpread }}
+                            {{ broker.AverageUSDJPYSpread.toFixed(2) }}
                         </td>
                     </tr>
                     <tr>
                         <th>GBP/USD spread, avg</th>
                         <td class="text-right">
-                            {{ broker.AverageGBPUSDSpread }}
+                            {{ broker.AverageGBPUSDSpread.toFixed(2) }}
                         </td>
                     </tr>
                     <tr>
                         <th>USD/CAD spread, avg</th>
                         <td class="text-right">
-                            {{ broker.AverageUSDCADSpread }}
+                            {{ broker.AverageUSDCADSpread.toFixed(2) }}
                         </td>
                     </tr>
                     <tr>
                         <th>XAU/USD spread, avg</th>
                         <td class="text-right">
-                            {{ broker.AverageXAUUSDSpread }}
+                            {{ broker.AverageXAUUSDSpread.toFixed(2) }}
                         </td>
                     </tr>
                     <tr>
                         <th>AUD/USD spread, avg</th>
                         <td class="text-right">
-                            {{ broker.AverageAUDUSDSpread }}
+                            {{ broker.AverageAUDUSDSpread.toFixed(2) }}
                         </td>
                     </tr>
                     <tr>
                         <th>USD/CHF spread, avg</th>
                         <td class="text-right">
-                            {{ broker.AverageUSDCHFSpread }}
+                            {{ broker.AverageUSDCHFSpread.toFixed(2) }}
                         </td>
                     </tr>
                     <tr>

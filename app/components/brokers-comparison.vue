@@ -45,31 +45,31 @@
                     <div v-if="index == 0" class="broker-comparison-table-row-title">
                         EUR/USD spread, avg
                     </div>
-                    {{ broker.AverageEurUsdSpread }}
+                    {{ broker.AverageEurUsdSpread.toFixed(2) }}
                 </div>
                 <div class="broker-comparison-table-row">
                     <div v-if="index == 0" class="broker-comparison-table-row-title">
                         USD/JPY spread, avg
                     </div>
-                    {{ broker.AverageUSDJPYSpread }}
+                    {{ broker.AverageUSDJPYSpread.toFixed(2) }}
                 </div>
                 <div class="broker-comparison-table-row">
                     <div v-if="index == 0" class="broker-comparison-table-row-title">
                         GBP/USD spread, avg
                     </div>
-                    {{ broker.AverageGBPUSDSpread }}
+                    {{ broker.AverageGBPUSDSpread.toFixed(2) }}
                 </div>
                 <div class="broker-comparison-table-row">
                     <div v-if="index == 0" class="broker-comparison-table-row-title">
                         USD/CAD spread, avg
                     </div>
-                    {{ broker.AverageUSDCADSpread }}
+                    {{ broker.AverageUSDCADSpread.toFixed(2) }}
                 </div>
                 <div class="broker-comparison-table-row">
                     <div v-if="index == 0" class="broker-comparison-table-row-title">
                         XAU/USD spread, avg
                     </div>
-                    {{ broker.AverageXAUUSDSpread }}
+                    {{ broker.AverageXAUUSDSpread.toFixed(2) }}
                 </div>
                 <div class="broker-comparison-table-row">
                     <div v-if="index == 0" class="broker-comparison-table-row-title">
@@ -81,7 +81,7 @@
                     <div v-if="index == 0" class="broker-comparison-table-row-title">
                         USD/CHF spread, avg
                     </div>
-                    {{ broker.AverageUSDCHFSpread }}
+                    {{ broker.AverageUSDCHFSpread.toFixed(2) }}
                 </div>
 
 

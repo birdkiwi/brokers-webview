@@ -413,7 +413,7 @@ if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
 
 
 // Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(10)(function () {
+module.exports = !__webpack_require__(11)(function () {
   return Object.defineProperty({}, 'a', { get: function get() {
       return 7;
     } }).a != 7;
@@ -471,144 +471,6 @@ module.exports = function (it) {
 
 /***/ }),
 /* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var dP = __webpack_require__(5),
-    createDesc = __webpack_require__(15);
-module.exports = __webpack_require__(3) ? function (object, key, value) {
-  return dP.f(object, key, createDesc(1, value));
-} : function (object, key, value) {
-  object[key] = value;
-  return object;
-};
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var store = __webpack_require__(26)('wks'),
-    uid = __webpack_require__(16),
-    _Symbol = __webpack_require__(2).Symbol,
-    USE_SYMBOL = typeof _Symbol == 'function';
-
-var $exports = module.exports = function (name) {
-  return store[name] || (store[name] = USE_SYMBOL && _Symbol[name] || (USE_SYMBOL ? _Symbol : uid)('Symbol.' + name));
-};
-
-$exports.store = store;
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var global = __webpack_require__(2),
-    core = __webpack_require__(1),
-    ctx = __webpack_require__(89),
-    hide = __webpack_require__(7),
-    PROTOTYPE = 'prototype';
-
-var $export = function $export(type, name, source) {
-  var IS_FORCED = type & $export.F,
-      IS_GLOBAL = type & $export.G,
-      IS_STATIC = type & $export.S,
-      IS_PROTO = type & $export.P,
-      IS_BIND = type & $export.B,
-      IS_WRAP = type & $export.W,
-      exports = IS_GLOBAL ? core : core[name] || (core[name] = {}),
-      expProto = exports[PROTOTYPE],
-      target = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE],
-      key,
-      own,
-      out;
-  if (IS_GLOBAL) source = name;
-  for (key in source) {
-    // contains in native
-    own = !IS_FORCED && target && target[key] !== undefined;
-    if (own && key in exports) continue;
-    // export native or passed
-    out = own ? target[key] : source[key];
-    // prevent global pollution for namespaces
-    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
-    // bind timers to global for call from export context
-    : IS_BIND && own ? ctx(out, global)
-    // wrap global constructors for prevent change them in library
-    : IS_WRAP && target[key] == out ? function (C) {
-      var F = function F(a, b, c) {
-        if (this instanceof C) {
-          switch (arguments.length) {
-            case 0:
-              return new C();
-            case 1:
-              return new C(a);
-            case 2:
-              return new C(a, b);
-          }return new C(a, b, c);
-        }return C.apply(this, arguments);
-      };
-      F[PROTOTYPE] = C[PROTOTYPE];
-      return F;
-      // make static versions for prototype methods
-    }(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
-    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
-    if (IS_PROTO) {
-      (exports.virtual || (exports.virtual = {}))[key] = out;
-      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
-      if (type & $export.R && expProto && !expProto[key]) hide(expProto, key, out);
-    }
-  }
-};
-// type bitmap
-$export.F = 1; // forced
-$export.G = 2; // global
-$export.S = 4; // static
-$export.P = 8; // proto
-$export.B = 16; // bind
-$export.W = 32; // wrap
-$export.U = 64; // safe
-$export.R = 128; // real proto method for `library` 
-module.exports = $export;
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function (exec) {
-  try {
-    return !!exec();
-  } catch (e) {
-    return true;
-  }
-};
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys = __webpack_require__(44),
-    enumBugKeys = __webpack_require__(19);
-
-module.exports = Object.keys || function keys(O) {
-  return $keys(O, enumBugKeys);
-};
-
-/***/ }),
-/* 12 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -689,6 +551,144 @@ module.exports = function normalizeComponent (
   }
 }
 
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var dP = __webpack_require__(5),
+    createDesc = __webpack_require__(15);
+module.exports = __webpack_require__(3) ? function (object, key, value) {
+  return dP.f(object, key, createDesc(1, value));
+} : function (object, key, value) {
+  object[key] = value;
+  return object;
+};
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var store = __webpack_require__(26)('wks'),
+    uid = __webpack_require__(16),
+    _Symbol = __webpack_require__(2).Symbol,
+    USE_SYMBOL = typeof _Symbol == 'function';
+
+var $exports = module.exports = function (name) {
+  return store[name] || (store[name] = USE_SYMBOL && _Symbol[name] || (USE_SYMBOL ? _Symbol : uid)('Symbol.' + name));
+};
+
+$exports.store = store;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var global = __webpack_require__(2),
+    core = __webpack_require__(1),
+    ctx = __webpack_require__(89),
+    hide = __webpack_require__(8),
+    PROTOTYPE = 'prototype';
+
+var $export = function $export(type, name, source) {
+  var IS_FORCED = type & $export.F,
+      IS_GLOBAL = type & $export.G,
+      IS_STATIC = type & $export.S,
+      IS_PROTO = type & $export.P,
+      IS_BIND = type & $export.B,
+      IS_WRAP = type & $export.W,
+      exports = IS_GLOBAL ? core : core[name] || (core[name] = {}),
+      expProto = exports[PROTOTYPE],
+      target = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE],
+      key,
+      own,
+      out;
+  if (IS_GLOBAL) source = name;
+  for (key in source) {
+    // contains in native
+    own = !IS_FORCED && target && target[key] !== undefined;
+    if (own && key in exports) continue;
+    // export native or passed
+    out = own ? target[key] : source[key];
+    // prevent global pollution for namespaces
+    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
+    // bind timers to global for call from export context
+    : IS_BIND && own ? ctx(out, global)
+    // wrap global constructors for prevent change them in library
+    : IS_WRAP && target[key] == out ? function (C) {
+      var F = function F(a, b, c) {
+        if (this instanceof C) {
+          switch (arguments.length) {
+            case 0:
+              return new C();
+            case 1:
+              return new C(a);
+            case 2:
+              return new C(a, b);
+          }return new C(a, b, c);
+        }return C.apply(this, arguments);
+      };
+      F[PROTOTYPE] = C[PROTOTYPE];
+      return F;
+      // make static versions for prototype methods
+    }(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
+    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
+    if (IS_PROTO) {
+      (exports.virtual || (exports.virtual = {}))[key] = out;
+      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
+      if (type & $export.R && expProto && !expProto[key]) hide(expProto, key, out);
+    }
+  }
+};
+// type bitmap
+$export.F = 1; // forced
+$export.G = 2; // global
+$export.S = 4; // static
+$export.P = 8; // proto
+$export.B = 16; // bind
+$export.W = 32; // wrap
+$export.U = 64; // safe
+$export.R = 128; // real proto method for `library` 
+module.exports = $export;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function (exec) {
+  try {
+    return !!exec();
+  } catch (e) {
+    return true;
+  }
+};
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// 19.1.2.14 / 15.2.3.14 Object.keys(O)
+var $keys = __webpack_require__(44),
+    enumBugKeys = __webpack_require__(19);
+
+module.exports = Object.keys || function keys(O) {
+  return $keys(O, enumBugKeys);
+};
 
 /***/ }),
 /* 13 */
@@ -947,7 +947,7 @@ exports.f = {}.propertyIsEnumerable;
 
 var def = __webpack_require__(5).f,
     has = __webpack_require__(4),
-    TAG = __webpack_require__(8)('toStringTag');
+    TAG = __webpack_require__(9)('toStringTag');
 
 module.exports = function (it, tag, stat) {
   if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
@@ -1038,7 +1038,7 @@ module.exports = function (name) {
 "use strict";
 
 
-exports.f = __webpack_require__(8);
+exports.f = __webpack_require__(9);
 
 /***/ }),
 /* 31 */
@@ -3271,7 +3271,7 @@ module.exports = function (it) {
 "use strict";
 
 
-module.exports = !__webpack_require__(3) && !__webpack_require__(10)(function () {
+module.exports = !__webpack_require__(3) && !__webpack_require__(11)(function () {
   return Object.defineProperty(__webpack_require__(39)('div'), 'a', { get: function get() {
       return 7;
     } }).a != 7;
@@ -3285,15 +3285,15 @@ module.exports = !__webpack_require__(3) && !__webpack_require__(10)(function ()
 
 
 var LIBRARY = __webpack_require__(21),
-    $export = __webpack_require__(9),
+    $export = __webpack_require__(10),
     redefine = __webpack_require__(45),
-    hide = __webpack_require__(7),
+    hide = __webpack_require__(8),
     has = __webpack_require__(4),
     Iterators = __webpack_require__(20),
     $iterCreate = __webpack_require__(94),
     setToStringTag = __webpack_require__(24),
     getPrototypeOf = __webpack_require__(101),
-    ITERATOR = __webpack_require__(8)('iterator'),
+    ITERATOR = __webpack_require__(9)('iterator'),
     BUGGY = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
 ,
     FF_ITERATOR = '@@iterator',
@@ -3427,7 +3427,7 @@ module.exports = function (object, names) {
 "use strict";
 
 
-module.exports = __webpack_require__(7);
+module.exports = __webpack_require__(8);
 
 /***/ }),
 /* 46 */
@@ -10008,11 +10008,11 @@ exports.default = Vue$3;
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var Component = __webpack_require__(12)(
+var Component = __webpack_require__(7)(
   /* script */
   __webpack_require__(119),
   /* template */
-  __webpack_require__(135),
+  __webpack_require__(141),
   /* styles */
   null,
   /* scopeId */
@@ -14003,7 +14003,7 @@ module.exports = function (fn, that, length) {
 
 
 // all enumerable object keys, includes symbols
-var getKeys = __webpack_require__(11),
+var getKeys = __webpack_require__(12),
     gOPS = __webpack_require__(43),
     pIE = __webpack_require__(23);
 module.exports = function (it) {
@@ -14068,7 +14068,7 @@ var create = __webpack_require__(22),
     IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(7)(IteratorPrototype, __webpack_require__(8)('iterator'), function () {
+__webpack_require__(8)(IteratorPrototype, __webpack_require__(9)('iterator'), function () {
   return this;
 });
 
@@ -14095,7 +14095,7 @@ module.exports = function (done, value) {
 "use strict";
 
 
-var getKeys = __webpack_require__(11),
+var getKeys = __webpack_require__(12),
     toIObject = __webpack_require__(6);
 module.exports = function (object, el) {
   var O = toIObject(object),
@@ -14125,7 +14125,7 @@ var META = __webpack_require__(16)('meta'),
 var isExtensible = Object.isExtensible || function () {
   return true;
 };
-var FREEZE = !__webpack_require__(10)(function () {
+var FREEZE = !__webpack_require__(11)(function () {
   return isExtensible(Object.preventExtensions({}));
 });
 var setMeta = function setMeta(it) {
@@ -14180,7 +14180,7 @@ var meta = module.exports = {
 
 var dP = __webpack_require__(5),
     anObject = __webpack_require__(13),
-    getKeys = __webpack_require__(11);
+    getKeys = __webpack_require__(12);
 
 module.exports = __webpack_require__(3) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
@@ -14274,9 +14274,9 @@ module.exports = Object.getPrototypeOf || function (O) {
 
 
 // most Object methods by ES6 should accept primitives
-var $export = __webpack_require__(9),
+var $export = __webpack_require__(10),
     core = __webpack_require__(1),
-    fails = __webpack_require__(10);
+    fails = __webpack_require__(11);
 module.exports = function (KEY, exec) {
   var fn = (core.Object || {})[KEY] || Object[KEY],
       exp = {};
@@ -14387,7 +14387,7 @@ addToUnscopables('entries');
 "use strict";
 
 
-var $export = __webpack_require__(9);
+var $export = __webpack_require__(10);
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
 $export($export.S, 'Object', { create: __webpack_require__(22) });
 
@@ -14398,7 +14398,7 @@ $export($export.S, 'Object', { create: __webpack_require__(22) });
 "use strict";
 
 
-var $export = __webpack_require__(9);
+var $export = __webpack_require__(10);
 // 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
 $export($export.S + $export.F * !__webpack_require__(3), 'Object', { defineProperty: __webpack_require__(5).f });
 
@@ -14411,7 +14411,7 @@ $export($export.S + $export.F * !__webpack_require__(3), 'Object', { definePrope
 
 // 19.1.2.14 Object.keys(O)
 var toObject = __webpack_require__(46),
-    $keys = __webpack_require__(11);
+    $keys = __webpack_require__(12);
 
 __webpack_require__(102)('keys', function () {
   return function keys(it) {
@@ -14463,14 +14463,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 var global = __webpack_require__(2),
     has = __webpack_require__(4),
     DESCRIPTORS = __webpack_require__(3),
-    $export = __webpack_require__(9),
+    $export = __webpack_require__(10),
     redefine = __webpack_require__(45),
     META = __webpack_require__(97).KEY,
-    $fails = __webpack_require__(10),
+    $fails = __webpack_require__(11),
     shared = __webpack_require__(26),
     setToStringTag = __webpack_require__(24),
     uid = __webpack_require__(16),
-    wks = __webpack_require__(8),
+    wks = __webpack_require__(9),
     wksExt = __webpack_require__(30),
     wksDefine = __webpack_require__(29),
     keyOf = __webpack_require__(96),
@@ -14484,7 +14484,7 @@ var global = __webpack_require__(2),
     gOPNExt = __webpack_require__(100),
     $GOPD = __webpack_require__(99),
     $DP = __webpack_require__(5),
-    $keys = __webpack_require__(11),
+    $keys = __webpack_require__(12),
     gOPD = $GOPD.f,
     dP = $DP.f,
     gOPN = gOPNExt.f,
@@ -14692,7 +14692,7 @@ $JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function () {
 });
 
 // 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
-$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(7)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
+$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(8)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
 // 19.4.3.5 Symbol.prototype[@@toStringTag]
 setToStringTag($Symbol, 'Symbol');
 // 20.2.1.9 Math[@@toStringTag]
@@ -14727,9 +14727,9 @@ __webpack_require__(29)('observable');
 
 __webpack_require__(106);
 var global = __webpack_require__(2),
-    hide = __webpack_require__(7),
+    hide = __webpack_require__(8),
     Iterators = __webpack_require__(20),
-    TO_STRING_TAG = __webpack_require__(8)('toStringTag');
+    TO_STRING_TAG = __webpack_require__(9)('toStringTag');
 
 for (var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList', 'CSSRuleList'], i = 0; i < 5; i++) {
   var NAME = collections[i],
@@ -14945,23 +14945,23 @@ var _axios = __webpack_require__(54);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _FadeLoader = __webpack_require__(131);
+var _FadeLoader = __webpack_require__(135);
 
 var _FadeLoader2 = _interopRequireDefault(_FadeLoader);
 
-var _brokersList = __webpack_require__(130);
+var _brokersList = __webpack_require__(133);
 
 var _brokersList2 = _interopRequireDefault(_brokersList);
 
-var _brokersCard = __webpack_require__(128);
+var _brokersCard = __webpack_require__(130);
 
 var _brokersCard2 = _interopRequireDefault(_brokersCard);
 
-var _brokersComparison = __webpack_require__(149);
+var _brokersComparison = __webpack_require__(131);
 
 var _brokersComparison2 = _interopRequireDefault(_brokersComparison);
 
-var _brokersFilter = __webpack_require__(129);
+var _brokersFilter = __webpack_require__(132);
 
 var _brokersFilter2 = _interopRequireDefault(_brokersFilter);
 
@@ -15063,10 +15063,12 @@ exports.default = {
             var _this = this;
             _this.spinner = true;
 
+            var params = {
+                type: type ? type : 'Forex'
+            };
+
             axiosInstance.get('FindAccounts', {
-                params: {
-                    type: type ? type : 'Forex'
-                }
+                params: params
             }).then(function (response) {
                 _this.brokers = response.data.data;
                 _this.spinner = false;
@@ -15078,11 +15080,7 @@ exports.default = {
         getCountries: function getCountries() {
             var _this = this;
 
-            axiosInstance.get('AccountCountries', {
-                params: {
-                    //profileType: type ? type : 'Forex'
-                }
-            }).then(function (response) {
+            axiosInstance.get('AccountCountries').then(function (response) {
                 _this.countries = response.data;
             }, function (error) {
                 //TODO: error handler
@@ -15402,23 +15400,194 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-
-var _vueSliderComponent = __webpack_require__(124);
-
-var _vueSliderComponent2 = _interopRequireDefault(_vueSliderComponent);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
     data: function data() {
         return {};
     },
 
-    components: {
-        vueSlider: _vueSliderComponent2.default
-    },
-    props: ['filters', 'countries']
-}; //
+    props: ['comparison']
+};
+
+/***/ }),
+/* 122 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _vueSliderComponent = __webpack_require__(126);
+
+var _vueSliderComponent2 = _interopRequireDefault(_vueSliderComponent);
+
+var _countriesSelect = __webpack_require__(134);
+
+var _countriesSelect2 = _interopRequireDefault(_countriesSelect);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 //
 //
 //
@@ -15497,8 +15666,38 @@ exports.default = {
 //
 //
 
+exports.default = {
+    data: function data() {
+        return {
+            showCountrySelect: false
+        };
+    },
+
+    components: {
+        vueSlider: _vueSliderComponent2.default,
+        countriesSelect: _countriesSelect2.default
+    },
+    props: ['filters', 'countries'],
+    methods: {
+        toggleCountrySelect: function toggleCountrySelect() {
+            this.showCountrySelect = true;
+        },
+        resetFilter: function resetFilter() {
+            this.filters.active = false;
+            this.filters.country = null;
+            this.filters.sortBy = null;
+            this.filters.tradeComission.value = [0, 10];
+            this.filters.minAccountDeposit.value = [0, 10];
+        },
+        applyFilter: function applyFilter() {
+            this.filters.active = true;
+            this.filters.visible = false;
+        }
+    }
+};
+
 /***/ }),
-/* 122 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15633,21 +15832,42 @@ exports.default = {
         scroll: function scroll() {
             this.$parent.brokersListScroll = window.pageYOffset;
         }
-    },
-    mounted: function mounted() {
-        console.log('mounted');
-        console.log(document.documentElement.scrollHeight);
-        window.scrollTo(0, this.$parent.brokersListScroll);
-        window.addEventListener('scroll', this.scroll);
-    },
-    destroyed: function destroyed() {
-        console.log('destroyed');
-        window.removeEventListener('scroll', this.scroll);
     }
 };
 
 /***/ }),
-/* 123 */
+/* 124 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+    props: ['countries', 'filters'],
+    methods: {
+        selectCountry: function selectCountry(name) {
+            this.$parent.showCountrySelect = false;
+            this.filters.country = name;
+        }
+    }
+};
+
+/***/ }),
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15792,7 +16012,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 124 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16133,10 +16353,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     var s = i(0);t.exports = s;
   }]);
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(126)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(128)(module)))
 
 /***/ }),
-/* 125 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16171,7 +16391,7 @@ module.exports = function listToStyles(parentId, list) {
 };
 
 /***/ }),
-/* 126 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16201,7 +16421,7 @@ module.exports = function (module) {
 };
 
 /***/ }),
-/* 127 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(116)(true);
@@ -16215,15 +16435,15 @@ exports.push([module.i, "\n.v-spinner .v-fade\n{\n    -webkit-animation: v-fadeS
 
 
 /***/ }),
-/* 128 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var Component = __webpack_require__(12)(
+var Component = __webpack_require__(7)(
   /* script */
   __webpack_require__(120),
   /* template */
-  __webpack_require__(132),
+  __webpack_require__(138),
   /* styles */
   null,
   /* scopeId */
@@ -16255,15 +16475,55 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 129 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var Component = __webpack_require__(12)(
+var Component = __webpack_require__(7)(
   /* script */
   __webpack_require__(121),
   /* template */
-  __webpack_require__(134),
+  __webpack_require__(137),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/Users/alexey/PhpstormProjects/brokers-webview/app/components/brokers-comparison.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] brokers-comparison.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3bfddaa0", Component.options)
+  } else {
+    hotAPI.reload("data-v-3bfddaa0", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 132 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(7)(
+  /* script */
+  __webpack_require__(122),
+  /* template */
+  __webpack_require__(140),
   /* styles */
   null,
   /* scopeId */
@@ -16295,15 +16555,15 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 130 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var Component = __webpack_require__(12)(
+var Component = __webpack_require__(7)(
   /* script */
-  __webpack_require__(122),
+  __webpack_require__(123),
   /* template */
-  __webpack_require__(136),
+  __webpack_require__(142),
   /* styles */
   null,
   /* scopeId */
@@ -16335,19 +16595,59 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 131 */
+/* 134 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(7)(
+  /* script */
+  __webpack_require__(124),
+  /* template */
+  __webpack_require__(136),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/Users/alexey/PhpstormProjects/brokers-webview/app/components/countries-select.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] countries-select.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0b545f59", Component.options)
+  } else {
+    hotAPI.reload("data-v-0b545f59", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(137)
+  __webpack_require__(143)
 }
-var Component = __webpack_require__(12)(
+var Component = __webpack_require__(7)(
   /* script */
-  __webpack_require__(123),
+  __webpack_require__(125),
   /* template */
-  __webpack_require__(133),
+  __webpack_require__(139),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -16379,7 +16679,143 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 132 */
+/* 136 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "brokers-filter-select"
+  }, [_c('a', {
+    staticClass: "brokers-filter-select-item",
+    attrs: {
+      "href": "#"
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.selectCountry(null)
+      }
+    }
+  }, [_vm._v("\n        All countries\n    ")]), _vm._v(" "), _vm._l((_vm.countries), function(country, name) {
+    return _c('a', {
+      staticClass: "brokers-filter-select-item",
+      attrs: {
+        "href": "#"
+      },
+      on: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm.selectCountry(name)
+        }
+      }
+    }, [_vm._v("\n        " + _vm._s(name) + "\n    ")])
+  })], 2)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-0b545f59", module.exports)
+  }
+}
+
+/***/ }),
+/* 137 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "broker-comparison"
+  }, _vm._l((_vm.comparison), function(broker, index) {
+    return _c('div', {
+      staticClass: "broker-comparison-item"
+    }, [_c('div', {
+      staticClass: "broker-comparison-card"
+    }, [_c('div', {
+      staticClass: "broker-comparison-card-padding"
+    }, [_c('div', {
+      staticClass: "broker-comparison-card-logo"
+    }, [_c('img', {
+      attrs: {
+        "src": 'http://www.brokeries.com/Content/Proto/images/logos/brokers/' + broker.Broker + '.jpg'
+      }
+    })]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-card-title"
+    }, [_vm._v("\n                    " + _vm._s(broker.Broker) + "\n                ")]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-card-subtitle"
+    }, [_vm._v("\n                    " + _vm._s(broker.ProfileType) + " Account\n                ")]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-card-link-btn"
+    }, [_c('a', {
+      staticClass: "button button-round button-green",
+      attrs: {
+        "href": broker.BrokerWebsite,
+        "target": "_blank"
+      }
+    }, [_vm._v("Open account")])])])]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-table"
+    }, [_c('div', {
+      staticClass: "broker-comparison-table-row"
+    }, [(index == 0) ? _c('div', {
+      staticClass: "broker-comparison-table-row-title"
+    }, [_vm._v("\n                    Aggregate rating\n                ")]) : _vm._e(), _vm._v(" "), (broker.Rank === 'Excellent') ? _c('span', {
+      staticClass: "c-green"
+    }, [_vm._v("\n                    " + _vm._s(broker.Rank) + "\n                ")]) : (broker.Rank === 'Poor') ? _c('span', {
+      staticClass: "c-gray-light"
+    }, [_vm._v("\n                    " + _vm._s(broker.Rank) + "\n                ")]) : _c('span', [_vm._v("\n                    " + _vm._s(broker.Rank) + "\n                ")])]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-table-row"
+    }, [(index == 0) ? _c('div', {
+      staticClass: "broker-comparison-table-row-title"
+    }, [_vm._v("\n                    Rating\n                ")]) : _vm._e(), _vm._v(" "), _c('div', {
+      staticClass: "brokers-card-stars broker-stars"
+    }, [_vm._l((Math.round(broker.StarRating)), function(index) {
+      return _c('span', {
+        staticClass: "broker-stars-item broker-stars-item-filled"
+      })
+    }), _vm._v(" "), _vm._l(((5 - Math.round(broker.StarRating))), function(index) {
+      return _c('span', {
+        staticClass: "broker-stars-item"
+      })
+    })], 2)]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-table-row"
+    }, [(index == 0) ? _c('div', {
+      staticClass: "broker-comparison-table-row-title"
+    }, [_vm._v("\n                    EUR/USD spread, avg\n                ")]) : _vm._e(), _vm._v("\n                " + _vm._s(broker.AverageEurUsdSpread.toFixed(2)) + "\n            ")]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-table-row"
+    }, [(index == 0) ? _c('div', {
+      staticClass: "broker-comparison-table-row-title"
+    }, [_vm._v("\n                    USD/JPY spread, avg\n                ")]) : _vm._e(), _vm._v("\n                " + _vm._s(broker.AverageUSDJPYSpread.toFixed(2)) + "\n            ")]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-table-row"
+    }, [(index == 0) ? _c('div', {
+      staticClass: "broker-comparison-table-row-title"
+    }, [_vm._v("\n                    GBP/USD spread, avg\n                ")]) : _vm._e(), _vm._v("\n                " + _vm._s(broker.AverageGBPUSDSpread.toFixed(2)) + "\n            ")]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-table-row"
+    }, [(index == 0) ? _c('div', {
+      staticClass: "broker-comparison-table-row-title"
+    }, [_vm._v("\n                    USD/CAD spread, avg\n                ")]) : _vm._e(), _vm._v("\n                " + _vm._s(broker.AverageUSDCADSpread.toFixed(2)) + "\n            ")]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-table-row"
+    }, [(index == 0) ? _c('div', {
+      staticClass: "broker-comparison-table-row-title"
+    }, [_vm._v("\n                    XAU/USD spread, avg\n                ")]) : _vm._e(), _vm._v("\n                " + _vm._s(broker.AverageXAUUSDSpread.toFixed(2)) + "\n            ")]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-table-row"
+    }, [(index == 0) ? _c('div', {
+      staticClass: "broker-comparison-table-row-title"
+    }, [_vm._v("\n                    AUD/USD spread, avg\n                ")]) : _vm._e(), _vm._v("\n                " + _vm._s(broker.AverageAUDUSDSpread) + "\n            ")]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-table-row"
+    }, [(index == 0) ? _c('div', {
+      staticClass: "broker-comparison-table-row-title"
+    }, [_vm._v("\n                    USD/CHF spread, avg\n                ")]) : _vm._e(), _vm._v("\n                " + _vm._s(broker.AverageUSDCHFSpread.toFixed(2)) + "\n            ")])])])
+  }))
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-3bfddaa0", module.exports)
+  }
+}
+
+/***/ }),
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -16461,19 +16897,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     })
   })], 2)])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("EUR/USD spread, avg")]), _vm._v(" "), _c('td', {
     staticClass: "text-right"
-  }, [_vm._v("\n                        " + _vm._s(_vm.broker.AverageEurUsdSpread) + "\n                    ")])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("USD/JPY spread, avg")]), _vm._v(" "), _c('td', {
+  }, [_vm._v("\n                        " + _vm._s(_vm.broker.AverageEurUsdSpread.toFixed(2)) + "\n                    ")])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("USD/JPY spread, avg")]), _vm._v(" "), _c('td', {
     staticClass: "text-right"
-  }, [_vm._v("\n                        " + _vm._s(_vm.broker.AverageUSDJPYSpread) + "\n                    ")])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("GBP/USD spread, avg")]), _vm._v(" "), _c('td', {
+  }, [_vm._v("\n                        " + _vm._s(_vm.broker.AverageUSDJPYSpread.toFixed(2)) + "\n                    ")])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("GBP/USD spread, avg")]), _vm._v(" "), _c('td', {
     staticClass: "text-right"
-  }, [_vm._v("\n                        " + _vm._s(_vm.broker.AverageGBPUSDSpread) + "\n                    ")])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("USD/CAD spread, avg")]), _vm._v(" "), _c('td', {
+  }, [_vm._v("\n                        " + _vm._s(_vm.broker.AverageGBPUSDSpread.toFixed(2)) + "\n                    ")])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("USD/CAD spread, avg")]), _vm._v(" "), _c('td', {
     staticClass: "text-right"
-  }, [_vm._v("\n                        " + _vm._s(_vm.broker.AverageUSDCADSpread) + "\n                    ")])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("XAU/USD spread, avg")]), _vm._v(" "), _c('td', {
+  }, [_vm._v("\n                        " + _vm._s(_vm.broker.AverageUSDCADSpread.toFixed(2)) + "\n                    ")])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("XAU/USD spread, avg")]), _vm._v(" "), _c('td', {
     staticClass: "text-right"
-  }, [_vm._v("\n                        " + _vm._s(_vm.broker.AverageXAUUSDSpread) + "\n                    ")])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("AUD/USD spread, avg")]), _vm._v(" "), _c('td', {
+  }, [_vm._v("\n                        " + _vm._s(_vm.broker.AverageXAUUSDSpread.toFixed(2)) + "\n                    ")])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("AUD/USD spread, avg")]), _vm._v(" "), _c('td', {
     staticClass: "text-right"
-  }, [_vm._v("\n                        " + _vm._s(_vm.broker.AverageAUDUSDSpread) + "\n                    ")])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("USD/CHF spread, avg")]), _vm._v(" "), _c('td', {
+  }, [_vm._v("\n                        " + _vm._s(_vm.broker.AverageAUDUSDSpread.toFixed(2)) + "\n                    ")])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("USD/CHF spread, avg")]), _vm._v(" "), _c('td', {
     staticClass: "text-right"
-  }, [_vm._v("\n                        " + _vm._s(_vm.broker.AverageUSDCHFSpread) + "\n                    ")])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("Trade comission")]), _vm._v(" "), _c('td', {
+  }, [_vm._v("\n                        " + _vm._s(_vm.broker.AverageUSDCHFSpread.toFixed(2)) + "\n                    ")])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("Trade comission")]), _vm._v(" "), _c('td', {
     staticClass: "text-right"
   }, [_vm._v("\n                        " + _vm._s(_vm.broker.TradeCommission) + "\n                    ")])]), _vm._v(" "), _c('tr', [_c('th', [_vm._v("Incentive")]), _vm._v(" "), _c('td', {
     staticClass: "text-right"
@@ -16534,7 +16970,7 @@ if (false) {
 }
 
 /***/ }),
-/* 133 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -16585,78 +17021,94 @@ if (false) {
 }
 
 /***/ }),
-/* 134 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "brokers-filter"
-  }, [_vm._m(0), _vm._v(" "), _c('div', {
+  }, [_c('div', {
+    staticClass: "brokers-filter-padding"
+  }, [_c('div', {
+    staticClass: "brokers-filter-header"
+  }, [_c('div', {
+    staticClass: "brokers-filter-header-title"
+  }, [_vm._v("\n                Filter\n            ")]), _vm._v(" "), _c('div', {
+    staticClass: "brokers-filter-header-buttons"
+  }, [_c('a', {
+    staticClass: "button button-round",
+    attrs: {
+      "href": "#"
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.resetFilter($event)
+      }
+    }
+  }, [_vm._v("Reset ×")]), _vm._v(" "), _c('a', {
+    staticClass: "button button-round button-green",
+    attrs: {
+      "href": "#"
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.applyFilter($event)
+      }
+    }
+  }, [_vm._v("Apply")])])]), _vm._v(" "), _c('div', {
     staticClass: "brokers-filter-body"
   }, [_c('div', {
     staticClass: "brokers-filter-control brokers-filter-control-country"
   }, [_c('div', {
     staticClass: "brokers-filter-control-country-title"
-  }, [_vm._v("\n                Country range\n            ")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.filters.country),
-      expression: "filters.country"
-    }],
-    staticClass: "js-country-select brokers-filter-control-country-select",
+  }, [_vm._v("\n                    Country range\n                ")]), _vm._v(" "), _c('a', {
+    staticClass: "brokers-filter-control-country-link",
+    attrs: {
+      "href": "#"
+    },
     on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.filters.country = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.toggleCountrySelect($event)
       }
     }
-  }, [_c('option', {
-    domProps: {
-      "value": null
-    }
-  }, [_vm._v("All countries")]), _vm._v(" "), _vm._l((_vm.countries), function(country, name) {
-    return _c('option', {
-      domProps: {
-        "value": name
-      }
-    }, [_vm._v("\n                    " + _vm._s(name) + "\n                ")])
-  })], 2)]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                    " + _vm._s(_vm.filters.country ? _vm.filters.country : 'All countries') + "\n                ")])]), _vm._v(" "), _c('div', {
     staticClass: "brokers-filter-control brokers-filter-control-sorting"
   }, [_c('div', {
     staticClass: "brokers-filter-control-title"
-  }, [_vm._v("\n                Sorting\n            ")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                    Sorting\n                ")]), _vm._v(" "), _c('div', {
     staticClass: "brokers-filter-control-sorting-select"
   }, [_c('a', {
-    staticClass: "brokers-filter-control-sorting-select-item active",
-    attrs: {
-      "href": "#"
-    },
-    on: {
-      "click": function($event) {
-        $event.preventDefault();
-      }
-    }
-  }, [_vm._v("\n                    Unsorted\n                ")]), _vm._v(" "), _c('a', {
     staticClass: "brokers-filter-control-sorting-select-item",
+    class: _vm.filters.sortBy == null ? 'active' : '',
     attrs: {
       "href": "#"
     },
     on: {
       "click": function($event) {
         $event.preventDefault();
+        _vm.filters.sortBy = null
       }
     }
-  }, [_vm._v("\n                    Abc\n                ")])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                        Unsorted\n                    ")]), _vm._v(" "), _c('a', {
+    staticClass: "brokers-filter-control-sorting-select-item",
+    class: _vm.filters.sortBy == 'abc' ? 'active' : '',
+    attrs: {
+      "href": "#"
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.filters.sortBy = 'abc'
+      }
+    }
+  }, [_vm._v("\n                        Abc\n                    ")])])]), _vm._v(" "), _c('div', {
     staticClass: "brokers-filter-control brokers-filter-control-range"
   }, [_c('div', {
     staticClass: "brokers-filter-control-title"
-  }, [_vm._v("\n                Trade Comission\n            ")]), _vm._v(" "), _c('vue-slider', _vm._b({
+  }, [_vm._v("\n                    Trade Comission\n                ")]), _vm._v(" "), _c('vue-slider', _vm._b({
     ref: "tradeComissionSlider",
     model: {
       value: (_vm.filters.tradeComission.value),
@@ -16669,13 +17121,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "brokers-filter-control-range-values"
   }, [_c('div', {
     staticClass: "brokers-filter-control-range-min"
-  }, [_vm._v("\n                    " + _vm._s(_vm.filters.tradeComission.value[0]) + "\n                ")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                        " + _vm._s(_vm.filters.tradeComission.value[0]) + "\n                    ")]), _vm._v(" "), _c('div', {
     staticClass: "brokers-filter-control-range-max"
-  }, [_vm._v("\n                    " + _vm._s(_vm.filters.tradeComission.value[1]) + "\n                ")])])], 1), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                        " + _vm._s(_vm.filters.tradeComission.value[1]) + "\n                    ")])])], 1), _vm._v(" "), _c('div', {
     staticClass: "brokers-filter-control brokers-filter-control-range"
   }, [_c('div', {
     staticClass: "brokers-filter-control-title"
-  }, [_vm._v("\n                Min account deposit\n            ")]), _vm._v(" "), _c('vue-slider', _vm._b({
+  }, [_vm._v("\n                    Min account deposit\n                ")]), _vm._v(" "), _c('vue-slider', _vm._b({
     model: {
       value: (_vm.filters.minAccountDeposit.value),
       callback: function($$v) {
@@ -16687,28 +17139,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "brokers-filter-control-range-values"
   }, [_c('div', {
     staticClass: "brokers-filter-control-range-min"
-  }, [_vm._v("\n                    " + _vm._s(_vm.filters.minAccountDeposit.value[0]) + "\n                ")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                        " + _vm._s(_vm.filters.minAccountDeposit.value[0]) + "\n                    ")]), _vm._v(" "), _c('div', {
     staticClass: "brokers-filter-control-range-max"
-  }, [_vm._v("\n                    " + _vm._s(_vm.filters.minAccountDeposit.value[1]) + "\n                ")])])], 1)])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "brokers-filter-header"
-  }, [_c('div', {
-    staticClass: "brokers-filter-header-title"
-  }, [_vm._v("\n            Filter\n        ")]), _vm._v(" "), _c('div', {
-    staticClass: "brokers-filter-header-buttons"
-  }, [_c('a', {
-    staticClass: "button button-round button-gray",
+  }, [_vm._v("\n                        " + _vm._s(_vm.filters.minAccountDeposit.value[1]) + "\n                    ")])])], 1)])]), _vm._v(" "), _c('transition', {
     attrs: {
-      "href": "#"
+      "name": "fade"
     }
-  }, [_vm._v("Reset")]), _vm._v(" "), _c('a', {
-    staticClass: "button button-round button-green",
+  }, [(_vm.showCountrySelect) ? _c('countries-select', {
     attrs: {
-      "href": "#"
+      "countries": _vm.countries,
+      "filters": _vm.filters
     }
-  }, [_vm._v("Apply")])])])
-}]}
+  }) : _vm._e()], 1)], 1)
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -16718,7 +17161,7 @@ if (false) {
 }
 
 /***/ }),
-/* 135 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -16783,7 +17226,7 @@ if (false) {
 }
 
 /***/ }),
-/* 136 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -16996,17 +17439,17 @@ if (false) {
 }
 
 /***/ }),
-/* 137 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(127);
+var content = __webpack_require__(129);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(138)("7bcda46e", content, false);
+var update = __webpack_require__(144)("7bcda46e", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -17022,7 +17465,7 @@ if(false) {
 }
 
 /***/ }),
-/* 138 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -17041,7 +17484,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(125)
+var listToStyles = __webpack_require__(127)
 
 /*
 type StyleObject = {
@@ -17241,327 +17684,6 @@ function applyToTag (styleElement, obj) {
   }
 }
 
-
-/***/ }),
-/* 139 */,
-/* 140 */,
-/* 141 */,
-/* 142 */,
-/* 143 */,
-/* 144 */,
-/* 145 */,
-/* 146 */,
-/* 147 */,
-/* 148 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-exports.default = {
-    data: function data() {
-        return {};
-    },
-
-    props: ['comparison']
-};
-
-/***/ }),
-/* 149 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var Component = __webpack_require__(12)(
-  /* script */
-  __webpack_require__(148),
-  /* template */
-  __webpack_require__(150),
-  /* styles */
-  null,
-  /* scopeId */
-  null,
-  /* moduleIdentifier (server only) */
-  null
-)
-Component.options.__file = "/Users/alexey/PhpstormProjects/brokers-webview/app/components/brokers-comparison.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] brokers-comparison.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3bfddaa0", Component.options)
-  } else {
-    hotAPI.reload("data-v-3bfddaa0", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 150 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "broker-comparison"
-  }, _vm._l((_vm.comparison), function(broker, index) {
-    return _c('div', {
-      staticClass: "broker-comparison-item"
-    }, [_c('div', {
-      staticClass: "broker-comparison-card"
-    }, [_c('div', {
-      staticClass: "broker-comparison-card-padding"
-    }, [_c('div', {
-      staticClass: "broker-comparison-card-logo"
-    }, [_c('img', {
-      attrs: {
-        "src": 'http://www.brokeries.com/Content/Proto/images/logos/brokers/' + broker.Broker + '.jpg'
-      }
-    })]), _vm._v(" "), _c('div', {
-      staticClass: "broker-comparison-card-title"
-    }, [_vm._v("\n                    " + _vm._s(broker.Broker) + "\n                ")]), _vm._v(" "), _c('div', {
-      staticClass: "broker-comparison-card-subtitle"
-    }, [_vm._v("\n                    " + _vm._s(broker.ProfileType) + " Account\n                ")]), _vm._v(" "), _c('div', {
-      staticClass: "broker-comparison-card-link-btn"
-    }, [_c('a', {
-      staticClass: "button button-round button-green",
-      attrs: {
-        "href": broker.BrokerWebsite,
-        "target": "_blank"
-      }
-    }, [_vm._v("Open account")])])])]), _vm._v(" "), _c('div', {
-      staticClass: "broker-comparison-table"
-    }, [_c('div', {
-      staticClass: "broker-comparison-table-row"
-    }, [(index == 0) ? _c('div', {
-      staticClass: "broker-comparison-table-row-title"
-    }, [_vm._v("\n                    Aggregate rating\n                ")]) : _vm._e(), _vm._v(" "), (broker.Rank === 'Excellent') ? _c('span', {
-      staticClass: "c-green"
-    }, [_vm._v("\n                    " + _vm._s(broker.Rank) + "\n                ")]) : (broker.Rank === 'Poor') ? _c('span', {
-      staticClass: "c-gray-light"
-    }, [_vm._v("\n                    " + _vm._s(broker.Rank) + "\n                ")]) : _c('span', [_vm._v("\n                    " + _vm._s(broker.Rank) + "\n                ")])]), _vm._v(" "), _c('div', {
-      staticClass: "broker-comparison-table-row"
-    }, [(index == 0) ? _c('div', {
-      staticClass: "broker-comparison-table-row-title"
-    }, [_vm._v("\n                    Rating\n                ")]) : _vm._e(), _vm._v(" "), _c('div', {
-      staticClass: "brokers-card-stars broker-stars"
-    }, [_vm._l((Math.round(broker.StarRating)), function(index) {
-      return _c('span', {
-        staticClass: "broker-stars-item broker-stars-item-filled"
-      })
-    }), _vm._v(" "), _vm._l(((5 - Math.round(broker.StarRating))), function(index) {
-      return _c('span', {
-        staticClass: "broker-stars-item"
-      })
-    })], 2)]), _vm._v(" "), _c('div', {
-      staticClass: "broker-comparison-table-row"
-    }, [(index == 0) ? _c('div', {
-      staticClass: "broker-comparison-table-row-title"
-    }, [_vm._v("\n                    EUR/USD spread, avg\n                ")]) : _vm._e(), _vm._v("\n                " + _vm._s(broker.AverageEurUsdSpread) + "\n            ")]), _vm._v(" "), _c('div', {
-      staticClass: "broker-comparison-table-row"
-    }, [(index == 0) ? _c('div', {
-      staticClass: "broker-comparison-table-row-title"
-    }, [_vm._v("\n                    USD/JPY spread, avg\n                ")]) : _vm._e(), _vm._v("\n                " + _vm._s(broker.AverageUSDJPYSpread) + "\n            ")]), _vm._v(" "), _c('div', {
-      staticClass: "broker-comparison-table-row"
-    }, [(index == 0) ? _c('div', {
-      staticClass: "broker-comparison-table-row-title"
-    }, [_vm._v("\n                    GBP/USD spread, avg\n                ")]) : _vm._e(), _vm._v("\n                " + _vm._s(broker.AverageGBPUSDSpread) + "\n            ")]), _vm._v(" "), _c('div', {
-      staticClass: "broker-comparison-table-row"
-    }, [(index == 0) ? _c('div', {
-      staticClass: "broker-comparison-table-row-title"
-    }, [_vm._v("\n                    USD/CAD spread, avg\n                ")]) : _vm._e(), _vm._v("\n                " + _vm._s(broker.AverageUSDCADSpread) + "\n            ")]), _vm._v(" "), _c('div', {
-      staticClass: "broker-comparison-table-row"
-    }, [(index == 0) ? _c('div', {
-      staticClass: "broker-comparison-table-row-title"
-    }, [_vm._v("\n                    XAU/USD spread, avg\n                ")]) : _vm._e(), _vm._v("\n                " + _vm._s(broker.AverageXAUUSDSpread) + "\n            ")]), _vm._v(" "), _c('div', {
-      staticClass: "broker-comparison-table-row"
-    }, [(index == 0) ? _c('div', {
-      staticClass: "broker-comparison-table-row-title"
-    }, [_vm._v("\n                    AUD/USD spread, avg\n                ")]) : _vm._e(), _vm._v("\n                " + _vm._s(broker.AverageAUDUSDSpread) + "\n            ")]), _vm._v(" "), _c('div', {
-      staticClass: "broker-comparison-table-row"
-    }, [(index == 0) ? _c('div', {
-      staticClass: "broker-comparison-table-row-title"
-    }, [_vm._v("\n                    USD/CHF spread, avg\n                ")]) : _vm._e(), _vm._v("\n                " + _vm._s(broker.AverageUSDCHFSpread) + "\n            ")])])])
-  }))
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-3bfddaa0", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);

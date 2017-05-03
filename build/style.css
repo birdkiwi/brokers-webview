@@ -488,10 +488,8 @@ template {
   left: 50%;
   top: 0;
   transform: translateX(-50%);
-  margin: 8px;
-  width: 100%;
+  width: calc(100% - 16px);
   max-width: 360px;
-  padding: 16px;
   background-color: #333333;
   color: #fff;
   border-radius: 12px;
@@ -500,6 +498,9 @@ template {
 }
 .brokers-filter a {
   color: #fff;
+}
+.brokers-filter-padding {
+  padding: 16px;
 }
 .brokers-filter-header {
   display: flex;
@@ -531,7 +532,7 @@ template {
   display: inline-block;
   width: 8px;
   height: 13px;
-  vertical-align: middle;
+  vertical-align: baseline;
   background: url(e1a4f560aa59f10b9e9ef3a889238829.svg);
   margin-left: 5px;
 }
@@ -628,6 +629,33 @@ template {
   justify-content: space-between;
   margin-top: 10px;
   font-size: 13px;
+}
+.brokers-filter-select {
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #333333;
+  box-shadow: 0 1px 12px 0 rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  color: #fff;
+  padding: 16px;
+  box-sizing: border-box;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.brokers-filter-select-item {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 0;
+  font-size: 17px;
+  line-height: 22px;
+  border-bottom: 1px solid #606060;
+}
+.brokers-filter-select-item:last-child {
+  border-bottom: none;
 }
 .broker-card {
   background: #333333;
@@ -973,6 +1001,7 @@ body {
   color: #333333;
   width: 100%;
   height: 100%;
+  font-weight: 300;
 }
 .wrapper {
   width: 100%;
