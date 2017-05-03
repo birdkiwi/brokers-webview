@@ -1,0 +1,105 @@
+.broker-comparison {
+  display: flex;
+  flex-direction: row;
+  background: #404040;
+  color: #fff;
+  width: 100%;
+  overflow-x: auto;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 10px 8px;
+}
+
+.broker-comparison-item {
+  flex: 0 0 auto;
+  width: 120px;
+
+  &:last-child {
+    padding-right: 8px;
+  }
+}
+
+.broker-comparison-card {
+  position: relative;
+  background: #fff;
+  border-radius: 4px;
+  text-align: center;
+  margin: 0 2px 20px;
+  color: @c-main-black;
+  overflow: hidden;
+}
+
+.broker-comparison-card-padding {
+  padding: 8px;
+}
+
+.broker-comparison-card-live {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: absolute;
+  left: -57px;
+  top: 0;
+  transform: rotate(-45deg);
+  transform-origin: left top;
+  width: 80px;
+  height: 80px;
+  padding: 7px;
+  box-sizing: border-box;
+  background-color: #F2DA24;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.broker-comparison-card-logo {
+  img {
+    max-width: 100%;
+    max-height: 50px;
+  }
+}
+
+.broker-comparison-card-title {
+  font-size: 13px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.broker-comparison-card-subtitle {
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.broker-comparison-card-link-btn {
+  .button {
+    font-size: 11px;
+    line-height: 24px;
+    height: 24px;
+    width: 100%;
+    padding: 0 10px;
+  }
+}
+
+.broker-comparison-table {
+  font-size: 17px;
+}
+
+.broker-comparison-table-row {
+  position: relative;
+  border-top: 1px solid @c-filter-border;
+  padding: 12px;
+  margin-bottom: 5px;
+}
+
+.broker-comparison-table-row-title {
+  display: inline-block;
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  top: -1em;
+  font-size: 11px;
+  color: #818183;
+  padding: 3px 12px;
+  background: #404040;
+  white-space: nowrap;
+}

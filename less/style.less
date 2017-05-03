@@ -1,8 +1,9 @@
 @import "../node_modules/normalize.css/normalize.css";
 @import "colors";
 @import "buttons";
-@import "filter";
+@import "brokers-filter";
 @import "broker-card";
+@import "broker-comparison";
 @import "brokers-list";
 @import "typo";
 @import "transitions";
@@ -11,6 +12,13 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   color: @c-main-black;
+  width: 100%;
+  height: 100%;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100%;
 }
 
 .broker-stars {

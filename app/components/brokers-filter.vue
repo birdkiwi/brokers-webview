@@ -16,9 +16,9 @@
                 <div class="brokers-filter-control-country-title">
                     Country range
                 </div>
-                <a href="#" @click.prevent="toggleCountrySelect" class="brokers-filter-control-country-link">
+                <!--<a href="#" @click.prevent="toggleCountrySelect" class="brokers-filter-control-country-link">
                     {{ filters.country ? filters.country : 'All countries' }}
-                </a>
+                </a>-->
                 <select v-model="filters.country" class="js-country-select brokers-filter-control-country-select">
                     <option :value="null">All countries</option>
                     <option v-for="(country, name) in countries" :value="name">

@@ -59,8 +59,20 @@
 }
 
 .brokers-filter-control-country-select {
-  visibility: hidden;
-  position: absolute;
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 17px;
+  background: url("../images/icon-select-arrow-right-white.svg") 95% center no-repeat;
+  width: 150px;
+  text-overflow: ellipsis;
+  padding-right: 20px;
+
+  option {
+    color: #333;
+  }
 }
 
 .brokers-filter-control-title {

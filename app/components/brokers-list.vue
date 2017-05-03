@@ -44,16 +44,16 @@
                         </tr>
                     </table>
                 </a>
-                <a v-if="inComparison(broker.BrokerId)" href="#" class="brokers-list-item-comparison" @click.prevent="removeFromComparison(broker.BrokerId)">
-                    <svg width="29px" height="29px" viewBox="0 0 29 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <a v-if="inComparison(broker)" href="#" class="brokers-list-item-comparison" @click.prevent="removeFromComparison(broker)">
+                    <svg width="29px" height="29px" viewBox="0 0 28 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                             <circle fill="#0CAE00" cx="14.5" cy="14.5" r="14.5"></circle>
                             <path d="M13.4482584,18.5301613 L21.9922485,9.98901367 L21.0046387,9 L13.0028687,17.0126343 L13.0028687,17.0353962 L9.934021,13.9698486 L9,14.9414063 L13.0028687,18.9685579 L13.0028687,18.9754028 L13.0062813,18.9719913 L13.0144043,18.9801636 L13.4482584,18.5301613 Z" fill="#FFFFFF"></path>
                         </g>
                     </svg>
                 </a>
-                <a v-else href="#" class="brokers-list-item-comparison" @click.prevent="addToComparison(broker.BrokerId)">
-                    <svg width="29px" height="29px" viewBox="0 0 29 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <a v-else-if="comparison.length < 5" href="#" class="brokers-list-item-comparison" @click.prevent="addToComparison(broker)">
+                    <svg width="29px" height="29px" viewBox="0 0 28 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <defs>
                             <circle id="path-1" cx="14.5" cy="14.5" r="14.5"></circle>
                             <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="29" height="29" fill="white">
@@ -72,7 +72,7 @@
             </div>
         </div>
         <div :class="'brokers-comparison-button ' + (comparison.length ? 'active': '')">
-            <a href="#" @click.prevent="" class="brokers-comparison-button-text">
+            <a href="#" @click.prevent="compare" class="brokers-comparison-button-text">
                 Compare: {{ comparison.length }}
             </a>
             <a href="#" @click.prevent="clearComparison" class="brokers-comparison-button-clear"></a>
@@ -83,26 +83,43 @@
     export default {
         data() {
             return {
+                showShadow: true
             }
         },
         props: ['brokers', 'comparison'],
         methods: {
-            addToComparison(id) {
-                if (this.comparison.indexOf(id) < 0) {
-                    this.comparison.push(id);
+            addToComparison(broker) {
+                if (!this.inComparison(broker) && this.comparison.length < 5) {
+                    this.comparison.push(broker);
                 }
             },
-            removeFromComparison(id) {
-                const index = this.comparison.indexOf(id);
-                if (index > -1) {
-                    this.comparison.splice(index, 1);
-                }
+            removeFromComparison(broker) {
+                this.comparison.forEach((v, i) => {
+                    if (v.BrokerId === broker.BrokerId) {
+                        this.comparison.splice(i, 1);
+                    }
+                });
             },
-            inComparison(id) {
-                return this.comparison.indexOf(id) > -1;
+            inComparison(broker) {
+                let result = false;
+
+                this.comparison.forEach((v, i) => {
+                    if (v.BrokerId === broker.BrokerId) {
+                        result = true;
+                    }
+                });
+
+                return result;
             },
             clearComparison() {
                 this.comparison.splice(0, this.comparison.length);
+            },
+            compare() {
+                window.scrollTo(0, 0);
+                this.$parent.setView('brokers-comparison');
+            },
+            scroll() {
+                this.$parent.brokersListScroll = window.pageYOffset;
             }
         }
     }

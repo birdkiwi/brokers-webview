@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="wrapper">
         <transition name="fade">
             <div class="spinner-overlay" v-if="spinner">
                 <div class="spinner">
@@ -17,6 +17,10 @@
         </transition>
 
         <transition name="fade">
+            <brokers-comparison v-if="currentView == 'brokers-comparison'" :comparison="comparison"></brokers-comparison>
+        </transition>
+
+        <transition name="fade">
             <div class="overlay overlay-padding" v-if="filters.visible">
                 <brokers-filter :filters="filters" :countries="countries"></brokers-filter>
             </div>
@@ -29,6 +33,7 @@
     import spinner from 'vue-spinner/src/FadeLoader.vue';
     import brokersList from './components/brokers-list.vue';
     import brokersCard from './components/brokers-card.vue';
+    import brokersComparison from './components/brokers-comparison.vue';
     import brokersFilter from './components/brokers-filter.vue';
     import countryCodes from './data/countries.json';
 
@@ -45,6 +50,7 @@
         data() {
             return {
                 currentView: 'brokers-list',
+                brokersListScroll: 0,
                 currentBroker: null,
                 spinner: false,
                 brokers: [],
@@ -83,6 +89,7 @@
         components: {
             brokersList,
             brokersFilter,
+            brokersComparison,
             brokersCard,
             spinner
         },

@@ -10012,7 +10012,7 @@ var Component = __webpack_require__(12)(
   /* script */
   __webpack_require__(119),
   /* template */
-  __webpack_require__(134),
+  __webpack_require__(135),
   /* styles */
   null,
   /* scopeId */
@@ -14945,7 +14945,7 @@ var _axios = __webpack_require__(54);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _FadeLoader = __webpack_require__(155);
+var _FadeLoader = __webpack_require__(131);
 
 var _FadeLoader2 = _interopRequireDefault(_FadeLoader);
 
@@ -14957,6 +14957,10 @@ var _brokersCard = __webpack_require__(128);
 
 var _brokersCard2 = _interopRequireDefault(_brokersCard);
 
+var _brokersComparison = __webpack_require__(149);
+
+var _brokersComparison2 = _interopRequireDefault(_brokersComparison);
+
 var _brokersFilter = __webpack_require__(129);
 
 var _brokersFilter2 = _interopRequireDefault(_brokersFilter);
@@ -14967,14 +14971,11 @@ var _countries2 = _interopRequireDefault(_countries);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var axiosInstance = _axios2.default.create({
-    baseURL: _config2.default.apiUrl,
-    timeout: 10000,
-    headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-    }
-}); //
+//
+//
+//
+//
+//
 //
 //
 //
@@ -15000,10 +15001,20 @@ var axiosInstance = _axios2.default.create({
 //
 //
 
+var axiosInstance = _axios2.default.create({
+    baseURL: _config2.default.apiUrl,
+    timeout: 10000,
+    headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+    }
+});
+
 exports.default = {
     data: function data() {
         return {
             currentView: 'brokers-list',
+            brokersListScroll: 0,
             currentBroker: null,
             spinner: false,
             brokers: [],
@@ -15043,6 +15054,7 @@ exports.default = {
     components: {
         brokersList: _brokersList2.default,
         brokersFilter: _brokersFilter2.default,
+        brokersComparison: _brokersComparison2.default,
         brokersCard: _brokersCard2.default,
         spinner: _FadeLoader2.default
     },
@@ -15579,33 +15591,207 @@ Object.defineProperty(exports, "__esModule", {
 
 exports.default = {
     data: function data() {
-        return {};
+        return {
+            showShadow: true
+        };
     },
 
     props: ['brokers', 'comparison'],
     methods: {
-        addToComparison: function addToComparison(id) {
-            if (this.comparison.indexOf(id) < 0) {
-                this.comparison.push(id);
+        addToComparison: function addToComparison(broker) {
+            if (!this.inComparison(broker) && this.comparison.length < 5) {
+                this.comparison.push(broker);
             }
         },
-        removeFromComparison: function removeFromComparison(id) {
-            var index = this.comparison.indexOf(id);
-            if (index > -1) {
-                this.comparison.splice(index, 1);
-            }
+        removeFromComparison: function removeFromComparison(broker) {
+            var _this = this;
+
+            this.comparison.forEach(function (v, i) {
+                if (v.BrokerId === broker.BrokerId) {
+                    _this.comparison.splice(i, 1);
+                }
+            });
         },
-        inComparison: function inComparison(id) {
-            return this.comparison.indexOf(id) > -1;
+        inComparison: function inComparison(broker) {
+            var result = false;
+
+            this.comparison.forEach(function (v, i) {
+                if (v.BrokerId === broker.BrokerId) {
+                    result = true;
+                }
+            });
+
+            return result;
         },
         clearComparison: function clearComparison() {
             this.comparison.splice(0, this.comparison.length);
+        },
+        compare: function compare() {
+            window.scrollTo(0, 0);
+            this.$parent.setView('brokers-comparison');
+        },
+        scroll: function scroll() {
+            this.$parent.brokersListScroll = window.pageYOffset;
         }
+    },
+    mounted: function mounted() {
+        console.log('mounted');
+        console.log(document.documentElement.scrollHeight);
+        window.scrollTo(0, this.$parent.brokersListScroll);
+        window.addEventListener('scroll', this.scroll);
+    },
+    destroyed: function destroyed() {
+        console.log('destroyed');
+        window.removeEventListener('scroll', this.scroll);
     }
 };
 
 /***/ }),
-/* 123 */,
+/* 123 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+
+  name: 'FadeLoader',
+
+  props: {
+    loading: {
+      type: Boolean,
+      default: true
+    },
+    color: {
+      type: String,
+      default: '#5dc596'
+    },
+    height: {
+      type: String,
+      default: '15px'
+    },
+    width: {
+      type: String,
+      default: '5px'
+    },
+    margin: {
+      type: String,
+      default: '2px'
+    },
+    radius: {
+      type: String,
+      default: '2px'
+    }
+  },
+  data: function data() {
+    return {
+      spinnerStyle: {
+        backgroundColor: this.color,
+        height: this.height,
+        width: this.width,
+        margin: this.margin,
+        borderRadius: this.radius
+      },
+      radius: '20px'
+    };
+  },
+
+  computed: {
+    ngRadius: function ngRadius() {
+      return '-' + this.radius;
+    },
+    quarter: function quarter() {
+      return parseFloat(this.radius) / 2 + parseFloat(this.radius) / 5.5 + 'px';
+    },
+    ngQuarter: function ngQuarter() {
+      return '-' + this.quarter;
+    },
+    animationStyle1: function animationStyle1() {
+      return {
+        top: this.radius,
+        left: 0,
+        animationDelay: '0.12s'
+      };
+    },
+    animationStyle2: function animationStyle2() {
+      return {
+        top: this.quarter,
+        left: this.quarter,
+        animationDelay: '0.24s',
+        transform: 'rotate(-45deg)'
+      };
+    },
+    animationStyle3: function animationStyle3() {
+      return {
+        top: 0,
+        left: this.radius,
+        animationDelay: '0.36s',
+        transform: 'rotate(90deg)'
+      };
+    },
+    animationStyle4: function animationStyle4() {
+      return {
+        top: this.ngQuarter,
+        left: this.quarter,
+        animationDelay: '0.48s',
+        transform: 'rotate(45deg)'
+      };
+    },
+    animationStyle5: function animationStyle5() {
+      return {
+        top: this.ngRadius,
+        left: 0,
+        animationDelay: '0.60s'
+      };
+    },
+    animationStyle6: function animationStyle6() {
+      return {
+        top: this.ngQuarter,
+        left: this.ngQuarter,
+        animationDelay: '0.72s',
+        transform: 'rotate(-45deg)'
+      };
+    },
+    animationStyle7: function animationStyle7() {
+      return {
+        top: 0,
+        left: this.ngRadius,
+        animationDelay: '0.84s',
+        transform: 'rotate(90deg)'
+      };
+    },
+    animationStyle8: function animationStyle8() {
+      return {
+        top: this.quarter,
+        left: this.ngQuarter,
+        animationDelay: '0.96s',
+        transform: 'rotate(45deg)'
+      };
+    }
+  }
+
+};
+
+/***/ }),
 /* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16015,7 +16201,20 @@ module.exports = function (module) {
 };
 
 /***/ }),
-/* 127 */,
+/* 127 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(116)(true);
+// imports
+
+
+// module
+exports.push([module.i, "\n.v-spinner .v-fade\n{\n    -webkit-animation: v-fadeStretchDelay 1.2s infinite ease-in-out;\n            animation: v-fadeStretchDelay 1.2s infinite ease-in-out;\n    -webkit-animation-fill-mode: both;\n\t          animation-fill-mode: both;\n    position: absolute;\n}\n@-webkit-keyframes v-fadeStretchDelay\n{\n50%\n    {\n        -webkit-opacity: 0.3;             \n                opacity: 0.3;\n}\n100%\n    {\n        -webkit-opacity: 1;             \n                opacity: 1;\n}\n}\n@keyframes v-fadeStretchDelay\n{\n50%\n    {\n        -webkit-opacity: 0.3;             \n                opacity: 0.3;\n}\n100%\n    {\n        -webkit-opacity: 1;             \n                opacity: 1;\n}\n}\n", "", {"version":3,"sources":["/Users/alexey/PhpstormProjects/brokers-webview/node_modules/vue-spinner/src/FadeLoader.vue?15b8fcfc"],"names":[],"mappings":";AAyIA;;IAEA,gEAAA;YACA,wDAAA;IACA,kCAAA;WACA,0BAAA;IACA,mBAAA;CACA;AAEA;;AAEA;;QAEA,qBAAA;gBACA,aAAA;CACA;AACA;;QAEA,mBAAA;gBACA,WAAA;CACA;CACA;AAEA;;AAEA;;QAEA,qBAAA;gBACA,aAAA;CACA;AACA;;QAEA,mBAAA;gBACA,WAAA;CACA;CACA","file":"FadeLoader.vue","sourcesContent":["<template>\n  <div class=\"v-spinner\" v-bind:style=\"{position: 'relative', fontSize: 0}\" v-show=\"loading\">\n  <!-- <div class=\"v-spinner\" v-bind:style=\"containerStyle\"> -->\n    <div class=\"v-fade v-fade1\" v-bind:style=\"[spinnerStyle,animationStyle1]\">\n    </div><div class=\"v-fade v-fade2\" v-bind:style=\"[spinnerStyle,animationStyle2]\">\n    </div><div class=\"v-fade v-fade3\" v-bind:style=\"[spinnerStyle,animationStyle3]\">\n    </div><div class=\"v-fade v-fade4\" v-bind:style=\"[spinnerStyle,animationStyle4]\">\n    </div><div class=\"v-fade v-fade5\" v-bind:style=\"[spinnerStyle,animationStyle5]\">\n    </div><div class=\"v-fade v-fade6\" v-bind:style=\"[spinnerStyle,animationStyle6]\">\n    </div><div class=\"v-fade v-fade7\" v-bind:style=\"[spinnerStyle,animationStyle7]\">\n    </div><div class=\"v-fade v-fade8\" v-bind:style=\"[spinnerStyle,animationStyle8]\">\n    </div>\n  </div>\n</template>\n\n<script>\nexport default {\n  \n  name: 'FadeLoader',\n\n  props: {\n    loading: {\n      type: Boolean,\n      default: true\n    },\n    color: { \n      type: String,\n      default: '#5dc596'\n    },\n    height: {\n      type: String,\n      default: '15px'\n    },\n    width: {\n      type: String,\n      default: '5px'\n    },\n    margin: {\n      type: String,\n      default: '2px'\n    },\n    radius: {\n      type: String,\n      default: '2px'\n    }\n  },\n  data () {\n    return {\n      spinnerStyle: {\n      \tbackgroundColor: this.color,\n      \theight: this.height,\n     \t\twidth: this.width,\n      \tmargin: this.margin,\n      \tborderRadius: this.radius\n      },\n      radius: '20px'\n    }\n  },\n  computed: {\n    ngRadius () {\n      return '-' + this.radius\n    },\n    quarter () {\n      return (parseFloat(this.radius)/2 + parseFloat(this.radius)/5.5) + 'px'\n    },\n    ngQuarter () {\n      return '-' + this.quarter\n    },\n    animationStyle1 () {\n      return {\n        top: this.radius,\n        left: 0,\n        animationDelay: '0.12s'\n      }\n    },\n    animationStyle2 () {\n      return {\n        top: this.quarter,\n        left: this.quarter,\n        animationDelay: '0.24s',\n        transform: 'rotate(-45deg)'\n      }\n    },\n    animationStyle3 () {\n      return {\n        top: 0,\n        left: this.radius,\n        animationDelay: '0.36s',\n        transform: 'rotate(90deg)'\n      }\n    },\n    animationStyle4 () {\n      return {\n        top: this.ngQuarter,\n        left: this.quarter,\n        animationDelay: '0.48s',\n        transform: 'rotate(45deg)'\n      }\n    },\n    animationStyle5 () {\n      return {\n        top: this.ngRadius,\n        left: 0,\n        animationDelay: '0.60s'\n      }\n    },\n    animationStyle6 () {\n      return {\n        top: this.ngQuarter,\n        left: this.ngQuarter,\n        animationDelay: '0.72s',\n        transform: 'rotate(-45deg)'\n      }\n    },\n    animationStyle7 () {\n      return {\n        top: 0,\n        left: this.ngRadius,\n        animationDelay: '0.84s',\n        transform: 'rotate(90deg)'\n      }\n    },\n    animationStyle8 () {\n      return {\n        top: this.quarter,\n        left: this.ngQuarter,\n        animationDelay: '0.96s',\n        transform: 'rotate(45deg)'\n      }\n    }\n  }\n\n}\n</script>\n\n<style>\n\n.v-spinner .v-fade\n{\n    -webkit-animation: v-fadeStretchDelay 1.2s infinite ease-in-out;\n            animation: v-fadeStretchDelay 1.2s infinite ease-in-out;\n    -webkit-animation-fill-mode: both;\n\t          animation-fill-mode: both;\n    position: absolute;               \n}\n\n@-webkit-keyframes v-fadeStretchDelay\n{\n    50%\n    {\n        -webkit-opacity: 0.3;             \n                opacity: 0.3;\n    }\n    100%\n    {\n        -webkit-opacity: 1;             \n                opacity: 1;\n    }\n}\n\n@keyframes v-fadeStretchDelay\n{\n    50%\n    {\n        -webkit-opacity: 0.3;             \n                opacity: 0.3;\n    }\n    100%\n    {\n        -webkit-opacity: 1;             \n                opacity: 1;\n    }\n}\n</style>"],"sourceRoot":""}]);
+
+// exports
+
+
+/***/ }),
 /* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16064,7 +16263,7 @@ var Component = __webpack_require__(12)(
   /* script */
   __webpack_require__(121),
   /* template */
-  __webpack_require__(133),
+  __webpack_require__(134),
   /* styles */
   null,
   /* scopeId */
@@ -16104,7 +16303,7 @@ var Component = __webpack_require__(12)(
   /* script */
   __webpack_require__(122),
   /* template */
-  __webpack_require__(135),
+  __webpack_require__(136),
   /* styles */
   null,
   /* scopeId */
@@ -16136,7 +16335,50 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 131 */,
+/* 131 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(137)
+}
+var Component = __webpack_require__(12)(
+  /* script */
+  __webpack_require__(123),
+  /* template */
+  __webpack_require__(133),
+  /* styles */
+  injectStyle,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/Users/alexey/PhpstormProjects/brokers-webview/node_modules/vue-spinner/src/FadeLoader.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] FadeLoader.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-620c4bd5", Component.options)
+  } else {
+    hotAPI.reload("data-v-620c4bd5", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
 /* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16297,6 +16539,57 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.loading),
+      expression: "loading"
+    }],
+    staticClass: "v-spinner",
+    style: ({
+      position: 'relative',
+      fontSize: 0
+    })
+  }, [_c('div', {
+    staticClass: "v-fade v-fade1",
+    style: ([_vm.spinnerStyle, _vm.animationStyle1])
+  }), _c('div', {
+    staticClass: "v-fade v-fade2",
+    style: ([_vm.spinnerStyle, _vm.animationStyle2])
+  }), _c('div', {
+    staticClass: "v-fade v-fade3",
+    style: ([_vm.spinnerStyle, _vm.animationStyle3])
+  }), _c('div', {
+    staticClass: "v-fade v-fade4",
+    style: ([_vm.spinnerStyle, _vm.animationStyle4])
+  }), _c('div', {
+    staticClass: "v-fade v-fade5",
+    style: ([_vm.spinnerStyle, _vm.animationStyle5])
+  }), _c('div', {
+    staticClass: "v-fade v-fade6",
+    style: ([_vm.spinnerStyle, _vm.animationStyle6])
+  }), _c('div', {
+    staticClass: "v-fade v-fade7",
+    style: ([_vm.spinnerStyle, _vm.animationStyle7])
+  }), _c('div', {
+    staticClass: "v-fade v-fade8",
+    style: ([_vm.spinnerStyle, _vm.animationStyle8])
+  })])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-620c4bd5", module.exports)
+  }
+}
+
+/***/ }),
+/* 134 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: "brokers-filter"
   }, [_vm._m(0), _vm._v(" "), _c('div', {
     staticClass: "brokers-filter-body"
@@ -16304,18 +16597,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "brokers-filter-control brokers-filter-control-country"
   }, [_c('div', {
     staticClass: "brokers-filter-control-country-title"
-  }, [_vm._v("\n                Country range\n            ")]), _vm._v(" "), _c('a', {
-    staticClass: "brokers-filter-control-country-link",
-    attrs: {
-      "href": "#"
-    },
-    on: {
-      "click": function($event) {
-        $event.preventDefault();
-        _vm.toggleCountrySelect($event)
-      }
-    }
-  }, [_vm._v("\n                " + _vm._s(_vm.filters.country ? _vm.filters.country : 'All countries') + "\n            ")]), _vm._v(" "), _c('select', {
+  }, [_vm._v("\n                Country range\n            ")]), _vm._v(" "), _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -16436,11 +16718,13 @@ if (false) {
 }
 
 /***/ }),
-/* 134 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('transition', {
+  return _c('div', {
+    staticClass: "wrapper"
+  }, [_c('transition', {
     attrs: {
       "name": "fade"
     }
@@ -16473,6 +16757,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "name": "fade"
     }
+  }, [(_vm.currentView == 'brokers-comparison') ? _c('brokers-comparison', {
+    attrs: {
+      "comparison": _vm.comparison
+    }
+  }) : _vm._e()], 1), _vm._v(" "), _c('transition', {
+    attrs: {
+      "name": "fade"
+    }
   }, [(_vm.filters.visible) ? _c('div', {
     staticClass: "overlay overlay-padding"
   }, [_c('brokers-filter', {
@@ -16491,7 +16783,7 @@ if (false) {
 }
 
 /***/ }),
-/* 135 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -16550,7 +16842,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "c-green"
     }, [_vm._v("\n                                " + _vm._s(broker.Rank) + "\n                            ")]) : (broker.Rank === 'Poor') ? _c('span', {
       staticClass: "c-gray-light"
-    }, [_vm._v("\n                                " + _vm._s(broker.Rank) + "\n                                ")]) : _c('span', [_vm._v("\n                                " + _vm._s(broker.Rank) + "\n                            ")])]), _vm._v(" "), _c('td', [_vm._v("\n                            " + _vm._s(broker.MinDeposit) + "\n                        ")]), _vm._v(" "), _c('td', [_vm._v("\n                            " + _vm._s(broker.MaxLeverage) + "\n                        ")])])])]), _vm._v(" "), (_vm.inComparison(broker.BrokerId)) ? _c('a', {
+    }, [_vm._v("\n                                " + _vm._s(broker.Rank) + "\n                                ")]) : _c('span', [_vm._v("\n                                " + _vm._s(broker.Rank) + "\n                            ")])]), _vm._v(" "), _c('td', [_vm._v("\n                            " + _vm._s(broker.MinDeposit) + "\n                        ")]), _vm._v(" "), _c('td', [_vm._v("\n                            " + _vm._s(broker.MaxLeverage) + "\n                        ")])])])]), _vm._v(" "), (_vm.inComparison(broker)) ? _c('a', {
       staticClass: "brokers-list-item-comparison",
       attrs: {
         "href": "#"
@@ -16558,14 +16850,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       on: {
         "click": function($event) {
           $event.preventDefault();
-          _vm.removeFromComparison(broker.BrokerId)
+          _vm.removeFromComparison(broker)
         }
       }
     }, [_c('svg', {
       attrs: {
         "width": "29px",
         "height": "29px",
-        "viewBox": "0 0 29 29",
+        "viewBox": "0 0 28 29",
         "version": "1.1",
         "xmlns": "http://www.w3.org/2000/svg",
         "xmlns:xlink": "http://www.w3.org/1999/xlink"
@@ -16589,7 +16881,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "d": "M13.4482584,18.5301613 L21.9922485,9.98901367 L21.0046387,9 L13.0028687,17.0126343 L13.0028687,17.0353962 L9.934021,13.9698486 L9,14.9414063 L13.0028687,18.9685579 L13.0028687,18.9754028 L13.0062813,18.9719913 L13.0144043,18.9801636 L13.4482584,18.5301613 Z",
         "fill": "#FFFFFF"
       }
-    })])])]) : _c('a', {
+    })])])]) : (_vm.comparison.length < 5) ? _c('a', {
       staticClass: "brokers-list-item-comparison",
       attrs: {
         "href": "#"
@@ -16597,14 +16889,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       on: {
         "click": function($event) {
           $event.preventDefault();
-          _vm.addToComparison(broker.BrokerId)
+          _vm.addToComparison(broker)
         }
       }
     }, [_c('svg', {
       attrs: {
         "width": "29px",
         "height": "29px",
-        "viewBox": "0 0 29 29",
+        "viewBox": "0 0 28 29",
         "version": "1.1",
         "xmlns": "http://www.w3.org/2000/svg",
         "xmlns:xlink": "http://www.w3.org/1999/xlink"
@@ -16666,7 +16958,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "width": "15",
         "height": "1"
       }
-    })])])])])])
+    })])])])]) : _vm._e()])
   })), _vm._v(" "), _c('div', {
     class: 'brokers-comparison-button ' + (_vm.comparison.length ? 'active' : '')
   }, [_c('a', {
@@ -16677,6 +16969,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": function($event) {
         $event.preventDefault();
+        _vm.compare($event)
       }
     }
   }, [_vm._v("\n            Compare: " + _vm._s(_vm.comparison.length) + "\n        ")]), _vm._v(" "), _c('a', {
@@ -16703,8 +16996,32 @@ if (false) {
 }
 
 /***/ }),
-/* 136 */,
-/* 137 */,
+/* 137 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(127);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(138)("7bcda46e", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../css-loader/index.js?sourceMap!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-620c4bd5\",\"scoped\":false,\"hasInlineConfig\":false}!../../vue-loader/lib/selector.js?type=styles&index=0!./FadeLoader.vue", function() {
+     var newContent = require("!!../../css-loader/index.js?sourceMap!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-620c4bd5\",\"scoped\":false,\"hasInlineConfig\":false}!../../vue-loader/lib/selector.js?type=styles&index=0!./FadeLoader.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
 /* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16935,20 +17252,158 @@ function applyToTag (styleElement, obj) {
 /* 145 */,
 /* 146 */,
 /* 147 */,
-/* 148 */,
-/* 149 */,
-/* 150 */,
-/* 151 */,
-/* 152 */,
-/* 153 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -16966,162 +17421,33 @@ Object.defineProperty(exports, "__esModule", {
 //
 
 exports.default = {
+    data: function data() {
+        return {};
+    },
 
-  name: 'FadeLoader',
-
-  props: {
-    loading: {
-      type: Boolean,
-      default: true
-    },
-    color: {
-      type: String,
-      default: '#5dc596'
-    },
-    height: {
-      type: String,
-      default: '15px'
-    },
-    width: {
-      type: String,
-      default: '5px'
-    },
-    margin: {
-      type: String,
-      default: '2px'
-    },
-    radius: {
-      type: String,
-      default: '2px'
-    }
-  },
-  data: function data() {
-    return {
-      spinnerStyle: {
-        backgroundColor: this.color,
-        height: this.height,
-        width: this.width,
-        margin: this.margin,
-        borderRadius: this.radius
-      },
-      radius: '20px'
-    };
-  },
-
-  computed: {
-    ngRadius: function ngRadius() {
-      return '-' + this.radius;
-    },
-    quarter: function quarter() {
-      return parseFloat(this.radius) / 2 + parseFloat(this.radius) / 5.5 + 'px';
-    },
-    ngQuarter: function ngQuarter() {
-      return '-' + this.quarter;
-    },
-    animationStyle1: function animationStyle1() {
-      return {
-        top: this.radius,
-        left: 0,
-        animationDelay: '0.12s'
-      };
-    },
-    animationStyle2: function animationStyle2() {
-      return {
-        top: this.quarter,
-        left: this.quarter,
-        animationDelay: '0.24s',
-        transform: 'rotate(-45deg)'
-      };
-    },
-    animationStyle3: function animationStyle3() {
-      return {
-        top: 0,
-        left: this.radius,
-        animationDelay: '0.36s',
-        transform: 'rotate(90deg)'
-      };
-    },
-    animationStyle4: function animationStyle4() {
-      return {
-        top: this.ngQuarter,
-        left: this.quarter,
-        animationDelay: '0.48s',
-        transform: 'rotate(45deg)'
-      };
-    },
-    animationStyle5: function animationStyle5() {
-      return {
-        top: this.ngRadius,
-        left: 0,
-        animationDelay: '0.60s'
-      };
-    },
-    animationStyle6: function animationStyle6() {
-      return {
-        top: this.ngQuarter,
-        left: this.ngQuarter,
-        animationDelay: '0.72s',
-        transform: 'rotate(-45deg)'
-      };
-    },
-    animationStyle7: function animationStyle7() {
-      return {
-        top: 0,
-        left: this.ngRadius,
-        animationDelay: '0.84s',
-        transform: 'rotate(90deg)'
-      };
-    },
-    animationStyle8: function animationStyle8() {
-      return {
-        top: this.quarter,
-        left: this.ngQuarter,
-        animationDelay: '0.96s',
-        transform: 'rotate(45deg)'
-      };
-    }
-  }
-
+    props: ['comparison']
 };
 
 /***/ }),
-/* 154 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(116)(true);
-// imports
-
-
-// module
-exports.push([module.i, "\n.v-spinner .v-fade\n{\n    -webkit-animation: v-fadeStretchDelay 1.2s infinite ease-in-out;\n            animation: v-fadeStretchDelay 1.2s infinite ease-in-out;\n    -webkit-animation-fill-mode: both;\n\t          animation-fill-mode: both;\n    position: absolute;\n}\n@-webkit-keyframes v-fadeStretchDelay\n{\n50%\n    {\n        -webkit-opacity: 0.3;             \n                opacity: 0.3;\n}\n100%\n    {\n        -webkit-opacity: 1;             \n                opacity: 1;\n}\n}\n@keyframes v-fadeStretchDelay\n{\n50%\n    {\n        -webkit-opacity: 0.3;             \n                opacity: 0.3;\n}\n100%\n    {\n        -webkit-opacity: 1;             \n                opacity: 1;\n}\n}\n", "", {"version":3,"sources":["/Users/alexey/PhpstormProjects/brokers-webview/node_modules/vue-spinner/src/FadeLoader.vue?15b8fcfc"],"names":[],"mappings":";AAyIA;;IAEA,gEAAA;YACA,wDAAA;IACA,kCAAA;WACA,0BAAA;IACA,mBAAA;CACA;AAEA;;AAEA;;QAEA,qBAAA;gBACA,aAAA;CACA;AACA;;QAEA,mBAAA;gBACA,WAAA;CACA;CACA;AAEA;;AAEA;;QAEA,qBAAA;gBACA,aAAA;CACA;AACA;;QAEA,mBAAA;gBACA,WAAA;CACA;CACA","file":"FadeLoader.vue","sourcesContent":["<template>\n  <div class=\"v-spinner\" v-bind:style=\"{position: 'relative', fontSize: 0}\" v-show=\"loading\">\n  <!-- <div class=\"v-spinner\" v-bind:style=\"containerStyle\"> -->\n    <div class=\"v-fade v-fade1\" v-bind:style=\"[spinnerStyle,animationStyle1]\">\n    </div><div class=\"v-fade v-fade2\" v-bind:style=\"[spinnerStyle,animationStyle2]\">\n    </div><div class=\"v-fade v-fade3\" v-bind:style=\"[spinnerStyle,animationStyle3]\">\n    </div><div class=\"v-fade v-fade4\" v-bind:style=\"[spinnerStyle,animationStyle4]\">\n    </div><div class=\"v-fade v-fade5\" v-bind:style=\"[spinnerStyle,animationStyle5]\">\n    </div><div class=\"v-fade v-fade6\" v-bind:style=\"[spinnerStyle,animationStyle6]\">\n    </div><div class=\"v-fade v-fade7\" v-bind:style=\"[spinnerStyle,animationStyle7]\">\n    </div><div class=\"v-fade v-fade8\" v-bind:style=\"[spinnerStyle,animationStyle8]\">\n    </div>\n  </div>\n</template>\n\n<script>\nexport default {\n  \n  name: 'FadeLoader',\n\n  props: {\n    loading: {\n      type: Boolean,\n      default: true\n    },\n    color: { \n      type: String,\n      default: '#5dc596'\n    },\n    height: {\n      type: String,\n      default: '15px'\n    },\n    width: {\n      type: String,\n      default: '5px'\n    },\n    margin: {\n      type: String,\n      default: '2px'\n    },\n    radius: {\n      type: String,\n      default: '2px'\n    }\n  },\n  data () {\n    return {\n      spinnerStyle: {\n      \tbackgroundColor: this.color,\n      \theight: this.height,\n     \t\twidth: this.width,\n      \tmargin: this.margin,\n      \tborderRadius: this.radius\n      },\n      radius: '20px'\n    }\n  },\n  computed: {\n    ngRadius () {\n      return '-' + this.radius\n    },\n    quarter () {\n      return (parseFloat(this.radius)/2 + parseFloat(this.radius)/5.5) + 'px'\n    },\n    ngQuarter () {\n      return '-' + this.quarter\n    },\n    animationStyle1 () {\n      return {\n        top: this.radius,\n        left: 0,\n        animationDelay: '0.12s'\n      }\n    },\n    animationStyle2 () {\n      return {\n        top: this.quarter,\n        left: this.quarter,\n        animationDelay: '0.24s',\n        transform: 'rotate(-45deg)'\n      }\n    },\n    animationStyle3 () {\n      return {\n        top: 0,\n        left: this.radius,\n        animationDelay: '0.36s',\n        transform: 'rotate(90deg)'\n      }\n    },\n    animationStyle4 () {\n      return {\n        top: this.ngQuarter,\n        left: this.quarter,\n        animationDelay: '0.48s',\n        transform: 'rotate(45deg)'\n      }\n    },\n    animationStyle5 () {\n      return {\n        top: this.ngRadius,\n        left: 0,\n        animationDelay: '0.60s'\n      }\n    },\n    animationStyle6 () {\n      return {\n        top: this.ngQuarter,\n        left: this.ngQuarter,\n        animationDelay: '0.72s',\n        transform: 'rotate(-45deg)'\n      }\n    },\n    animationStyle7 () {\n      return {\n        top: 0,\n        left: this.ngRadius,\n        animationDelay: '0.84s',\n        transform: 'rotate(90deg)'\n      }\n    },\n    animationStyle8 () {\n      return {\n        top: this.quarter,\n        left: this.ngQuarter,\n        animationDelay: '0.96s',\n        transform: 'rotate(45deg)'\n      }\n    }\n  }\n\n}\n</script>\n\n<style>\n\n.v-spinner .v-fade\n{\n    -webkit-animation: v-fadeStretchDelay 1.2s infinite ease-in-out;\n            animation: v-fadeStretchDelay 1.2s infinite ease-in-out;\n    -webkit-animation-fill-mode: both;\n\t          animation-fill-mode: both;\n    position: absolute;               \n}\n\n@-webkit-keyframes v-fadeStretchDelay\n{\n    50%\n    {\n        -webkit-opacity: 0.3;             \n                opacity: 0.3;\n    }\n    100%\n    {\n        -webkit-opacity: 1;             \n                opacity: 1;\n    }\n}\n\n@keyframes v-fadeStretchDelay\n{\n    50%\n    {\n        -webkit-opacity: 0.3;             \n                opacity: 0.3;\n    }\n    100%\n    {\n        -webkit-opacity: 1;             \n                opacity: 1;\n    }\n}\n</style>"],"sourceRoot":""}]);
-
-// exports
-
-
-/***/ }),
-/* 155 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(157)
-}
 var Component = __webpack_require__(12)(
   /* script */
-  __webpack_require__(153),
+  __webpack_require__(148),
   /* template */
-  __webpack_require__(156),
+  __webpack_require__(150),
   /* styles */
-  injectStyle,
+  null,
   /* scopeId */
   null,
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/alexey/PhpstormProjects/brokers-webview/node_modules/vue-spinner/src/FadeLoader.vue"
+Component.options.__file = "/Users/alexey/PhpstormProjects/brokers-webview/app/components/brokers-comparison.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] FadeLoader.vue: functional components are not supported with templates, they should use render functions.")}
+if (Component.options.functional) {console.error("[vue-loader] brokers-comparison.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -17130,9 +17456,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-620c4bd5", Component.options)
+    hotAPI.createRecord("data-v-3bfddaa0", Component.options)
   } else {
-    hotAPI.reload("data-v-620c4bd5", Component.options)
+    hotAPI.reload("data-v-3bfddaa0", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -17143,80 +17469,98 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 156 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.loading),
-      expression: "loading"
-    }],
-    staticClass: "v-spinner",
-    style: ({
-      position: 'relative',
-      fontSize: 0
-    })
-  }, [_c('div', {
-    staticClass: "v-fade v-fade1",
-    style: ([_vm.spinnerStyle, _vm.animationStyle1])
-  }), _c('div', {
-    staticClass: "v-fade v-fade2",
-    style: ([_vm.spinnerStyle, _vm.animationStyle2])
-  }), _c('div', {
-    staticClass: "v-fade v-fade3",
-    style: ([_vm.spinnerStyle, _vm.animationStyle3])
-  }), _c('div', {
-    staticClass: "v-fade v-fade4",
-    style: ([_vm.spinnerStyle, _vm.animationStyle4])
-  }), _c('div', {
-    staticClass: "v-fade v-fade5",
-    style: ([_vm.spinnerStyle, _vm.animationStyle5])
-  }), _c('div', {
-    staticClass: "v-fade v-fade6",
-    style: ([_vm.spinnerStyle, _vm.animationStyle6])
-  }), _c('div', {
-    staticClass: "v-fade v-fade7",
-    style: ([_vm.spinnerStyle, _vm.animationStyle7])
-  }), _c('div', {
-    staticClass: "v-fade v-fade8",
-    style: ([_vm.spinnerStyle, _vm.animationStyle8])
-  })])
+    staticClass: "broker-comparison"
+  }, _vm._l((_vm.comparison), function(broker, index) {
+    return _c('div', {
+      staticClass: "broker-comparison-item"
+    }, [_c('div', {
+      staticClass: "broker-comparison-card"
+    }, [_c('div', {
+      staticClass: "broker-comparison-card-padding"
+    }, [_c('div', {
+      staticClass: "broker-comparison-card-logo"
+    }, [_c('img', {
+      attrs: {
+        "src": 'http://www.brokeries.com/Content/Proto/images/logos/brokers/' + broker.Broker + '.jpg'
+      }
+    })]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-card-title"
+    }, [_vm._v("\n                    " + _vm._s(broker.Broker) + "\n                ")]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-card-subtitle"
+    }, [_vm._v("\n                    " + _vm._s(broker.ProfileType) + " Account\n                ")]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-card-link-btn"
+    }, [_c('a', {
+      staticClass: "button button-round button-green",
+      attrs: {
+        "href": broker.BrokerWebsite,
+        "target": "_blank"
+      }
+    }, [_vm._v("Open account")])])])]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-table"
+    }, [_c('div', {
+      staticClass: "broker-comparison-table-row"
+    }, [(index == 0) ? _c('div', {
+      staticClass: "broker-comparison-table-row-title"
+    }, [_vm._v("\n                    Aggregate rating\n                ")]) : _vm._e(), _vm._v(" "), (broker.Rank === 'Excellent') ? _c('span', {
+      staticClass: "c-green"
+    }, [_vm._v("\n                    " + _vm._s(broker.Rank) + "\n                ")]) : (broker.Rank === 'Poor') ? _c('span', {
+      staticClass: "c-gray-light"
+    }, [_vm._v("\n                    " + _vm._s(broker.Rank) + "\n                ")]) : _c('span', [_vm._v("\n                    " + _vm._s(broker.Rank) + "\n                ")])]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-table-row"
+    }, [(index == 0) ? _c('div', {
+      staticClass: "broker-comparison-table-row-title"
+    }, [_vm._v("\n                    Rating\n                ")]) : _vm._e(), _vm._v(" "), _c('div', {
+      staticClass: "brokers-card-stars broker-stars"
+    }, [_vm._l((Math.round(broker.StarRating)), function(index) {
+      return _c('span', {
+        staticClass: "broker-stars-item broker-stars-item-filled"
+      })
+    }), _vm._v(" "), _vm._l(((5 - Math.round(broker.StarRating))), function(index) {
+      return _c('span', {
+        staticClass: "broker-stars-item"
+      })
+    })], 2)]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-table-row"
+    }, [(index == 0) ? _c('div', {
+      staticClass: "broker-comparison-table-row-title"
+    }, [_vm._v("\n                    EUR/USD spread, avg\n                ")]) : _vm._e(), _vm._v("\n                " + _vm._s(broker.AverageEurUsdSpread) + "\n            ")]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-table-row"
+    }, [(index == 0) ? _c('div', {
+      staticClass: "broker-comparison-table-row-title"
+    }, [_vm._v("\n                    USD/JPY spread, avg\n                ")]) : _vm._e(), _vm._v("\n                " + _vm._s(broker.AverageUSDJPYSpread) + "\n            ")]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-table-row"
+    }, [(index == 0) ? _c('div', {
+      staticClass: "broker-comparison-table-row-title"
+    }, [_vm._v("\n                    GBP/USD spread, avg\n                ")]) : _vm._e(), _vm._v("\n                " + _vm._s(broker.AverageGBPUSDSpread) + "\n            ")]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-table-row"
+    }, [(index == 0) ? _c('div', {
+      staticClass: "broker-comparison-table-row-title"
+    }, [_vm._v("\n                    USD/CAD spread, avg\n                ")]) : _vm._e(), _vm._v("\n                " + _vm._s(broker.AverageUSDCADSpread) + "\n            ")]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-table-row"
+    }, [(index == 0) ? _c('div', {
+      staticClass: "broker-comparison-table-row-title"
+    }, [_vm._v("\n                    XAU/USD spread, avg\n                ")]) : _vm._e(), _vm._v("\n                " + _vm._s(broker.AverageXAUUSDSpread) + "\n            ")]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-table-row"
+    }, [(index == 0) ? _c('div', {
+      staticClass: "broker-comparison-table-row-title"
+    }, [_vm._v("\n                    AUD/USD spread, avg\n                ")]) : _vm._e(), _vm._v("\n                " + _vm._s(broker.AverageAUDUSDSpread) + "\n            ")]), _vm._v(" "), _c('div', {
+      staticClass: "broker-comparison-table-row"
+    }, [(index == 0) ? _c('div', {
+      staticClass: "broker-comparison-table-row-title"
+    }, [_vm._v("\n                    USD/CHF spread, avg\n                ")]) : _vm._e(), _vm._v("\n                " + _vm._s(broker.AverageUSDCHFSpread) + "\n            ")])])])
+  }))
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-620c4bd5", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-3bfddaa0", module.exports)
   }
-}
-
-/***/ }),
-/* 157 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(154);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(138)("7bcda46e", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../css-loader/index.js?sourceMap!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-620c4bd5\",\"scoped\":false,\"hasInlineConfig\":false}!../../vue-loader/lib/selector.js?type=styles&index=0!./FadeLoader.vue", function() {
-     var newContent = require("!!../../css-loader/index.js?sourceMap!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-620c4bd5\",\"scoped\":false,\"hasInlineConfig\":false}!../../vue-loader/lib/selector.js?type=styles&index=0!./FadeLoader.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
 }
 
 /***/ })
