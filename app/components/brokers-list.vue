@@ -2,7 +2,11 @@
     <div>
         <div class="brokers-list">
             <div class="brokers-list-item" v-for="broker in brokers">
-                <a href="#" @click.prevent="$parent.openBroker(broker)" class="brokers-list-item-left">
+                <router-link :to="'/broker/' + broker.BrokerId" class="brokers-list-item-left">
+                    <div v-if="broker.Live" class="brokers-list-item-live">
+                        Live
+                    </div>
+
                     <div class="brokers-list-item-photo">
                         <img :src="'http://www.brokeries.com/Content/Proto/images/logos/brokers/' + broker.Broker + '.jpg'">
                     </div>
@@ -10,11 +14,11 @@
                         <span v-for="index in Math.round(broker.StarRating)" class="broker-stars-item broker-stars-item-filled"></span>
                         <span v-for="index in (5 - Math.round(broker.StarRating))" class="broker-stars-item"></span>
                     </div>
-                </a>
-                <a href="#" @click.prevent="$parent.openBroker(broker)" class="brokers-list-item-content">
-                    <div class="brokers-list-item-title">{{ broker.Broker }}</div>
+                </router-link>
+                <router-link :to="'/broker/' + broker.BrokerId" class="brokers-list-item-content">
+                    <div class="brokers-list-item-title">{{ broker.Broker }} {{ broker.BrokerId }}</div>
                     <div class="brokers-list-item-subtitle">
-                        <div class="brokers-list-item-label">Promo</div>
+                        <div v-if="broker.Promo !== undefined" class="brokers-list-item-label">Promo</div>
                         {{ broker.ProfileType }} Account
                     </div>
                     <table class="brokers-list-item-table">
@@ -43,8 +47,8 @@
                             </td>
                         </tr>
                     </table>
-                </a>
-                <a v-if="inComparison(broker)" href="#" class="brokers-list-item-comparison" @click.prevent="removeFromComparison(broker)">
+                </router-link>
+                <a v-if="inComparison(broker.BrokerId)" href="#" class="brokers-list-item-comparison" @click.prevent="removeFromComparison(broker.BrokerId)">
                     <svg width="29px" height="29px" viewBox="0 0 28 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                             <circle fill="#0CAE00" cx="14.5" cy="14.5" r="14.5"></circle>
@@ -52,7 +56,7 @@
                         </g>
                     </svg>
                 </a>
-                <a v-else-if="comparison.length < 5" href="#" class="brokers-list-item-comparison" @click.prevent="addToComparison(broker)">
+                <a v-else-if="comparison.length < 5" href="#" class="brokers-list-item-comparison" @click.prevent="addToComparison(broker.BrokerId)">
                     <svg width="29px" height="29px" viewBox="0 0 28 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <defs>
                             <circle id="path-1" cx="14.5" cy="14.5" r="14.5"></circle>
@@ -80,31 +84,35 @@
     </div>
 </template>
 <script>
+    import * as types from '../store/mutation-types';
+
     export default {
         data() {
             return {
-                showShadow: true
             }
         },
-        props: ['brokers', 'comparison'],
+        props: ['type'],
+        computed: {
+            brokers() {
+                const type = this.type ? this.type : 'Forex';
+                return this.$store.getters.getBrokersByType(type);
+            },
+            comparison() {
+                return this.$store.state.brokers.comparison
+            }
+        },
         methods: {
-            addToComparison(broker) {
-                if (!this.inComparison(broker) && this.comparison.length < 5) {
-                    this.comparison.push(broker);
-                }
+            addToComparison(id) {
+                this.$store.commit(types.COMPARISON_BROKER_ADD, {id});
             },
-            removeFromComparison(broker) {
-                this.comparison.forEach((v, i) => {
-                    if (v.BrokerId === broker.BrokerId) {
-                        this.comparison.splice(i, 1);
-                    }
-                });
+            removeFromComparison(id) {
+                this.$store.commit(types.COMPARISON_BROKER_DEL, {id});
             },
-            inComparison(broker) {
+            inComparison(id) {
                 let result = false;
 
-                this.comparison.forEach((v, i) => {
-                    if (v.BrokerId === broker.BrokerId) {
+                this.$store.state.brokers.comparison.forEach((v, i) => {
+                    if (v.BrokerId === id) {
                         result = true;
                     }
                 });
@@ -112,14 +120,7 @@
                 return result;
             },
             clearComparison() {
-                this.comparison.splice(0, this.comparison.length);
-            },
-            compare() {
-                window.scrollTo(0, 0);
-                this.$parent.setView('brokers-comparison');
-            },
-            scroll() {
-                this.$parent.brokersListScroll = window.pageYOffset;
+                this.$store.commit(types.COMPARISON_CLEAR);
             }
         }
     }

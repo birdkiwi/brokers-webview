@@ -533,7 +533,7 @@ template {
   width: 8px;
   height: 13px;
   vertical-align: baseline;
-  background: url(e1a4f560aa59f10b9e9ef3a889238829.svg);
+  background: url("data:image/svg+xml,%3C?xml version='1.0' encoding='UTF-8' standalone='no'?%3E %3Csvg width='8px' height='13px' viewBox='0 0 8 13' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E %3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E %3Cg transform='translate(-327.000000, -199.000000)' fill='%23CDCED2' fill-rule='nonzero'%3E %3Cg transform='translate(8.000000, 114.000000)'%3E %3Cg transform='translate(0.000000, 61.000000)'%3E %3Cpolygon points='320.274445 24 319.00013 25.2315655 324.449684 30.4999941 319 35.7684345 320.274316 37 327 30.4999374'%3E%3C/polygon%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/svg%3E");
   margin-left: 5px;
 }
 .brokers-filter-control-country-select {
@@ -543,7 +543,7 @@ template {
   background: transparent;
   color: #fff;
   font-size: 17px;
-  background: url(e1a4f560aa59f10b9e9ef3a889238829.svg) 95% center no-repeat;
+  background: url("data:image/svg+xml,%3C?xml version='1.0' encoding='UTF-8' standalone='no'?%3E %3Csvg width='8px' height='13px' viewBox='0 0 8 13' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E %3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E %3Cg transform='translate(-327.000000, -199.000000)' fill='%23CDCED2' fill-rule='nonzero'%3E %3Cg transform='translate(8.000000, 114.000000)'%3E %3Cg transform='translate(0.000000, 61.000000)'%3E %3Cpolygon points='320.274445 24 319.00013 25.2315655 324.449684 30.4999941 319 35.7684345 320.274316 37 327 30.4999374'%3E%3C/polygon%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/svg%3E") 95% center no-repeat;
   width: 150px;
   text-overflow: ellipsis;
   padding-right: 20px;
@@ -597,7 +597,7 @@ template {
   right: 11px;
   top: 50%;
   margin-top: -5px;
-  background: url(f3420322819a7b08b1ad0b6a915837bb.svg) no-repeat center;
+  background: url("data:image/svg+xml,%3C?xml version='1.0' encoding='UTF-8' standalone='no'?%3E %3Csvg width='14px' height='10px' viewBox='0 0 14 10' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E %3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E %3Cg transform='translate(-151.000000, -297.000000)' fill='%230CAE00'%3E %3Cg transform='translate(8.000000, 114.000000)'%3E %3Cg transform='translate(0.000000, 137.000000)'%3E %3Cg transform='translate(16.000000, 29.000000)'%3E %3Cpolygon points='139.034794 17.0004997 131.739805 24.0998851 128.943977 21.4296207 127.5 22.8996652 131.696746 27 140.4998 18.4405636'%3E%3C/polygon%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/svg%3E") no-repeat center;
   width: 14px;
   height: 10px;
 }
@@ -878,6 +878,8 @@ template {
   white-space: nowrap;
 }
 .brokers-list-item {
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
@@ -895,6 +897,24 @@ template {
   .brokers-list-item-left {
     padding: 6px 6px 6px 0;
   }
+}
+.brokers-list-item-live {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: absolute;
+  left: -36px;
+  top: 0;
+  transform: rotate(-45deg);
+  transform-origin: left top;
+  width: 50px;
+  height: 50px;
+  padding: 4px;
+  box-sizing: border-box;
+  background-color: #F2DA24;
+  font-size: 9px;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 .brokers-list-item-photo {
   width: 80px;
@@ -1016,10 +1036,10 @@ body {
   width: 12px;
   height: 12px;
   margin: 0 1px;
-  background: url(d996311cb1c7c7bf98674f20bef5ba74.svg) no-repeat center;
+  background: url("data:image/svg+xml,%3C?xml version='1.0' encoding='UTF-8' standalone='no'?%3E %3Csvg width='12px' height='11px' viewBox='0 0 12 11' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E %3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E %3Cg transform='translate(-76.000000, -191.000000)' fill='%23D6D6D6'%3E %3Cg transform='translate(0.000000, 105.000000)'%3E %3Cg transform='translate(24.000000, 86.000000)'%3E %3Cpolygon points='58 9 54.4732885 10.854102 55.1468305 6.92705098 52.2936609 4.14589803 56.2366442 3.57294902 58 0 59.7633558 3.57294902 63.7063391 4.14589803 60.8531695 6.92705098 61.5267115 10.854102'%3E%3C/polygon%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/svg%3E") no-repeat center;
 }
 .broker-stars-item-filled {
-  background-image: url(9881e8a5f2e854768712e676c91a4c64.svg);
+  background-image: url("data:image/svg+xml,%3C?xml version='1.0' encoding='UTF-8' standalone='no'?%3E %3Csvg width='12px' height='11px' viewBox='0 0 12 11' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E %3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E %3Cg transform='translate(-76.000000, -191.000000)' fill='%23F2DB24'%3E %3Cg transform='translate(0.000000, 105.000000)'%3E %3Cg transform='translate(24.000000, 86.000000)'%3E %3Cpolygon points='58 9 54.4732885 10.854102 55.1468305 6.92705098 52.2936609 4.14589803 56.2366442 3.57294902 58 0 59.7633558 3.57294902 63.7063391 4.14589803 60.8531695 6.92705098 61.5267115 10.854102'%3E%3C/polygon%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/svg%3E");
 }
 .brokers-comparison-button {
   position: fixed;
@@ -1054,7 +1074,7 @@ body {
 }
 .brokers-comparison-button-clear {
   display: inline-block;
-  background: url(269772b44f07a67ee5f26fa731a086e1.svg) no-repeat center;
+  background: url("data:image/svg+xml,%3C?xml version='1.0' encoding='UTF-8' standalone='no'?%3E %3Csvg width='9px' height='9px' viewBox='0 0 9 9' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E %3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E %3Cg transform='translate(-250.000000, -622.000000)' fill='%23FFFFFF'%3E %3Cg transform='translate(0.000000, 571.000000)'%3E %3Cg transform='translate(100.000000, 35.000000)'%3E %3Cg transform='translate(150.000000, 16.000000)'%3E %3Crect transform='translate(4.500000, 4.500000) rotate(-315.000000) translate(-4.500000, -4.500000) ' x='-1' y='4' width='11' height='1'%3E%3C/rect%3E %3Crect transform='translate(4.500000, 4.500000) rotate(-225.000000) translate(-4.500000, -4.500000) ' x='-1' y='4' width='11' height='1'%3E%3C/rect%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/g%3E %3C/svg%3E") no-repeat center;
   width: 40px;
   height: 40px;
 }

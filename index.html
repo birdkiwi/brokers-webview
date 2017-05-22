@@ -3,20 +3,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>Brokery</title>
-    <link rel="stylesheet" href="build/style.css">
+    <link rel="stylesheet" href="build/style.css" inline>
 </head>
 <body>
 <div style="position:fixed; z-index: 1010; top: 0; left: 0; background: rgba(255, 255, 255, 0.6); font-size: 11px; padding: 4px;">
-    <a href="#" onclick="setView('brokers-list'); hideFilter();">&larr;</a> &nbsp;
-    <a href="#" onclick="setView('brokers-list'); getAccounts('Forex');">Forex</a> &nbsp;
-    <a href="#" onclick="setView('brokers-list'); getAccounts('Stock');">Stocks</a> &nbsp;
-    <a href="#" onclick="setView('brokers-list'); getAccounts('Other');">Other</a> &nbsp;
+    <a href="#" onclick="window.history.back(); return false;">&larr;</a> &nbsp;
+    <a href="#/brokers/Forex">Forex</a> &nbsp;
+    <a href="#/brokers/Stock">Stock</a> &nbsp;
+    <a href="#/brokers/Other">Other</a> &nbsp;
     <a href="#" onclick="showFilter();">Show filter</a> &nbsp;
     <a href="#" onclick="hideFilter();">Hide filter</a> &nbsp;
 </div>
 <div id="app">
     <app></app>
 </div>
-<script src="build/app.js"></script>
+<script src="build/app.js" inline></script>
 </body>
 </html>

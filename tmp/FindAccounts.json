@@ -1,7 +1,7 @@
 {
   "start_date": "05/31/2015",
-  "last_updated": "03/01/2017",
-  "query_hash": "54418141",
+  "last_updated": "05/01/2017",
+  "query_hash": "35329770",
   "data": [
     {
       "id": "31693b8a-6b29-4087-bd17-ad22565a9a98",
@@ -67,7 +67,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "9904c687-f2f2-462f-b5a7-84d101e94456",
@@ -133,7 +134,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "01a2bd56-7cb5-478e-a298-7e1a3946b58d",
@@ -199,7 +201,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "013c71e8-17d6-4e35-8f9e-b02b29554da5",
@@ -265,7 +268,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "a9dbf704-7cb5-40f4-8f74-dfbccf5b4fe8",
@@ -330,7 +334,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "dfa309b7-2be1-43d9-853a-a232de429551",
@@ -399,7 +404,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "b43efb53-d708-40e6-a79b-d9b4ff665aff",
@@ -468,7 +474,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 4,
-      "StarVotes": 2
+      "StarVotes": 2,
+      "Live": false
     },
     {
       "id": "5d3e1552-cb48-4955-b9ab-73233f6c9356",
@@ -534,7 +541,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "93943e80-af7f-4db0-bf6b-c6f068d0ac57",
@@ -600,7 +608,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "15fb45ea-522d-46a3-82a5-05ca33a67061",
@@ -669,72 +678,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
-    },
-    {
-      "id": "99bb13c8-f73a-4984-84fa-8b76dd101050",
-      "name": "Sterling Gent Trading Individual MT4 Direct",
-      "Location": "Virgin Islands, British, Tortola<br>British Virgin Islands",
-      "ProfileType": "Forex",
-      "Broker": "Sterling Gent Trading",
-      "BrokerId": "bc45d43f-f254-41e5-8836-bffd61c3eba2",
-      "BrokerWebsite": "http://www.sterlinggent.com/",
-      "MinDeposit": 500,
-      "MarginMinDeposit": 0,
-      "MaxLeverage": 400,
-      "TradeCommission": 0,
-      "AverageEurUsdSpread": 0.700000000000145,
-      "AverageUSDJPYSpread": 8.00000000000978,
-      "AverageGBPUSDSpread": 1.2000000000012,
-      "AverageUSDCADSpread": 1.49999999999872,
-      "AverageXAUUSDSpread": 0,
-      "ExecutionType": "N/A",
-      "SupportsOptions": false,
-      "IsCommissionVolumeBased": false,
-      "Marginable": true,
-      "IncentivizedCommission": 0,
-      "Incentive": "",
-      "ExchangeCommissions": 0,
-      "MarginRate": 0,
-      "AssistedTradeFee": 0,
-      "ContractFee": 0,
-      "OptionsRegulatoryFee": 0,
-      "MinBondValue": 0,
-      "MaxBondValue": 0,
-      "OutgoingAccountTransferPartialFee": 0,
-      "OutgoingAccountTransferFullFee": 0,
-      "IncomingWireTransferFee": 0,
-      "OutgoingWireTransferFee": 0,
-      "CheckCopyFee": 0,
-      "CheckRequestFee": 0,
-      "StopPaymentRequestFee": 0,
-      "Description": "",
-      "Website": "https://sgtmarkets.com/en/open-account/",
-      "location_details": {
-        "country": "British Virgin Islands",
-        "state": "Tortola",
-        "street_addr": "Virgin Islands, British",
-        "latitude": 18.4334704,
-        "longitude": -64.6332782,
-        "country_iso_code": "VG"
-      },
-      "AverageAUDUSDSpread": 0.899999999999235,
-      "AverageUSDCHFSpread": 0.900000000000345,
-      "Vrstaspreada": "Fixed",
-      "DealingDeskDD": true,
-      "NonDealingDeskSTP": true,
-      "STPInstantExecution": true,
-      "STPDirectMarketAccess": true,
-      "ECNElectronicCommunicationNetwork": true,
-      "LiquidityProvidersLPs": "",
-      "WebLinks": [
-        "https://sgtmarkets.com/en/open-account/"
-      ],
-      "AverageCurrencySpread": 2.20000000000157,
-      "Rank": "Excellent",
-      "BrokerSupportsDemoAccounts": "Yes",
-      "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "badbbe39-2571-4538-b065-6f8ced6776ad",
@@ -802,7 +747,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "3e68ea4e-b4f0-4a30-a667-5e726a648ede",
@@ -870,7 +816,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "a0ef15fd-3f2f-44b2-8e0f-31c7c8ca1ad3",
@@ -937,7 +884,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "28fcdfa7-e27a-4346-852b-c54dcab0ac51",
@@ -1004,7 +952,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "290b4829-8e2b-46d8-8c4c-790bac8b7da1",
@@ -1070,7 +1019,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "8e7537f6-3e02-4c98-8331-dfd58fdc7603",
@@ -1131,7 +1081,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "71b84e41-0b60-4580-b7a5-064d1513569d",
@@ -1198,7 +1149,8 @@
       "Rank": "Good",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "3c695412-24be-4c32-93ad-e7ebe1556a03",
@@ -1264,7 +1216,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "bffe503a-9e68-4d24-9ab4-874b1bc340ad",
@@ -1328,7 +1281,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "51490336-69d8-4eda-b532-cdc5b5af5088",
@@ -1391,7 +1345,8 @@
       "Rank": "Good",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "3cf78e21-75b0-49b5-8934-8126a8d4daa5",
@@ -1456,7 +1411,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "a51ba212-b9a2-4e78-89de-64c565fe3b7a",
@@ -1520,7 +1476,8 @@
       "Rank": "Good",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "202a56ae-90cd-451d-b85a-e83a970763b7",
@@ -1589,7 +1546,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "f4c885fd-d9d3-4f72-bb00-26fc1228d03f",
@@ -1655,7 +1613,8 @@
       "Rank": "Good",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "7d6ba269-c09e-43e6-8743-1fa28e9525f5",
@@ -1718,7 +1677,8 @@
       "Rank": "Good",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "6cdeef6f-39e3-4063-abaf-361b7bef51ab",
@@ -1785,7 +1745,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "6bbe5e6c-4fc9-4b52-bf90-66f658d0936e",
@@ -1850,7 +1811,75 @@
       "Rank": "Good",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
+    },
+    {
+      "id": "99bb13c8-f73a-4984-84fa-8b76dd101050",
+      "name": "Individual MT4 Direct",
+      "Location": "Virgin Islands, British, Tortola<br>British Virgin Islands",
+      "ProfileType": "Forex",
+      "Broker": "Sterling Gent Trading",
+      "BrokerId": "bc45d43f-f254-41e5-8836-bffd61c3eba2",
+      "BrokerWebsite": "http://www.sterlinggent.com/",
+      "MinDeposit": 500,
+      "MarginMinDeposit": 0,
+      "MaxLeverage": 400,
+      "TradeCommission": 0,
+      "AverageEurUsdSpread": 0,
+      "AverageUSDJPYSpread": 3.99999999999068,
+      "AverageGBPUSDSpread": 0.4000000000004,
+      "AverageUSDCADSpread": 0.59999999999949,
+      "AverageXAUUSDSpread": 31.9999999999936,
+      "ExecutionType": "N/A",
+      "SupportsOptions": false,
+      "IsCommissionVolumeBased": false,
+      "Marginable": true,
+      "IncentivizedCommission": 0,
+      "Incentive": "",
+      "ExchangeCommissions": 0,
+      "MarginRate": 0,
+      "AssistedTradeFee": 0,
+      "ContractFee": 0,
+      "OptionsRegulatoryFee": 0,
+      "MinBondValue": 0,
+      "MaxBondValue": 0,
+      "OutgoingAccountTransferPartialFee": 0,
+      "OutgoingAccountTransferFullFee": 0,
+      "IncomingWireTransferFee": 0,
+      "OutgoingWireTransferFee": 0,
+      "CheckCopyFee": 0,
+      "CheckRequestFee": 0,
+      "StopPaymentRequestFee": 0,
+      "Description": "",
+      "Website": "https://sgtmarkets.com/en/open-account/step-1/",
+      "location_details": {
+        "country": "British Virgin Islands",
+        "state": "Tortola",
+        "street_addr": "Virgin Islands, British",
+        "latitude": 18.4334704,
+        "longitude": -64.6332782,
+        "country_iso_code": "VG"
+      },
+      "AverageAUDUSDSpread": 0.2000000000002,
+      "AverageUSDCHFSpread": 0.20000000000131,
+      "Vrstaspreada": "Fixed",
+      "DealingDeskDD": true,
+      "NonDealingDeskSTP": true,
+      "STPInstantExecution": true,
+      "STPDirectMarketAccess": true,
+      "ECNElectronicCommunicationNetwork": true,
+      "LiquidityProvidersLPs": "",
+      "WebLinks": [
+        "https://sgtmarkets.com/en/open-account/step-1/"
+      ],
+      "AverageCurrencySpread": 1.07999999999842,
+      "Rank": "Poor",
+      "BrokerSupportsDemoAccounts": "Yes",
+      "StarRating": 0,
+      "StarVotes": 0,
+      "Live": true,
+      "Promo": ""
     },
     {
       "id": "8679fdfd-953a-4be1-88be-8398b638e332",
@@ -1917,7 +1946,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 3.66666666666667,
-      "StarVotes": 3
+      "StarVotes": 3,
+      "Live": false
     },
     {
       "id": "dbb973b1-f0e2-4d28-9839-53eed810701f",
@@ -1981,7 +2011,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "d848efe0-88e1-44ed-a33a-c75f759676d8",
@@ -2044,7 +2075,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "8c7ee316-9d59-4dae-98a2-2ad83a021f7e",
@@ -2108,7 +2140,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "a4e74c09-3997-4dec-a77c-fd84ee6bc06a",
@@ -2172,7 +2205,8 @@
       "Rank": "Good",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "7536ab27-f830-4757-ba7e-9647ee2017c3",
@@ -2236,7 +2270,8 @@
       "Rank": "Good",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "c263ab31-c496-40bb-8351-7514e57f0b03",
@@ -2299,7 +2334,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "85f61938-7a41-48bb-aa81-230fed00e8ee",
@@ -2370,7 +2406,8 @@
       "Rank": "Good",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "73b3ed28-e674-4c10-86ec-82b61a7b1107",
@@ -2435,7 +2472,8 @@
       "Rank": "Good",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "01eec223-3420-4bd6-bb45-59885a01774e",
@@ -2500,7 +2538,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "25d166ec-ba93-4a91-a9d3-ad2e594deff3",
@@ -2563,7 +2602,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "b9a0e8a8-6596-4342-8ff8-5b1cbb30db16",
@@ -2626,7 +2666,8 @@
       "Rank": "Good",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "71423877-9e70-4753-b4ed-f1537fc8c130",
@@ -2690,7 +2731,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "e0adc484-7f3a-4477-aea8-7854068ad8c1",
@@ -2753,7 +2795,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "9c370c59-0eda-4098-8b24-ab76559c0a23",
@@ -2817,7 +2860,8 @@
       "Rank": "Good",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "18ecc9b5-2bcd-45d9-ad0e-d9af67dad9bd",
@@ -2883,7 +2927,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "ba19af4a-868f-4d0b-b403-7ca5d5888929",
@@ -2947,7 +2992,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "01d1bd22-63cd-46a4-bc36-ed4027066391",
@@ -3015,7 +3061,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "924afd74-f04c-436c-a548-581f7dae77ee",
@@ -3078,7 +3125,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "d6e741e9-3368-4e6a-8610-7fef35704330",
@@ -3142,7 +3190,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "6079e9fb-62be-428f-a605-c782cdf11cf7",
@@ -3205,7 +3254,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "d961fa27-b451-4f8e-ac4b-c1a6bb227483",
@@ -3268,7 +3318,8 @@
       "Rank": "Good",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "ec33ff7c-a10c-4dc0-b685-a75f5f77771e",
@@ -3332,7 +3383,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "7f8ed71e-83c2-4411-a2e2-f4ea8bd6b3ac",
@@ -3400,7 +3452,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "fea031a3-6b94-41bf-b002-fef871fcad7b",
@@ -3463,7 +3516,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "3d6dd465-e8f2-4995-89db-dbbe605ad1ff",
@@ -3526,7 +3580,8 @@
       "Rank": "Good",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "5ab9a669-6f2c-4375-ab8d-3e46231a3d09",
@@ -3590,7 +3645,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "b6d4a96d-7b81-444a-900b-e41f0076598f",
@@ -3654,7 +3710,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "c77c7940-2179-44b3-bcd8-0cb4b1585bbd",
@@ -3724,7 +3781,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "b601fd41-8388-490b-b94a-0c29b42a1eb3",
@@ -3792,7 +3850,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "97e5e34f-1f96-48cf-aec3-04bec64aeff7",
@@ -3856,7 +3915,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "72fab876-f5f1-451a-8906-77cc860654b8",
@@ -3919,7 +3979,8 @@
       "Rank": "Good",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "1fd855b9-37e9-4cf4-bd0e-3a8c169fc524",
@@ -3982,7 +4043,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "aa4987cb-c07f-4003-b711-9d16f957bb89",
@@ -4046,7 +4108,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "cf1330e3-91b2-4134-8ca6-e8788a5cc9d3",
@@ -4110,7 +4173,8 @@
       "Rank": "Excellent",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "710dacc0-302f-478e-9abd-b24d575e4e9d",
@@ -4172,7 +4236,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "8efd42e4-ce9a-4b4d-8388-b897076bdb10",
@@ -4234,7 +4299,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "40458939-f003-48f2-bede-ee99f11b93ba",
@@ -4296,7 +4362,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "8504e7d5-8f3c-4e1b-9a26-6a24d039a240",
@@ -4358,7 +4425,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "3a971210-2040-4450-9ce0-315cd019d3cf",
@@ -4422,7 +4490,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "14adc19d-98f4-404b-b151-8435ac286744",
@@ -4486,7 +4555,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "19693a25-ae84-412e-9e6d-2ef9092600c9",
@@ -4545,7 +4615,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "1cab0569-67b2-4c72-9f3b-fc25b9300efe",
@@ -4612,7 +4683,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "05f14efb-b20b-4d33-a3c8-e542e6321ea3",
@@ -4674,7 +4746,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "54ada2a6-ec43-4e11-971f-a6d6cf725cf2",
@@ -4736,7 +4809,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "5b995bde-af2e-40bd-b2e6-1bab7b84cc42",
@@ -4800,7 +4874,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "444a5b38-c95f-4ea7-bd72-1a8ab9035e26",
@@ -4862,7 +4937,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "41dde938-760b-4254-8510-3fe756fb6589",
@@ -4924,7 +5000,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "5b688350-a76b-4f9b-b830-8284538ec233",
@@ -4986,7 +5063,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "acfc0ba7-8f70-4a02-9c6a-a5689303f0f1",
@@ -5048,7 +5126,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "6000d440-383f-49ab-8d80-428e620da249",
@@ -5110,7 +5189,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "3dd8700a-a631-48b8-8305-156e3a4aaad7",
@@ -5172,7 +5252,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "5ce14310-e45e-431a-8221-cd47f79a2679",
@@ -5237,7 +5318,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "140c2cb9-f80f-44c8-befc-43a2d08f06b3",
@@ -5296,7 +5378,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "7ec7d4cb-17b0-410a-aa61-522d11b2499d",
@@ -5358,7 +5441,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "54ab85bb-e25d-471d-9bb3-3df732708dd9",
@@ -5420,7 +5504,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "1e24f062-c577-41ff-b233-3786c43d8bdd",
@@ -5482,7 +5567,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "04fb3184-9225-452c-a856-2d7e5c3943d3",
@@ -5544,7 +5630,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "0bcdafda-39da-4299-bfbe-0255506f469e",
@@ -5608,7 +5695,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "da5d1fde-607c-4569-91fe-a7d572a86298",
@@ -5670,7 +5758,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "ca36fcc1-1baa-4d42-8b3e-25dde5235305",
@@ -5732,7 +5821,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "a1d35537-d181-419a-a8bb-180799ccdc93",
@@ -5794,7 +5884,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "ae3a2747-d0a8-46ff-8045-beccae858b9b",
@@ -5856,7 +5947,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "c9f0e241-73fd-4a8f-b384-9c04b39a2449",
@@ -5915,7 +6007,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "f44aa723-b2af-43ff-8981-5ffba4bf7ec7",
@@ -5977,7 +6070,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "5f0540a8-99c1-478a-b847-87985176e1d5",
@@ -6039,7 +6133,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "335e82fd-52a5-4e50-8469-31b3f9908ac2",
@@ -6101,7 +6196,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "1432f884-6c49-44cd-930c-eab714cf0da0",
@@ -6162,7 +6258,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "474c5a18-9f57-4927-a112-af641223bedb",
@@ -6224,7 +6321,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "5714af55-d637-49b8-9623-e4ee19af5e6d",
@@ -6283,7 +6381,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "27b3f9d1-30cf-4152-bdf9-baa368cd88a6",
@@ -6345,7 +6444,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "018576cb-47e4-4823-bf9d-f414a34a66f1",
@@ -6405,7 +6505,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "54bd462c-d569-4c0d-ab39-56481f89c7a2",
@@ -6467,7 +6568,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "6390ba0a-b325-4c6f-ad12-e1e15d3984d4",
@@ -6529,7 +6631,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "fba5f397-a883-4796-b177-9a9d3b183879",
@@ -6591,7 +6694,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "c5c9b0c3-b633-4937-b8f5-bb42b2eb19e2",
@@ -6653,7 +6757,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "2e2a6543-9616-40a8-bb3e-e36e6c9dd626",
@@ -6715,7 +6820,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "702a663c-07fb-4d3e-9a7c-2d5e5196a6fd",
@@ -6779,7 +6885,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "f460e0c5-8035-4929-8747-8aa48d9da8d3",
@@ -6841,7 +6948,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "25f3247e-d273-4633-be8d-f4b78d901925",
@@ -6903,7 +7011,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "00a1d039-843d-454b-a12c-da697d139eb8",
@@ -6965,7 +7074,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "8836a364-b893-4fbd-b611-d56eb69762dd",
@@ -7024,7 +7134,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "cd7f0940-1310-40ca-b855-051776ea60cb",
@@ -7086,7 +7197,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "393fa372-1b50-4412-94ba-b61ea5821058",
@@ -7148,7 +7260,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "885af82b-9d03-4dfa-8076-b5fc7d292b7b",
@@ -7208,7 +7321,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "d1e0655f-0091-49ae-a022-e1e6040ac48f",
@@ -7267,7 +7381,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "3eef55df-452c-41f9-a272-9f07e978e03d",
@@ -7331,7 +7446,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "0cb27d24-4ee4-4cb6-b310-4078d18cd346",
@@ -7393,7 +7509,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "7f881504-9fcb-472b-afb3-d80469eb5bb7",
@@ -7455,7 +7572,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "bf147e9d-5ca9-47b0-8196-24a41f3276b0",
@@ -7517,7 +7635,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "48ee4964-e3ef-4c70-aa99-8634d2024a71",
@@ -7584,7 +7703,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "b6e39eba-9ea9-419d-b02d-ae959bf56331",
@@ -7646,7 +7766,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "3269c413-dafe-44c1-9105-2025888f81fd",
@@ -7708,7 +7829,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "5ef9974e-d40c-4e24-bb7b-345b42f7c355",
@@ -7767,7 +7889,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "d00d750a-2e95-4323-8d32-5c85f08deee9",
@@ -7829,7 +7952,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "27c89c6c-49aa-4bc2-9e01-76672fa26c1c",
@@ -7891,7 +8015,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "30d61dbe-eb6d-497b-87b9-ad5de5fe1cb2",
@@ -7950,7 +8075,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "b7379da5-b877-40ab-8a6b-4b76c64e886a",
@@ -8012,7 +8138,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "059452a5-a897-4c0c-bff1-c472cf164bc9",
@@ -8071,7 +8198,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "b8750811-00fa-4ca8-9c9d-f94de21fbcdd",
@@ -8136,7 +8264,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "4570a32e-c20c-4102-b317-9ffaf1e8bcce",
@@ -8196,7 +8325,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "426bae1d-11c9-404e-bbee-510ada4579fe",
@@ -8255,7 +8385,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "8526d695-c2f2-4b01-bd34-6911ef3ca775",
@@ -8317,7 +8448,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "19fa918f-088a-4263-9ce1-efe1c433c6b2",
@@ -8379,7 +8511,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "4bfea6f1-73e5-45c5-aaf7-91100466f162",
@@ -8441,7 +8574,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "18c65d8d-d865-4350-a4c4-4539e0b63072",
@@ -8503,7 +8637,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "939f0542-0450-4923-a033-b412269e8425",
@@ -8565,7 +8700,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "65c751ee-4d2e-42a7-9e19-f2b3e39f90c1",
@@ -8627,7 +8763,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "2253b44b-68c9-461f-94a2-7eb4eae1d248",
@@ -8692,7 +8829,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "36cbbaba-c960-46c0-8890-afb9aa011c60",
@@ -8758,7 +8896,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "5862fadd-3e12-451b-b1cd-2a738b83f79b",
@@ -8820,7 +8959,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "22b3daf1-5360-4c6d-a116-68d7ed8591ec",
@@ -8882,7 +9022,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "0ceb6a30-40d8-4184-9b82-8c080b71f4e0",
@@ -8944,7 +9085,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "b6b1942d-cc71-4c2b-89ed-09dc7ebb9967",
@@ -9006,7 +9148,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "6eb8c433-2fe2-4f13-8e52-b1d89e33f5ea",
@@ -9068,7 +9211,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "da25c465-2a38-4dea-b3cb-8e0a9cbaa30c",
@@ -9130,7 +9274,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "d2e28f56-d485-4e67-8dba-8a513a44de10",
@@ -9192,7 +9337,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "05f5bf6a-7fee-4d21-bf43-61a6995b6fc5",
@@ -9256,7 +9402,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "1c7facdc-bda6-461a-adea-852522a41561",
@@ -9320,7 +9467,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "5d014205-d4a2-4b76-a97b-4fdf73fe12be",
@@ -9382,7 +9530,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "4c4e515a-a1db-43e7-af47-3f6fc5fd04b7",
@@ -9442,7 +9591,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "2cf044c6-5fa4-4df2-8268-cee87a19253c",
@@ -9504,7 +9654,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "3022cef9-605b-437f-8ae4-4f6cbc07b718",
@@ -9566,7 +9717,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "f5876452-b9d0-4921-8fb9-77d31086ab32",
@@ -9628,7 +9780,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "1fc8ae83-5f57-4c8e-88f8-ce96540ec99e",
@@ -9690,7 +9843,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "98b6cb35-a607-4099-9321-de9ede979681",
@@ -9749,7 +9903,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "48524423-82be-4dfb-92b2-f0acd942772a",
@@ -9808,7 +9963,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "8bfcd42f-049d-40ce-9afc-a258b3e10c37",
@@ -9870,7 +10026,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "8698d822-fa33-4966-9e30-6f4f8995ab17",
@@ -9932,7 +10089,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "26227092-86f4-4d19-a5ce-5f67523f413f",
@@ -9994,7 +10152,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "c17a370d-c959-4b05-89d9-670e1ea1f934",
@@ -10053,7 +10212,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "aea937cc-5424-4355-a07f-aeac5c2d1b4e",
@@ -10113,7 +10273,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "9fd289a7-c0b8-4c87-81f7-2488109d6425",
@@ -10172,7 +10333,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "1518d647-c4d2-44e8-9ed0-7152c392365d",
@@ -10236,7 +10398,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "f76b256a-bc0e-442c-b62a-851c5b766598",
@@ -10298,7 +10461,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "ab3b9aba-1b51-42ce-8580-e77c7a9db476",
@@ -10360,7 +10524,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "8c730d7c-f980-46fd-816e-491813a67afb",
@@ -10422,7 +10587,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "9e549266-3143-4216-b8af-7452e6eae190",
@@ -10484,7 +10650,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "54ea38c2-c38b-4c25-ac02-b8934b2e5aea",
@@ -10543,7 +10710,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "56cf2edc-3602-4820-bca8-4d3db7cc681e",
@@ -10605,7 +10773,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "3926402e-5028-4da0-984b-ec6be43c7573",
@@ -10666,7 +10835,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "9b798c0d-3978-4fa3-b50e-7ac6a86c57dd",
@@ -10728,7 +10898,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "b0893694-f16f-4d8c-b154-2ff0585535c3",
@@ -10793,7 +10964,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "b4c187b3-42f3-48d4-9182-b912eb8991c1",
@@ -10855,7 +11027,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "b2d31c9f-80bd-4ece-9b44-600a7dc2fe07",
@@ -10917,7 +11090,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "bbc66a5e-305b-42d8-9ff0-5838e5c9cfb4",
@@ -10979,7 +11153,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "f4921ed6-7789-4463-a843-3038eba7acca",
@@ -11044,7 +11219,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "6560d7ce-2d42-428c-bc49-7f713934bc71",
@@ -11103,7 +11279,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "c71989e2-3f13-4a11-bee9-3a823929ae45",
@@ -11165,7 +11342,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "5164b508-5b26-4140-ab00-f0a21734a779",
@@ -11225,7 +11403,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "488c765b-9fdd-461c-aa58-3f1565e177d8",
@@ -11284,7 +11463,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "7b978192-a2aa-4940-9cff-d7ec764c264e",
@@ -11346,7 +11526,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "39fe027c-b3d8-4795-8610-5402c799345b",
@@ -11408,7 +11589,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "7e21ff0f-cbed-4847-8bff-58d2cef83f83",
@@ -11470,7 +11652,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "2d2dcaf0-a8fc-49c3-afea-51aaa85d2206",
@@ -11534,7 +11717,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "f7949728-5378-4ea2-b386-cd683f91da8c",
@@ -11595,7 +11779,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "2d7fa0d5-6b25-4991-9380-5016ac69b5fd",
@@ -11657,7 +11842,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     },
     {
       "id": "283cf355-f865-4d4a-8f63-0490949d27bb",
@@ -11719,7 +11905,8 @@
       "Rank": "Poor",
       "BrokerSupportsDemoAccounts": "Yes",
       "StarRating": 0,
-      "StarVotes": 0
+      "StarVotes": 0,
+      "Live": false
     }
   ]
 }

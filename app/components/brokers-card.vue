@@ -1,8 +1,7 @@
 <template>
     <div class="broker-card">
         <div class="broker-card-preview">
-
-            <div class="broker-card-preview-live">
+            <div v-if="broker.Live" class="broker-card-preview-live">
                 Live
             </div>
 
@@ -20,13 +19,13 @@
                     <a :href="broker.BrokerWebsite" target="_blank" class="button button-round button-green">Open account</a>
                 </div>
             </div>
-            <div class="broker-card-promo">
+            <div v-if="broker.Promo !== undefined" class="broker-card-promo">
                 <div class="broker-card-promo-title">
                     Promo
                 </div>
-                <div class="broker-card-promo-desc">
+                <div v-if="broker.Promo.length" class="broker-card-promo-desc">
                     <p>
-                        Promo???
+                        {{ broker.Promo }}
                     </p>
                 </div>
             </div>
@@ -261,6 +260,14 @@
                 currentTab: 'details'
             }
         },
-        props: ['broker']
+        props: ['id'],
+        computed: {
+            broker() {
+                return this.$store.state.brokers.all.find(broker => broker.BrokerId === this.id);
+            }
+        },
+        mounted() {
+            //document.body.scrollTop = document.documentElement.scrollTop = 0;
+        }
     }
 </script>

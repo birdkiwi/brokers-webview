@@ -16,7 +16,10 @@ module.exports = {
         rules: [
             {
                 test: /\.svg$/,
-                use: "file-loader"
+                use: {
+                    loader: 'svg-url-loader',
+                    options: {}
+                }
             },
             {
                 test: /\.less$/,

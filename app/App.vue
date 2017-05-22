@@ -8,7 +8,11 @@
             </div>
         </transition>
 
-        <transition name="fade">
+        <!--<transition name="fade">-->
+            <router-view v-keep-scroll-position></router-view>
+        <!--</transition>-->
+
+        <!--<transition name="fade">
             <brokers-list v-if="currentView == 'brokers-list'" :brokers="brokers" :comparison="comparison"></brokers-list>
         </transition>
 
@@ -19,6 +23,7 @@
         <transition name="fade">
             <brokers-comparison v-if="currentView == 'brokers-comparison'" :comparison="comparison"></brokers-comparison>
         </transition>
+        -->
 
         <transition name="fade">
             <div class="overlay overlay-padding" v-if="filters.visible">
@@ -28,62 +33,25 @@
     </div>
 </template>
 <script>
-    import config from './config';
-    import axios from 'axios';
     import spinner from 'vue-spinner/src/FadeLoader.vue';
     import brokersList from './components/brokers-list.vue';
     import brokersCard from './components/brokers-card.vue';
     import brokersComparison from './components/brokers-comparison.vue';
     import brokersFilter from './components/brokers-filter.vue';
     import countryCodes from './data/countries.json';
-
-    let axiosInstance = axios.create({
-        baseURL: config.apiUrl,
-        timeout: 10000,
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        }
-    });
+    import * as types from './store/mutation-types';
 
     export default {
         data() {
             return {
-                currentView: 'brokers-list',
-                brokersListScroll: 0,
-                currentBroker: null,
-                spinner: false,
-                brokers: [],
-                countries: {},
-                comparison: [],
-                filters: {
-                    visible: false,
-                    active: false,
-                    country: null,
-                    sortBy: null,
-                    tradeComission: {
-                        value: [0, 10],
-                        slider: {
-                            width: '100%',
-                            height: 2,
-                            dotSize: 28,
-                            min: 0,
-                            max: 10,
-                            tooltip: false
-                        }
-                    },
-                    minAccountDeposit: {
-                        value: [0, 10],
-                        slider: {
-                            width: '100%',
-                            height: 2,
-                            dotSize: 28,
-                            min: 0,
-                            max: 10,
-                            tooltip: false
-                        }
-                    }
-                }
+            }
+        },
+        computed: {
+            spinner() {
+                return this.$store.state.spinner;
+            },
+            filters() {
+                return this.$store.state.filters;
             }
         },
         components: {
@@ -94,34 +62,6 @@
             spinner
         },
         methods: {
-            getAccounts(type) {
-                let _this = this;
-                _this.spinner = true;
-
-                let params = {
-                    type: type ? type : 'Forex'
-                }
-
-                axiosInstance.get('FindAccounts', {
-                    params: params
-                }).then(function(response) {
-                    _this.brokers = response.data.data;
-                    _this.spinner = false;
-                }, function (error) {
-                    _this.spinner = false;
-                    //TODO: error handler
-                });
-            },
-            getCountries() {
-                let _this = this;
-
-                axiosInstance.get('AccountCountries')
-                    .then(function(response) {
-                        _this.countries = response.data;
-                    }, function (error) {
-                        //TODO: error handler
-                    });
-            },
             showFilter() {
                 this.filters.visible = true;
             },
@@ -140,12 +80,45 @@
             }
         },
         mounted() {
-            this.getAccounts();
-            this.getCountries();
-            window.showFilter = this.showFilter;
-            window.hideFilter = this.hideFilter;
-            window.getAccounts = this.getAccounts;
-            window.setView = this.setView;
+            this.$store.dispatch('getAllBrokers');
+
+            window.messageFromNative = action => {
+                this.$store.commit('SPINNER_DISABLE');
+
+                switch (action) {
+                    case 'list:FOREX':
+                        this.$router.push('/brokers/Forex');
+                        break;
+                    case 'list:STOCKS':
+                        this.$router.push('/brokers/Stock');
+                        break;
+                    case 'list:OTHER':
+                        this.$router.push('/brokers/Other');
+                        break;
+                    case 'openFilter':
+                        this.$store.commit(types.FILTER_OPEN);
+                        break;
+                    case 'closeFilter':
+                        this.$store.commit(types.FILTER_CLOSE);
+                        break;
+                    default:
+                        if (action.includes('id:')) {
+                            const brokersIds = action.split(':')[1].split(',');
+
+                            if (brokersIds.length > 1) {
+                                this.$store.commit(types.COMPARISON_CLEAR);
+
+                                brokersIds.forEach(brokerId => {
+                                    this.$store.commit(types.COMPARISON_BROKER_ADD, {id: brokerId});
+                                });
+
+                                this.$router.push('/comparison');
+                            } else {
+                                this.$router.push('/broker/' + brokersIds[0]);
+                            }
+                        }
+                }
+            }
         }
     }
 </script>

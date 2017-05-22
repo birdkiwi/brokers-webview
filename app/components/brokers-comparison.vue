@@ -163,6 +163,10 @@
 
             }
         },
-        props: ['comparison']
+        computed: {
+            comparison() {
+                return this.$store.state.brokers.comparison;
+            }
+        }
     }
 </script>
