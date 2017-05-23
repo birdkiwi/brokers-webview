@@ -52,6 +52,9 @@
             },
             filters() {
                 return this.$store.state.filters;
+            },
+            countries() {
+                return this.$store.state.brokers.countries;
             }
         },
         components: {

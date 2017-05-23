@@ -4,6 +4,7 @@ import * as types from '../mutation-types'
 const state = {
     all: [],
     comparison: [],
+    countries: [],
     scrollPosition: 0
 };
 
@@ -24,15 +25,17 @@ const actions = {
         commit(types.SPINNER_ENABLE);
 
         let localStorageBrokers = [];
+        let localStorageCountries = {};
 
         try {
             localStorageBrokers = JSON.parse(window.localStorage.getItem('brokers'));
+            localStorageCountries = JSON.parse(window.localStorage.getItem('countries'));
         } catch(e) {
             console.log('LocalStorage Get error: ', e);
         }
 
         if (localStorageBrokers && localStorageBrokers.length) {
-            commit(types.BROKER_RECEIVE, localStorageBrokers);
+            commit(types.BROKERS_RECEIVE, localStorageBrokers);
         } else {
             brokersAPI.getBrokers().then(res => {
                 if (res.data && res.data.data) {
@@ -41,7 +44,7 @@ const actions = {
                     } catch(e) {
                         console.log('LocalStorage Set error: ', e);
                     }
-                    commit(types.BROKER_RECEIVE, res.data.data);
+                    commit(types.BROKERS_RECEIVE, res.data.data);
                 }
             });
 
@@ -49,12 +52,29 @@ const actions = {
 
             //TODO: check last_updated to update localStorage brokers
         }
+
+        if (localStorageCountries && Object.keys(localStorageCountries).length) {
+            commit(types.COUNTRIES_RECEIVE, localStorageCountries);
+        } else {
+            brokersAPI.getCountries().then(res => {
+                try {
+                    window.localStorage.setItem('countries', JSON.stringify(res.data));
+                } catch(e) {
+                    console.log('LocalStorage Set error: ', e);
+                }
+                commit(types.COUNTRIES_RECEIVE, res.data);
+            });
+        }
     }
 };
 
 const mutations = {
-    [types.BROKER_RECEIVE] (state, brokers) {
+    [types.BROKERS_RECEIVE] (state, brokers) {
         state.all = brokers;
+    },
+
+    [types.COUNTRIES_RECEIVE] (state, countries) {
+        state.countries = countries;
     },
 
     [types.COMPARISON_BROKER_ADD] (state, { id }) {

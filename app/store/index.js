@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import brokers from './modules/brokers';
-import countries from './modules/countries';
 import * as types from './mutation-types'
 
 Vue.use(Vuex);
@@ -62,7 +61,6 @@ export default new Vuex.Store({
 
     },
     modules: {
-        brokers,
-        countries
+        brokers
     },
 });
